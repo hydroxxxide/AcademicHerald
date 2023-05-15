@@ -1,7 +1,6 @@
 package com.example.academicherald.services;
 
 import com.example.academicherald.models.Publication;
-import com.example.academicherald.models.User;
 import com.example.academicherald.repositories.PublicationRepository;
 import org.springframework.stereotype.Service;
 
@@ -28,7 +27,7 @@ public class PublicationService {
         oldPublication.setText(newPublication.getText());
         oldPublication.setDateOfCreation(newPublication.getDateOfCreation());
         oldPublication.setCategory(newPublication.getCategory());
-        oldPublication.setUser(newPublication.getUser());
+        oldPublication.setAuthor(newPublication.getAuthor());
         oldPublication.setType(newPublication.getType());
         return repository.save(oldPublication);
     }

@@ -29,7 +29,8 @@ public class Publication {
     private Category category;
 
     @ManyToOne
-    private User user;
+    @JoinColumn(name = "author")
+    private User author;
 
     @Enumerated(EnumType.STRING)
     private PublicationType type;
