@@ -1,6 +1,6 @@
 package com.example.academicherald.controllers;
 
-import com.example.academicherald.dto.UserDTO;
+import com.example.academicherald.dto.UserDto;
 import com.example.academicherald.mappers.UserMapper;
 import com.example.academicherald.models.User;
 import com.example.academicherald.services.UserService;
@@ -18,17 +18,17 @@ public class UserController {
     }
 
     @PostMapping("/create")
-    public UserDTO create(@RequestBody User user){
+    public UserDto create(@RequestBody User user){
         return mapper.convertToDTO(service.create(user));
     }
 
     @GetMapping("/get/{id}")
-    public UserDTO getById(@PathVariable Long id){
+    public UserDto getById(@PathVariable Long id){
         return mapper.convertToDTO(service.getById(id));
     }
 
     @PutMapping("/update")
-    public UserDTO update(@RequestBody User u1){
+    public UserDto update(@RequestBody User u1){
         return mapper.convertToDTO(service.update(u1));
     }
 

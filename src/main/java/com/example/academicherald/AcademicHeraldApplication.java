@@ -13,6 +13,7 @@ public class AcademicHeraldApplication {
 	}
 
 	@Bean
-	public ModelMapper modelMapper(){return new ModelMapper();}
-
+	public ModelMapper modelMapper() {
+		return new ModelMapper();
+	}
 }

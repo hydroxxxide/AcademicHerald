@@ -20,10 +20,10 @@ public class UserService {
         return repository.findById(id).orElse(null);
     }
 
-    public User update(User u1){
-        User u2 = getById(u1.getId());
-        u2.setUsername(u1.getUsername());
-        u2.setEmail(u1.getEmail());
+    public User update(User newUser){
+        User u2 = getById(newUser.getId());
+        u2.setUsername(newUser.getUsername());
+        u2.setEmail(newUser.getEmail());
         return repository.save(u2);
     }
 
