@@ -6,34 +6,41 @@ import com.example.academicherald.models.Category;
 import com.example.academicherald.services.CategoryService;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/category")
 public class CategoryController {
-    private final CategoryService service;
+    private final CategoryService categoryService;
     private final CategoryMapper mapper;
 
-    public CategoryController(CategoryService service, CategoryMapper mapper) {
-        this.service = service;
+    public CategoryController(CategoryService categoryService, CategoryMapper mapper) {
+        this.categoryService = categoryService;
         this.mapper = mapper;
     }
 
     @PostMapping("/create")
-    public CategoryDto create(Category category){
-        return mapper.convertToDto(service.create(category));
+    public CategoryDto create(@RequestBody Category category) {
+        return mapper.convertToDto(categoryService.create(category));
     }
 
     @GetMapping("/get/{id}")
-    public CategoryDto getById(@PathVariable Long id){
-        return mapper.convertToDto(service.getById(id));
+    public CategoryDto getById(@PathVariable Long id) {
+        return mapper.convertToDto(categoryService.getById(id));
+    }
+
+    @GetMapping("/get/all")
+    public List<CategoryDto> getAll() {
+        return mapper.convertToDTOList(categoryService.getAll());
     }
 
     @PutMapping("/update")
-    public CategoryDto update(@RequestBody Category category){
-        return mapper.convertToDto(service.update(category));
+    public CategoryDto update(@RequestBody Category category) {
+        return mapper.convertToDto(categoryService.update(category));
     }
 
     @DeleteMapping("/delete/{id}")
-    public void delete(@PathVariable Long id){
-        service.delete(id);
+    public void delete(@PathVariable Long id) {
+        categoryService.delete(id);
     }
 }

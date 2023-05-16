@@ -5,6 +5,9 @@ import com.example.academicherald.models.Category;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Component
 public class CategoryMapper {
     private final ModelMapper mapper;
@@ -13,7 +16,15 @@ public class CategoryMapper {
         this.mapper = mapper;
     }
 
-    public CategoryDto convertToDto(Category category){
+    public List<CategoryDto> convertToDTOList(List<Category> categories) {
+        List<CategoryDto> categoryDtoList = new ArrayList<>();
+        for (Category c : categories) {
+            categoryDtoList.add(convertToDto(c));
+        }
+        return categoryDtoList;
+    }
+
+    public CategoryDto convertToDto(Category category) {
         return mapper.map(category, CategoryDto.class);
     }
 }

@@ -6,17 +6,19 @@ import com.example.academicherald.models.User;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
 
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 @Data
 public class PublicationDto {
     private String title;
     private String subtitle;
     private String text;
-    private Timestamp dateOfCreation;
+    @DateTimeFormat(pattern = "dd-MM-yyyy HH:mm:ss")
+    private LocalDateTime dateOfCreation;
     private Category category;
-    private User user;
+    private User author;
     @Enumerated(EnumType.STRING)
     private PublicationType type;
 }

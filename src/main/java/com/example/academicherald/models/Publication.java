@@ -6,8 +6,9 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.format.annotation.DateTimeFormat;
 
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "publications")
@@ -22,7 +23,8 @@ public class Publication {
     private String title;
     private String subtitle;
     private String text;
-    private Timestamp dateOfCreation;
+    @DateTimeFormat(pattern = "dd-MM-yyyy HH:mm:ss")
+    private LocalDateTime dateOfCreation;
 
     @ManyToOne
     @JoinColumn(name = "category")
