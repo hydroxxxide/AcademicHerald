@@ -24,7 +24,7 @@ public class Publication {
     private String subtitle;
     private String text;
     @DateTimeFormat(pattern = "dd-MM-yyyy HH:mm:ss")
-    private LocalDateTime dateOfCreation;
+    private LocalDateTime dateOfCreation = LocalDateTime.now();
 
     @ManyToOne
     @JoinColumn(name = "category")
