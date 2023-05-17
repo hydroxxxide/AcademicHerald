@@ -19,9 +19,11 @@ public class PublicationController {
         this.mapper = mapper;
     }
 
-    @PostMapping("/create/{user_id}")
-    public PublicationDto create(@RequestBody Publication publication, @PathVariable Long user_id) {
-        return mapper.convertToDto(publicationService.create(publication, user_id));
+    @PostMapping("/create")
+    public PublicationDto create(@RequestBody Publication publication,
+                                 @RequestParam Long userId,
+                                 @RequestParam Long categoryId) {
+        return mapper.convertToDto(publicationService.create(publication, userId,categoryId));
     }
 
     @GetMapping("/get/{id}")

@@ -1,28 +1,36 @@
 package com.example.academicherald.services;
 
+import com.example.academicherald.models.Category;
 import com.example.academicherald.models.Publication;
 import com.example.academicherald.models.User;
+import com.example.academicherald.repositories.CategoryRepository;
 import com.example.academicherald.repositories.PublicationRepository;
 import com.example.academicherald.repositories.UserRepository;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class PublicationService {
     private final PublicationRepository publicationRepository;
-    private final UserRepository userRepository;
+    private final UserService userService;
+    private final CategoryService categoryService;
 
-    public PublicationService(PublicationRepository publicationRepository, UserRepository userRepository) {
+    public PublicationService(PublicationRepository publicationRepository, UserService userService, CategoryService categoryService) {
         this.publicationRepository = publicationRepository;
-        this.userRepository = userRepository;
+        this.userService = userService;
+
+        this.categoryService = categoryService;
     }
 
-    public Publication create(Publication publication, Long user_id) {
+    public Publication create(Publication publication, Long userId, Long categoryId) {
         publication.setDateOfCreation(LocalDateTime.now());
-        User author = userRepository.findById(user_id).orElse(null);
+        User author = userService.getById(userId);
+        Category category = categoryService.getById(categoryId);
         publication.setAuthor(author);
+        publication.setCategory(category);
         return publicationRepository.save(publication);
     }
 

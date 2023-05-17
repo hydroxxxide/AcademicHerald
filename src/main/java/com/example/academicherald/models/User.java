@@ -21,6 +21,7 @@ public class User {
     private Long id;
     private String username;
     private String email;
+    @Enumerated(EnumType.STRING)
     private UserRole role;
     @OneToMany
     private List<Publication> publications;
