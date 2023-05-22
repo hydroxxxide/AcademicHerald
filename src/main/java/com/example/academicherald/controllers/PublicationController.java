@@ -23,8 +23,9 @@ public class PublicationController {
     public PublicationDto create(@RequestBody Publication publication,
                                  @RequestParam Long userId,
                                  @RequestParam Long categoryId) {
-        return mapper.convertToDto(publicationService.create(publication, userId,categoryId));
+        return mapper.convertToDto(publicationService.createPublication(publication, userId, categoryId));
     }
+
 
     @GetMapping("/get/{id}")
     public PublicationDto getById(@PathVariable Long id) {

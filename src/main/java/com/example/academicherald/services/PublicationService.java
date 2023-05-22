@@ -2,14 +2,12 @@ package com.example.academicherald.services;
 
 import com.example.academicherald.models.Category;
 import com.example.academicherald.models.Publication;
+import com.example.academicherald.models.Tag;
 import com.example.academicherald.models.User;
-import com.example.academicherald.repositories.CategoryRepository;
 import com.example.academicherald.repositories.PublicationRepository;
-import com.example.academicherald.repositories.UserRepository;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -17,20 +15,31 @@ public class PublicationService {
     private final PublicationRepository publicationRepository;
     private final UserService userService;
     private final CategoryService categoryService;
+    private final TagService tagService;
 
-    public PublicationService(PublicationRepository publicationRepository, UserService userService, CategoryService categoryService) {
+    public PublicationService(PublicationRepository publicationRepository, UserService userService, CategoryService categoryService, TagService tagService) {
         this.publicationRepository = publicationRepository;
         this.userService = userService;
-
         this.categoryService = categoryService;
+        this.tagService = tagService;
     }
 
-    public Publication create(Publication publication, Long userId, Long categoryId) {
+    //    public Publication create(Publication publication, Long userId, Long categoryId) {
+//        publication.setDateOfCreation(LocalDateTime.now());
+//        User author = userService.getById(userId);
+//        Category category = categoryService.getById(categoryId);
+//        publication.setAuthor(author);
+//        publication.setCategory(category);
+//        return publicationRepository.save(publication);
+//    }
+    public Publication createPublication(Publication publication, Long userId, Long categoryId) {
         publication.setDateOfCreation(LocalDateTime.now());
         User author = userService.getById(userId);
         Category category = categoryService.getById(categoryId);
+        List<Tag> tags = publication.getTags();
         publication.setAuthor(author);
         publication.setCategory(category);
+        publication.setTags(tags);
         return publicationRepository.save(publication);
     }
 

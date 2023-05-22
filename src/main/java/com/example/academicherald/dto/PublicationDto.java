@@ -2,6 +2,7 @@ package com.example.academicherald.dto;
 
 import com.example.academicherald.enums.PublicationType;
 import com.example.academicherald.models.Category;
+import com.example.academicherald.models.Tag;
 import com.example.academicherald.models.User;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -9,6 +10,8 @@ import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Set;
 
 @Data
 public class PublicationDto {
@@ -18,6 +21,7 @@ public class PublicationDto {
     @DateTimeFormat(pattern = "dd-MM-yyyy HH:mm:ss")
     private LocalDateTime dateOfCreation;
     private Category category;
+    private List<Tag> tags;
     private User author;
     @Enumerated(EnumType.STRING)
     private PublicationType type;

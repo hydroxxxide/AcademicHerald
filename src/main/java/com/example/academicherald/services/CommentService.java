@@ -31,10 +31,6 @@ public class CommentService {
         return commentRepository.save(comment);
     }
 
-    public List<Comment> allComments(){
-        return commentRepository.findAll();
-    }
-
     public Comment getCommentById(Long id){
         return commentRepository.findById(id).orElse(null);
     }
@@ -48,4 +44,17 @@ public class CommentService {
     public void deleteComment(Long id){
         commentRepository.deleteById(id);
     }
+
+
+    public List<Comment> allCommentsByIdPublic(Long publicationId){
+        Publication publication = publicationRepository.findById(publicationId).orElse(null);
+        List<Comment> comments = commentRepository.findByPublication(publication);
+        return  comments;
+    }
+    public List<Comment> allCommentsByUser(Long userId){
+        User user = userRepository.findById(userId).orElse(null);
+        List<Comment> comments = commentRepository.findByUser(user);
+        return comments;
+     }
+
 }

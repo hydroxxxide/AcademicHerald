@@ -7,6 +7,9 @@ import com.example.academicherald.models.Publication;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Component
 public class CommentMapper {
     private final ModelMapper mapper;
@@ -16,5 +19,12 @@ public class CommentMapper {
     }
     public CommentDto convertToDto(Comment comment) {
         return mapper.map(comment, CommentDto.class);
+    }
+    public List<CommentDto> convertToDTOList(List<Comment> comments) {
+        List<CommentDto> commentDtoList = new ArrayList<>();
+        for (Comment comment : comments) {
+            commentDtoList.add(convertToDto(comment));
+        }
+        return commentDtoList;
     }
 }
