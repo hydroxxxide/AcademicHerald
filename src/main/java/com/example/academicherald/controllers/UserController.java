@@ -4,7 +4,6 @@ import com.example.academicherald.dto.UserDto;
 import com.example.academicherald.mappers.UserMapper;
 import com.example.academicherald.models.User;
 import com.example.academicherald.services.UserService;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;

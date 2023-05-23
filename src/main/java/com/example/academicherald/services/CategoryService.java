@@ -4,7 +4,6 @@ import com.example.academicherald.models.Category;
 import com.example.academicherald.repositories.CategoryRepository;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.EntityNotFoundException;
 import java.time.LocalDateTime;
 import java.util.List;
 

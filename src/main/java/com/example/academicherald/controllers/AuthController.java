@@ -1,33 +1,36 @@
 package com.example.academicherald.controllers;
 
 
+import com.example.academicherald.authenticationRequest.AuthenticationRequest;
+import com.example.academicherald.authenticationRequest.AuthneticationResponse;
 import com.example.academicherald.models.User;
 import com.example.academicherald.services.UserService;
 import com.example.academicherald.util.JWTUtil;
-import com.example.academicherald.util.JwtAuthenticationResponse;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 
 @Controller
 public class AuthController {
     private final UserService userService;
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
+    private final UserDetailsService userDetailsService;
     private final JWTUtil jwtUtil;
 
 
-    public AuthController(UserService userService, PasswordEncoder passwordEncoder, AuthenticationManager authenticationManager, JWTUtil jwtUtil) {
+    public AuthController(UserService userService, PasswordEncoder passwordEncoder, AuthenticationManager authenticationManager, UserDetailsService userDetailsService, JWTUtil jwtUtil) {
         this.userService = userService;
         this.passwordEncoder = passwordEncoder;
         this.authenticationManager = authenticationManager;
+        this.userDetailsService = userDetailsService;
         this.jwtUtil = jwtUtil;
     }
 
@@ -47,27 +50,18 @@ public class AuthController {
         return ResponseEntity.ok("User registered successfully!");
     }
 
-    @PostMapping("/login")
-    public ResponseEntity<?> authenticateUser(@RequestBody UserDetails userDetails) {
+    @PostMapping(value = "/authenticate")
+    public ResponseEntity<?> createAuthenticationToken(@RequestBody AuthenticationRequest authenticationRequest) throws Exception {
         try {
-            // Попытка аутентификации пользователя
-            Authentication authentication = authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(
-                            userDetails.getUsername(),
-                            userDetails.getPassword()
-                    )
+            authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(authenticationRequest.getUsername(), authenticationRequest.getPassword())
             );
-
-            // Успешная аутентификация, генерация токена доступа
-            String token = jwtUtil.generateToken(authentication);
-
-            // Возвращаем токен как ответ
-            return ResponseEntity.ok(new JwtAuthenticationResponse(token));
-        } catch (AuthenticationException e) {
-            // Неверные учетные данные, возвращаем ошибку
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid username or password");
+        } catch (BadCredentialsException e) {
+            throw new Exception("Incorrect user or password");
         }
+        final UserDetails userDetails = userDetailsService.loadUserByUsername(authenticationRequest.getUsername());
+        final String jwt = jwtUtil.generateToken(userDetails);
+        return ResponseEntity.ok(new AuthneticationResponse(jwt));
     }
-
 
 }

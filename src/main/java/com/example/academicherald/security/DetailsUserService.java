@@ -23,7 +23,7 @@ public class DetailsUserService implements UserDetailsService {
     @Transactional(isolation = Isolation.SERIALIZABLE)
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userRepository.findByEmail(username);
+        User user = userRepository.findByUsername(username);
 
         if (user == null) {
             throw new UsernameNotFoundException("Unknown user: " + username);
