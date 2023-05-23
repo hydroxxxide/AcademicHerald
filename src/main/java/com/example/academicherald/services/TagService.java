@@ -1,17 +1,20 @@
 package com.example.academicherald.services;
 
+import com.example.academicherald.models.Publication;
 import com.example.academicherald.models.Tag;
+import com.example.academicherald.repositories.PublicationRepository;
 import com.example.academicherald.repositories.TagRepository;
 import org.springframework.stereotype.Service;
 
-import java.util.HashSet;
 import java.util.List;
 
 @Service
 public class TagService {
     private final TagRepository tagRepository;
-    public TagService(TagRepository tagRepository) {
+    private final PublicationRepository publicationRepository;
+    public TagService(TagRepository tagRepository, PublicationRepository publicationRepository) {
         this.tagRepository = tagRepository;
+        this.publicationRepository = publicationRepository;
     }
 
     public Tag create(Tag tag){
@@ -28,10 +31,7 @@ public class TagService {
         oldTag.setName(newTag.getName());
         return tagRepository.save(oldTag);
     }
-    public List<Tag> getByIds(List<Long> tagIds) {
-        List<Tag> tags = tagRepository.findAllById(tagIds);
-        return tags;
-    }
+
     public void delete(Long id){
         tagRepository.deleteById(id);
     }

@@ -19,7 +19,8 @@ public class Tag {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
-    @ManyToMany
+    //    @ManyToMany(mappedBy = "tags")
+//    private List<Publication> publications;
+    @ManyToMany(mappedBy = "tags")
     private List<Publication> publications;
-
 }

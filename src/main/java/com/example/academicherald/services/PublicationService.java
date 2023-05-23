@@ -5,9 +5,11 @@ import com.example.academicherald.models.Publication;
 import com.example.academicherald.models.Tag;
 import com.example.academicherald.models.User;
 import com.example.academicherald.repositories.PublicationRepository;
+import com.example.academicherald.repositories.TagRepository;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -16,32 +18,36 @@ public class PublicationService {
     private final UserService userService;
     private final CategoryService categoryService;
     private final TagService tagService;
+    private final TagRepository tagRepository;
 
-    public PublicationService(PublicationRepository publicationRepository, UserService userService, CategoryService categoryService, TagService tagService) {
+    public PublicationService(PublicationRepository publicationRepository, UserService userService, CategoryService categoryService, TagService tagService, TagRepository tagRepository) {
         this.publicationRepository = publicationRepository;
         this.userService = userService;
         this.categoryService = categoryService;
         this.tagService = tagService;
+        this.tagRepository = tagRepository;
     }
 
-    //    public Publication create(Publication publication, Long userId, Long categoryId) {
-//        publication.setDateOfCreation(LocalDateTime.now());
-//        User author = userService.getById(userId);
-//        Category category = categoryService.getById(categoryId);
-//        publication.setAuthor(author);
-//        publication.setCategory(category);
-//        return publicationRepository.save(publication);
-//    }
-    public Publication createPublication(Publication publication, Long userId, Long categoryId) {
+    public Publication createPublication(Publication publication, Long userId, Long categoryId, Long[] tagIds) {
         publication.setDateOfCreation(LocalDateTime.now());
         User author = userService.getById(userId);
         Category category = categoryService.getById(categoryId);
-        List<Tag> tags = publication.getTags();
+
+        List<Tag> tags = new ArrayList<>();
+        for (Long tagId : tagIds) {
+            Tag tag = tagService.getById(tagId);
+            tags.add(tag);
+        }
         publication.setAuthor(author);
         publication.setCategory(category);
         publication.setTags(tags);
+
         return publicationRepository.save(publication);
     }
+//    public List<Publication> getPublicationsByTagId(Long tagId) {
+//        return publicationRepository.findByTagId(tagId);
+//    }
+
 
     public Publication getById(Long id) {
         return publicationRepository.findById(id).orElse(null);
@@ -62,7 +68,6 @@ public class PublicationService {
         oldPublication.setType(newPublication.getType());
         return publicationRepository.save(oldPublication);
     }
-
     public void delete(Long id) {
         publicationRepository.deleteById(id);
     }
