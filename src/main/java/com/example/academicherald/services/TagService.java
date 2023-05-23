@@ -1,6 +1,5 @@
 package com.example.academicherald.services;
 
-import com.example.academicherald.models.Publication;
 import com.example.academicherald.models.Tag;
 import com.example.academicherald.repositories.PublicationRepository;
 import com.example.academicherald.repositories.TagRepository;

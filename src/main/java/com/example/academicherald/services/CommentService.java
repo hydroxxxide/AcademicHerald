@@ -23,7 +23,7 @@ public class CommentService {
         this.userRepository = userRepository;
     }
 
-    public Comment create(Comment comment, Long userId, Long publicationId){
+    public Comment create(Comment comment, Long userId, Long publicationId) {
         User author = userRepository.findById(userId).orElse(null);
         Publication publication = publicationRepository.findById(publicationId).orElse(null);
         comment.setUser(author);
@@ -31,30 +31,33 @@ public class CommentService {
         return commentRepository.save(comment);
     }
 
-    public Comment getCommentById(Long id){
+    public Comment getCommentById(Long id) {
         return commentRepository.findById(id).orElse(null);
     }
-    public Comment updateComment(Comment newComment){
+
+    public Comment updateComment(Comment newComment) {
         Comment oldComment = commentRepository.getById(newComment.getId());
         oldComment.setText(newComment.getText());
         oldComment.setUser(newComment.getUser());
         oldComment.setPublication(newComment.getPublication());
         return commentRepository.save(oldComment);
     }
-    public void deleteComment(Long id){
+
+    public void deleteComment(Long id) {
         commentRepository.deleteById(id);
     }
 
 
-    public List<Comment> allCommentsByIdPublic(Long publicationId){
+    public List<Comment> allCommentsByIdPublic(Long publicationId) {
         Publication publication = publicationRepository.findById(publicationId).orElse(null);
         List<Comment> comments = commentRepository.findByPublication(publication);
-        return  comments;
+        return comments;
     }
-    public List<Comment> allCommentsByUser(Long userId){
+
+    public List<Comment> allCommentsByUser(Long userId) {
         User user = userRepository.findById(userId).orElse(null);
         List<Comment> comments = commentRepository.findByUser(user);
         return comments;
-     }
+    }
 
 }

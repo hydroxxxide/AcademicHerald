@@ -3,10 +3,8 @@ package com.example.academicherald.services;
 import com.example.academicherald.models.Category;
 import com.example.academicherald.models.Publication;
 import com.example.academicherald.repositories.CategoryRepository;
-import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -34,11 +32,6 @@ public class CategoryService {
         oldCategory.setName(newCategory.getName());
         oldCategory.setPublications(newCategory.getPublications());
         return repository.save(oldCategory);
-    }
-    public List<Publication>  getPublicationsByCategory(Long categoryId){
-        Category category = getById(categoryId);
-        List<Publication> publications = category.getPublications();
-        return publications;
     }
     public void delete(Long id) {
         repository.deleteById(id);

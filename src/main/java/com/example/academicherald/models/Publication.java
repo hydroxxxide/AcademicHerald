@@ -2,6 +2,7 @@ package com.example.academicherald.models;
 
 import com.example.academicherald.enums.PublicationType;
 import jakarta.persistence.*;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -9,9 +10,7 @@ import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDateTime;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 @Entity
 @Table(name = "publications")
@@ -29,10 +28,10 @@ public class Publication {
     @DateTimeFormat(pattern = "dd-MM-yyyy HH:mm:ss")
     private LocalDateTime dateOfCreation = LocalDateTime.now();
 
-    @ManyToOne
+    @ManyToMany
     @JoinColumn(name = "category")
-
-    private Category category;
+//    @Size(max = 1)
+    private List<Category> category;
 
     @ManyToOne
     @JoinColumn(name = "author")
@@ -42,5 +41,10 @@ public class Publication {
     private PublicationType type;
 
     @ManyToMany
+    @JoinTable(
+            name = "publication_tags",
+            joinColumns = @JoinColumn(name = "publication_id"),
+            inverseJoinColumns = @JoinColumn(name = "tag_id")
+    )
     private List<Tag> tags;
 }

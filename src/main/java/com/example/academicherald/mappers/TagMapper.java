@@ -1,9 +1,7 @@
 package com.example.academicherald.mappers;
 
 import com.example.academicherald.dto.TagDto;
-import com.example.academicherald.dto.UserDto;
 import com.example.academicherald.models.Tag;
-import com.example.academicherald.models.User;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 

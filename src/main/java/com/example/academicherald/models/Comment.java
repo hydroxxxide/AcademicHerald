@@ -16,7 +16,11 @@ public class Comment {
     private Long id;
     private String text;
     @ManyToOne
+    @JoinColumn(name = "user_id")
+
     private User user;
     @ManyToOne
+    @JoinColumn(name = "publication_id")
+
     private Publication publication;
 }
