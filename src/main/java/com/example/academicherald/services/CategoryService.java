@@ -4,6 +4,8 @@ import com.example.academicherald.models.Category;
 import com.example.academicherald.repositories.CategoryRepository;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityNotFoundException;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -19,11 +21,11 @@ public class CategoryService {
     }
 
     public Category getById(Long id) {
-        return repository.findById(id).orElse(null);
+        return repository.findByIdAndRdtIsNull(id);
     }
 
     public List<Category> getAll() {
-        return repository.findAll();
+        return repository.findAllByRdtIsNull();
     }
 
     public Category update(Category newCategory) {
@@ -34,6 +36,8 @@ public class CategoryService {
     }
 
     public void delete(Long id) {
-        repository.deleteById(id);
+        Category category = getById(id);
+        category.setRdt(LocalDateTime.now());
+        repository.save(category);
     }
 }

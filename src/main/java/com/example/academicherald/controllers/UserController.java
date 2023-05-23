@@ -4,6 +4,7 @@ import com.example.academicherald.dto.UserDto;
 import com.example.academicherald.mappers.UserMapper;
 import com.example.academicherald.models.User;
 import com.example.academicherald.services.UserService;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -42,6 +43,21 @@ public class UserController {
     @DeleteMapping("/delete/{id}")
     public void delete(@PathVariable Long id) {
         userService.delete(id);
+    }
+
+    @GetMapping("/reset")
+    public boolean resetPassword(@RequestParam String email){
+        return userService.resetPassword(email);
+    }
+
+    @PostMapping("/reset/{resetToken}")
+    public boolean saveNewPassword(@PathVariable String resetToken, @RequestParam String password) {
+        return userService.saveNewPassword(resetToken, password);
+    }
+
+    @PostMapping("/register")
+    public UserDto register(@RequestBody UserDto userDto) {
+        return mapper.convertToDTO(userService.create(mapper.convertToEntity(userDto)));
     }
 
 }

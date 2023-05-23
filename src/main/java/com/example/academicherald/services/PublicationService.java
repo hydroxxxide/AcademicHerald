@@ -3,13 +3,10 @@ package com.example.academicherald.services;
 import com.example.academicherald.models.Category;
 import com.example.academicherald.models.Publication;
 import com.example.academicherald.models.User;
-import com.example.academicherald.repositories.CategoryRepository;
 import com.example.academicherald.repositories.PublicationRepository;
-import com.example.academicherald.repositories.UserRepository;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -35,11 +32,15 @@ public class PublicationService {
     }
 
     public Publication getById(Long id) {
-        return publicationRepository.findById(id).orElse(null);
+        return publicationRepository.findByIdAndRdtIsNull(id);
     }
 
-    public List<Publication> getAll() {
-        return publicationRepository.findAll();
+    public List<Publication> getAllAccepted() {
+        return publicationRepository.getAllByPassAndRdtIsNull(true);
+    }
+
+    public List<Publication> getAllRejected() {
+        return publicationRepository.getAllByPassAndRdtIsNull(false);
     }
 
     public Publication update(Publication newPublication) {
@@ -55,6 +56,15 @@ public class PublicationService {
     }
 
     public void delete(Long id) {
-        publicationRepository.deleteById(id);
+        Publication publication = getById(id);
+        publication.setRdt(LocalDateTime.now());
+        publicationRepository.save(publication);
     }
+
+    public void confirmPublication(Long id, boolean res){
+        Publication publication = getById(id);
+        publication.setPass(res);
+        update(publication);
+    }
+
 }

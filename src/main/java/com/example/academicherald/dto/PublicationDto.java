@@ -3,11 +3,11 @@ package com.example.academicherald.dto;
 import com.example.academicherald.enums.PublicationType;
 import com.example.academicherald.models.Category;
 import com.example.academicherald.models.User;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
 import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import java.time.LocalDateTime;
 
 @Data
