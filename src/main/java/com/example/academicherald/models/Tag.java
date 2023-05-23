@@ -21,6 +21,6 @@ public class Tag {
     private String name;
     //    @ManyToMany(mappedBy = "tags")
 //    private List<Publication> publications;
-    @ManyToMany(mappedBy = "tags")
+    @ManyToMany
     private List<Publication> publications;
 }

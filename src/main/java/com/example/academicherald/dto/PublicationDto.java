@@ -20,7 +20,7 @@ public class PublicationDto {
     private String text;
     @DateTimeFormat(pattern = "dd-MM-yyyy HH:mm:ss")
     private LocalDateTime dateOfCreation;
-    private Category category;
+    private List<Category> category;
     private List<Tag> tags;
     private User author;
     @Enumerated(EnumType.STRING)

@@ -31,6 +31,7 @@ public class Publication {
 
     @ManyToOne
     @JoinColumn(name = "category")
+
     private Category category;
 
     @ManyToOne
@@ -41,6 +42,5 @@ public class Publication {
     private PublicationType type;
 
     @ManyToMany
-    @JoinColumn(name = "tags")
     private List<Tag> tags;
 }
