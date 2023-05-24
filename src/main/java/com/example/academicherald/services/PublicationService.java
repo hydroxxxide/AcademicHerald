@@ -46,13 +46,22 @@ public class PublicationService {
     }
 
 
+    //Вытаскиваем список публикаций по id тега
     public List<Publication> getPublicationsByTagId(Long tagId) {
         return publicationRepository.findByTagsId(tagId);
     }
-
+    //Вытаскиваем список публикаций по id категории
     public List<Publication> getPublicationsByCategoryId(Long categoryId) {
         Category category = categoryService.getById(categoryId);
         return publicationRepository.findByCategory(category);
+    }
+    //Вытаскиваем список публикаций по id автора(какие посты он выложил)
+    public List<Publication> getPublicationsByAuthorId(Long authorId) {
+        User author = userRepository.findById(authorId).orElse(null);
+        if (author != null) {
+            return publicationRepository.findByAuthor(author);
+        }
+        return Collections.emptyList();
     }
 
     public Publication getById(Long id) {
@@ -74,17 +83,8 @@ public class PublicationService {
         oldPublication.setType(newPublication.getType());
         return publicationRepository.save(oldPublication);
     }
-
     public void delete(Long id) {
         publicationRepository.deleteById(id);
-    }
-
-    public List<Publication> getPublicationsByAuthorId(Long authorId) {
-        User author = userRepository.findById(authorId).orElse(null);
-        if (author != null) {
-            return publicationRepository.findByAuthor(author);
-        }
-        return Collections.emptyList();
     }
 
 

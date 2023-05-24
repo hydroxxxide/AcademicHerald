@@ -11,27 +11,31 @@ import java.util.List;
 public class TagService {
     private final TagRepository tagRepository;
     private final PublicationRepository publicationRepository;
+
     public TagService(TagRepository tagRepository, PublicationRepository publicationRepository) {
         this.tagRepository = tagRepository;
         this.publicationRepository = publicationRepository;
     }
 
-    public Tag create(Tag tag){
+    public Tag create(Tag tag) {
         return tagRepository.save(tag);
     }
-    public List<Tag> getAllTag(){
+
+    public List<Tag> getAllTag() {
         return tagRepository.findAll();
     }
-    public Tag getById(Long id){
+
+    public Tag getById(Long id) {
         return tagRepository.findById(id).orElse(null);
     }
-    public Tag update(Tag newTag){
+
+    public Tag update(Tag newTag) {
         Tag oldTag = tagRepository.getById(newTag.getId());
         oldTag.setName(newTag.getName());
         return tagRepository.save(oldTag);
     }
 
-    public void delete(Long id){
+    public void delete(Long id) {
         tagRepository.deleteById(id);
     }
 }

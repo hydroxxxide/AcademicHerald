@@ -43,21 +43,22 @@ public class CommentService {
         return commentRepository.save(oldComment);
     }
 
-    public void deleteComment(Long id) {
-        commentRepository.deleteById(id);
-    }
-
-
+    //Вытаскиваем список комментариев к определенному посту по id
     public List<Comment> allCommentsByIdPublic(Long publicationId) {
         Publication publication = publicationRepository.findById(publicationId).orElse(null);
         List<Comment> comments = commentRepository.findByPublication(publication);
         return comments;
     }
 
+    //Вытаскиваем список комментариев который написал пользователь за все время
     public List<Comment> allCommentsByUser(Long userId) {
         User user = userRepository.findById(userId).orElse(null);
         List<Comment> comments = commentRepository.findByUser(user);
         return comments;
+    }
+
+    public void deleteComment(Long id) {
+        commentRepository.deleteById(id);
     }
 
 }
