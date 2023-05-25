@@ -8,7 +8,7 @@ import java.util.List;
 
 @Repository
 public interface PublicationRepository extends JpaRepository<Publication, Long> {
-    List<Publication> getAllByPassAndRdtIsNull(boolean pass);
+    List<Publication> getAllByPassAndRdtIsNull(Boolean pass);
 
-    Publication findByIdAndRdtIsNull(Long id);
+    Publication findByIdAndPassAndRdtIsNull(Long id, Boolean pass);
 }

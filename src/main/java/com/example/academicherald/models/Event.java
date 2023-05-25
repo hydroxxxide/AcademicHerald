@@ -1,6 +1,5 @@
 package com.example.academicherald.models;
 
-import com.example.academicherald.enums.PublicationType;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -9,15 +8,16 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "publications")
+@Table(name = "events")
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
-public class Publication {
+public class Event {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -37,21 +37,17 @@ public class Publication {
 
     @NotNull
     @ManyToOne
-    @JoinColumn(name = "category")
-    private Category category;
-
-    @NotNull
-    @ManyToOne
     @JoinColumn(name = "author")
     private User author;
 
-    @NotNull
-    @Enumerated(EnumType.STRING)
-    private PublicationType type;
+    @DateTimeFormat(pattern = "dd-MM-yyyy HH:mm:ss")
+    private LocalDateTime dateOfEvent;
 
+    private Timestamp startTime;
 
-    private Boolean pass = false;
+    private String location;
+
+    private Double duration;
 
     private LocalDateTime rdt;
-
 }
