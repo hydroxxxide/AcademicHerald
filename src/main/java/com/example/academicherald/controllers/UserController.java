@@ -13,7 +13,6 @@ import java.util.List;
 public class UserController {
     private final UserService userService;
     private final UserMapper mapper;
-
     public UserController(UserService userService, UserMapper mapper) {
         this.userService = userService;
         this.mapper = mapper;
@@ -52,11 +51,6 @@ public class UserController {
     @PostMapping("/reset/{resetToken}")
     public boolean saveNewPassword(@PathVariable String resetToken, @RequestParam String password) {
         return userService.saveNewPassword(resetToken, password);
-    }
-
-    @PostMapping("/register")
-    public UserDto register(@RequestBody UserDto userDto) {
-        return mapper.convertToDTO(userService.create(mapper.convertToEntity(userDto)));
     }
 
 }

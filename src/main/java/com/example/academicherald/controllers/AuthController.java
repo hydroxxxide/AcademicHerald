@@ -2,7 +2,7 @@ package com.example.academicherald.controllers;
 
 
 import com.example.academicherald.authenticationRequest.AuthenticationRequest;
-import com.example.academicherald.authenticationRequest.AuthneticationResponse;
+import com.example.academicherald.authenticationRequest.AuthenticationResponse;
 import com.example.academicherald.models.User;
 import com.example.academicherald.services.UserService;
 import com.example.academicherald.util.JWTUtil;
@@ -61,7 +61,7 @@ public class AuthController {
         }
         final UserDetails userDetails = userDetailsService.loadUserByUsername(authenticationRequest.getUsername());
         final String jwt = jwtUtil.generateToken(userDetails);
-        return ResponseEntity.ok(new AuthneticationResponse(jwt));
+        return ResponseEntity.ok(new AuthenticationResponse(jwt));
     }
 
 }

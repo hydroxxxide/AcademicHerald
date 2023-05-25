@@ -47,18 +47,4 @@ public class PublicationController {
         publicationService.delete(id);
     }
 
-    @PutMapping("/confirm/{publicationId}")
-    public void confirmPublication(@PathVariable Long publicationId){
-        publicationService.confirmPublication(publicationId, true);
-    }
-
-    @PutMapping("/reject/{publicationId}")
-    public void rejectPublication(@PathVariable Long publicationId){
-        publicationService.confirmPublication(publicationId, false);
-    }
-
-    @GetMapping("/rejected/getAll")
-    public List<Publication> showRejectedPublications(){
-        return publicationService.getAllRejected();
-    }
 }
