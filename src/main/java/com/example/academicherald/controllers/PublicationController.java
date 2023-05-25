@@ -19,6 +19,7 @@ public class PublicationController {
         this.mapper = mapper;
     }
 
+
     @PostMapping("/create")
     public PublicationDto create(@RequestBody Publication publication,
                                  @RequestParam Long userId,
@@ -33,7 +34,7 @@ public class PublicationController {
 
     @GetMapping("/get/all")
     public List<PublicationDto> getAll() {
-        return mapper.convertToDTOList(publicationService.getAll());
+        return mapper.convertToDTOList(publicationService.getAllAccepted());
     }
 
     @PutMapping("/update")
@@ -45,4 +46,5 @@ public class PublicationController {
     public void delete(@PathVariable Long id) {
         publicationService.delete(id);
     }
+
 }

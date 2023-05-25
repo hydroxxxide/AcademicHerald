@@ -1,9 +1,10 @@
 package com.example.academicherald.dto;
 
 import com.example.academicherald.enums.UserRole;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
 import lombok.Data;
+
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 
 @Data
 public class UserDto {

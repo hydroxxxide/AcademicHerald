@@ -1,17 +1,17 @@
 
-insert into users (username, email, role)values
-                                      ('Argen', 'argen@mail.com', 2),
-                                      ('Felix', 'felix@mail.com', 3),
-                                      ('Arsen', 'arsen@mail.com', 1),
-                                      ('Azamat', 'azamat@mail.com', 1),
-                                      ('Dasha', 'dasha@mail.com', 1),
-                                      ('Khashem', 'khashem@mail.com', 1),
-                                      ('Adelina', 'adelina@mail.com', 1),
-                                      ('Askat', 'askat@mail.com', 1),
-                                      ('Ruslan', 'ruslan@mail.com', 1),
-                                      ('Atai', 'atai@mail.com', 1),
-                                      ('Aidai', 'aidai@mail.com', 1),
-                                      ('Gulkaiyr', 'gulkaiyr@mail.com', 1);
+insert into users (username, email, role, password)values
+                                      ('Argen', 'argen@mail.com', 'REVIEWER', '123'),
+                                      ('Felix', 'felix@mail.com', 'MENTOR', '123'),
+                                      ('Arsen', 'arsen@mail.com', 'STUDENT', '123'),
+                                      ('Azamat', 'azamat@mail.com', 'STUDENT', '123'),
+                                      ('Dasha', 'dasha@mail.com', 'STUDENT', '123'),
+                                      ('Khashem', 'khashem@mail.com', 'STUDENT', '123'),
+                                      ('Adelina', 'adelina@mail.com', 'STUDENT', '123'),
+                                      ('Askat', 'askat@mail.com', 'STUDENT', '123'),
+                                      ('Ruslan', 'ruslan@mail.com', 'STUDENT', '123'),
+                                      ('Atai', 'atai@mail.com', 'STUDENT', '123'),
+                                      ('Aidai', 'aidai@mail.com', 'STUDENT', '123'),
+                                      ('Gulkaiyr', 'gulkaiyr@mail.com', 'STUDENT', '123');
 
 
 insert into categories (name)values

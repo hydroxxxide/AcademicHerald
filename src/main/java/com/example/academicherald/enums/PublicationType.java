@@ -4,5 +4,6 @@ public enum PublicationType {
     ARTICLE,
     DISCUSSION,
     NEWS,
-    POST
+    POST,
+    EVENT
 }
