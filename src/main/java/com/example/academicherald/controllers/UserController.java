@@ -42,6 +42,26 @@ public class UserController {
     public void delete(@PathVariable Long id) {
         userService.delete(id);
     }
+    @GetMapping("/getAllGuests")
+    public List<UserDto> getAllGuests(){
+        return mapper.convertToDTOList(userService.getAllGuests());
+    }
+    @GetMapping("/getAllStudents")
+    public List<UserDto> getAllStudent(){
+        return mapper.convertToDTOList(userService.getAllStudent());
+    }
+    @GetMapping("/getAllMentors")
+    public List<UserDto> getAllMentors(){
+        return mapper.convertToDTOList(userService.getAllMentors());
+    }
+    @GetMapping("/getAllReviewer")
+    public List<UserDto> getAllReviewer(){
+        return mapper.convertToDTOList(userService.getAllReviewer());
+    }
+    @GetMapping("/getAllManager")
+    public List<UserDto> getAllManager(){
+        return mapper.convertToDTOList(userService.getAllManager());
+    }
 
     @GetMapping("/reset")
     public boolean resetPassword(@RequestParam String email){

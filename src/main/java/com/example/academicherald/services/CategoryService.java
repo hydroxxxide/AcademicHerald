@@ -1,6 +1,7 @@
 package com.example.academicherald.services;
 
 import com.example.academicherald.models.Category;
+import com.example.academicherald.models.Publication;
 import com.example.academicherald.repositories.CategoryRepository;
 import org.springframework.stereotype.Service;
 
@@ -33,10 +34,13 @@ public class CategoryService {
         oldCategory.setPublications(newCategory.getPublications());
         return repository.save(oldCategory);
     }
-
     public void delete(Long id) {
         Category category = getById(id);
         category.setRdt(LocalDateTime.now());
         repository.save(category);
     }
+    public List<Category> getCategoriesByIds(List<Long> categoryIds) {
+        return repository.findAllById(categoryIds);
+    }
+
 }
