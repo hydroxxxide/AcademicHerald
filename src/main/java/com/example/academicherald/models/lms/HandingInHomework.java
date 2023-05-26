@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name = "HandingInHomework")
+@Table(name = "handingInHomework")
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter

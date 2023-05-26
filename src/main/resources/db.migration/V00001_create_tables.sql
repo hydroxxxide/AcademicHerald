@@ -9,7 +9,7 @@ CREATE TABLE IF NOT EXISTS public.categories
     TABLESPACE pg_default;
 
 ALTER TABLE IF EXISTS public.categories
-    OWNER to postgres;
+    OWNER to sfyiluvhqjpfkh;
 
 
 CREATE TABLE IF NOT EXISTS public.categories_publications
@@ -30,7 +30,7 @@ CREATE TABLE IF NOT EXISTS public.categories_publications
     TABLESPACE pg_default;
 
 ALTER TABLE IF EXISTS public.categories_publications
-    OWNER to postgres;
+    OWNER to sfyiluvhqjpfkh;
 
 
 CREATE TABLE IF NOT EXISTS public.publications
@@ -57,7 +57,7 @@ CREATE TABLE IF NOT EXISTS public.publications
     TABLESPACE pg_default;
 
 ALTER TABLE IF EXISTS public.publications
-    OWNER to postgres;
+    OWNER to sfyiluvhqjpfkh;
 
 
 CREATE TABLE IF NOT EXISTS public.users
@@ -72,7 +72,7 @@ CREATE TABLE IF NOT EXISTS public.users
     TABLESPACE pg_default;
 
 ALTER TABLE IF EXISTS public.users
-    OWNER to postgres;
+    OWNER to sfyiluvhqjpfkh;
 
 CREATE TABLE IF NOT EXISTS public.users_publications
 (
@@ -92,4 +92,4 @@ CREATE TABLE IF NOT EXISTS public.users_publications
     TABLESPACE pg_default;
 
 ALTER TABLE IF EXISTS public.users_publications
-    OWNER to postgres;
+    OWNER to sfyiluvhqjpfkh;

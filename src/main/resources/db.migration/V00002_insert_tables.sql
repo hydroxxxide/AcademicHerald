@@ -4,6 +4,7 @@
                                                  ('Arsen', 'arsen@mail.com', 'STUDENT'),
                                                  ('Azamat', 'azamat@mail.com', 'STUDENT'),
                                                  ('Dasha', 'dasha@mail.com', 'STUDENT'),
+
                                                  ('Khashem', 'khashem@mail.com', 'STUDENT'),
                                                  ('Adelina', 'adelina@mail.com', 'STUDENT'),
                                                  ('Askat', 'askat@mail.com', 'STUDENT'),
