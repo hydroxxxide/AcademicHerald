@@ -1,6 +1,9 @@
 package com.example.academicherald.models;
 
 import com.example.academicherald.enums.UserRole;
+import com.example.academicherald.models.lms.Chapter;
+import com.example.academicherald.models.lms.Course;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -25,4 +28,9 @@ public class User {
     private UserRole role;
     @OneToMany
     private List<Publication> publications;
+    @ManyToOne
+    @JsonBackReference
+    private Course courses;
+
+
 }

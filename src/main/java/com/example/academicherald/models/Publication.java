@@ -1,6 +1,8 @@
 package com.example.academicherald.models;
 
 import com.example.academicherald.enums.PublicationType;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import lombok.AllArgsConstructor;
@@ -31,10 +33,12 @@ public class Publication {
     @ManyToMany
     @JoinColumn(name = "category")
 //    @Size(max = 1)
+    @JsonIgnore
     private List<Category> category;
 
     @ManyToOne
     @JoinColumn(name = "author")
+    @JsonBackReference
     private User author;
 
     @Enumerated(EnumType.STRING)
@@ -46,5 +50,6 @@ public class Publication {
             joinColumns = @JoinColumn(name = "publication_id"),
             inverseJoinColumns = @JoinColumn(name = "tag_id")
     )
+    @JsonIgnore
     private List<Tag> tags;
 }

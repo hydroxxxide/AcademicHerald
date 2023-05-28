@@ -7,27 +7,25 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
+import java.util.List;
+
 @Entity
-@Table(name = "lecture")
+@Table(name = "exercise")
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
-public class Lectures {
+public class Exercise {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @ManyToOne
     @JsonIgnore
     private Chapter chapter;
-    private String lectureTheme;
+    private LocalDateTime deadline;
+    private String name;
     private String text;
-
-    public void setChapter(Chapter chapter) {
-        this.chapter = chapter;
-        if (chapter != null) {
-            chapter.getLectures().add(this); // Добавляем текущую лекцию в список лекций главы
-        }
-    }
-
+    @OneToMany
+    private List<SubmittedExercise> submittedExerciseList;
 }

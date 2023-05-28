@@ -39,6 +39,19 @@ public class PublicationService {
         }
 
         publication.setAuthor(author);
+        if (author != null) {
+            author.getPublications().add(publication); // добавляем публикацию в список публикаций пользователя
+        }
+        if (categories != null) {
+            for (Category category : categories) {
+                category.getPublications().add(publication); // добавляем публикацию в список публикаций категории
+            }
+        }
+        if (tags != null) {
+            for (Tag tag : tags) {
+                tag.getPublications().add(publication); // добавляем публикацию в список публикаций тега
+            }
+        }
         publication.setCategory(categories);
         publication.setTags(tags);
 

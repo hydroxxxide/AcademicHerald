@@ -2,6 +2,7 @@ package com.example.academicherald.repositories;
 
 import com.example.academicherald.enums.UserRole;
 import com.example.academicherald.models.User;
+import com.example.academicherald.models.lms.Course;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -13,4 +14,8 @@ import java.util.List;
 public interface UserRepository extends JpaRepository<User, Long> {
     @Query("SELECT u FROM User u WHERE u.role = :role")
     List<User> findAllByRole(@Param("role") UserRole role);
+
+
+    User findByIdAndRole(Long id, UserRole role);
+
 }

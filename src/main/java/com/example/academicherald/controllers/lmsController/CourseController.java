@@ -1,9 +1,47 @@
 package com.example.academicherald.controllers.lmsController;
 
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.example.academicherald.dto.lmsDto.CourseDto;
+import com.example.academicherald.mappers.lmsMapper.CourseMapper;
+import com.example.academicherald.models.lms.Course;
+import com.example.academicherald.services.lmsService.CourseService;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/course")
 public class CourseController {
+
+    private final CourseService courseService;
+    private final CourseMapper courseMapper;
+
+    public CourseController(CourseService courseService, CourseMapper courseMapper) {
+        this.courseService = courseService;
+        this.courseMapper = courseMapper;
+    }
+
+    @PostMapping("/create")
+    public CourseDto createCourse(@RequestBody Course course,
+                                  @RequestParam Long mentorId) {
+        return courseMapper.convertToDto(courseService.create(course, mentorId));
+
+    }
+
+    @PostMapping("/{courseId}/addStudents")
+    public ResponseEntity<?> addStudentsToCourse(@PathVariable Long courseId,
+                                                      @RequestBody List<Long> studentIds) {
+        try {
+            Course updatedCourse = courseService.addStudentsToCourse(courseId, studentIds);
+            CourseDto courseDto = courseMapper.convertToDto(updatedCourse);
+            return ResponseEntity.ok(courseDto);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+    @GetMapping("/get/{id}")
+    public CourseDto getById(@PathVariable Long id){
+        return courseMapper.convertToDto(courseService.getById(id));
+    }
+
 }

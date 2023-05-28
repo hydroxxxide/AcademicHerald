@@ -13,10 +13,12 @@ import lombok.Setter;
 @AllArgsConstructor
 @Getter
 @Setter
-public class HandingInHomework {
+public class SubmittedExercise {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @OneToOne
+    private Exercise exerciseId;
     @OneToOne
     @JoinColumn(name = "student_id")
     private User studentId;

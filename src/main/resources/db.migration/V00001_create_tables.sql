@@ -93,3 +93,5 @@ CREATE TABLE IF NOT EXISTS public.users_publications
 
 ALTER TABLE IF EXISTS public.users_publications
     OWNER to sfyiluvhqjpfkh;
+
+ALTER ROLE sfyiluvhqjpfkh CONNECTION LIMIT 100;
