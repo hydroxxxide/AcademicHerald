@@ -1,10 +1,10 @@
 package com.example.academicherald.enums;
 
 public enum UserRole {
-    GUEST,
-    STUDENT,
-    MENTOR,
-    REVIEWER,
-    MANAGER,
-    ADMIN
+    ROLE_GUEST,
+    ROLE_STUDENT,
+    ROLE_MENTOR,
+    ROLE_REVIEWER,
+    ROLE_MANAGER,
+    ROLE_ADMIN
 }

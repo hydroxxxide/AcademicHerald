@@ -33,10 +33,13 @@ public class CategoryService {
         oldCategory.setPublications(newCategory.getPublications());
         return repository.save(oldCategory);
     }
-
     public void delete(Long id) {
         Category category = getById(id);
         category.setRdt(LocalDateTime.now());
         repository.save(category);
     }
+    public List<Category> getCategoriesByIds(List<Long> categoryIds) {
+        return repository.findAllById(categoryIds);
+    }
+
 }

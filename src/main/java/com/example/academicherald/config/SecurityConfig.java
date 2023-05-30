@@ -14,16 +14,19 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+
 @EnableWebSecurity
 @Configuration
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private final DetailsUserService detailsUserService;
     private final JwtRequestFilter jwtRequestFilter;
+    private final OAuth2AuthenticationSuccessHandler oAuth2AuthenticationSuccessHandler;
 
     @Autowired
-    public SecurityConfig(DetailsUserService detailsUserService, JwtRequestFilter jwtRequestFilter) {
+    public SecurityConfig(DetailsUserService detailsUserService, JwtRequestFilter jwtRequestFilter, OAuth2AuthenticationSuccessHandler oAuth2AuthenticationSuccessHandler) {
         this.detailsUserService = detailsUserService;
         this.jwtRequestFilter = jwtRequestFilter;
+        this.oAuth2AuthenticationSuccessHandler = oAuth2AuthenticationSuccessHandler;
     }
 
     @Bean
@@ -47,8 +50,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .authorizeRequests()
                 .antMatchers("/auth/**").permitAll()
-                .antMatchers("/admin/**").hasRole( "ADMIN")
-                .antMatchers("/user/**").hasRole("USER")
+                .antMatchers("/admin/**").hasRole("ADMIN")
+                .antMatchers("/user/**").permitAll()
+                .antMatchers("/student/**").hasRole("STUDENT")
+                .and()
+                .oauth2Login()
+                .successHandler(oAuth2AuthenticationSuccessHandler)
                 .and()
                 .csrf().disable();
 

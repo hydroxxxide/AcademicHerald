@@ -11,13 +11,13 @@ public class HelloController {
         return "Hello";
     }
 
-    @GetMapping("/user")
-    public String user() {
-        return "User";
+    @GetMapping("/success")
+    public String success() {
+        return "success";
     }
 
-    @GetMapping("/admin")
-    public String admin() {
-        return "Admin";
+    @GetMapping("/fail")
+    public String fail() {
+        return "fail";
     }
 }

@@ -20,6 +20,10 @@ public class PublicationMapper {
         return mapper.map(publication, PublicationDto.class);
     }
 
+    public Publication convertToEntity(PublicationDto publicationDto) {
+        return mapper.map(publicationDto, Publication.class);
+    }
+
     public List<PublicationDto> convertToDTOList(List<Publication> publications) {
         List<PublicationDto> publicationDtoList = new ArrayList<>();
         for (Publication p : publications) {
@@ -27,4 +31,5 @@ public class PublicationMapper {
         }
         return publicationDtoList;
     }
+
 }
