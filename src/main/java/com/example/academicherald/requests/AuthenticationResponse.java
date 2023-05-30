@@ -1,4 +1,4 @@
-package com.example.academicherald.authenticationRequest;
+package com.example.academicherald.requests;
 
 public class AuthenticationResponse {
     private final String jwt;

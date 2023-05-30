@@ -1,6 +1,5 @@
 package com.example.academicherald.services;
 
-import com.example.academicherald.enums.UserRole;
 import com.example.academicherald.models.User;
 import com.example.academicherald.repositories.UserRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -50,21 +49,6 @@ public class UserService {
         User user = getById(id);
         user.setRdt(LocalDateTime.now());
         userRepository.save(user);
-    }
-    public List<User> getAllGuests() {
-        return userRepository.findAllByRole(UserRole.GUEST);
-    }
-    public List<User> getAllStudent(){
-        return userRepository.findAllByRole(UserRole.STUDENT);
-    }
-    public List<User> getAllMentors() {
-        return userRepository.findAllByRole(UserRole.MENTOR);
-    }
-    public List<User> getAllReviewer(){
-        return userRepository.findAllByRole(UserRole.REVIEWER);
-    }
-    public List<User> getAllManager(){
-        return userRepository.findAllByRole(UserRole.MANAGER);
     }
 
 

@@ -2,12 +2,12 @@ package com.example.academicherald.models.lms;
 
 import com.example.academicherald.enums.CourseType;
 import com.example.academicherald.models.User;
-import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import javax.persistence.*;
 import java.util.List;
 
 @Entity

@@ -1,6 +1,7 @@
 package com.example.academicherald.controllers;
 
-import com.example.academicherald.models.Publication;
+import com.example.academicherald.dto.PublicationDto;
+import com.example.academicherald.mappers.PublicationMapper;
 import com.example.academicherald.services.PublicationService;
 import org.springframework.web.bind.annotation.*;
 
@@ -10,9 +11,11 @@ import java.util.List;
 @RequestMapping("/admin")
 public class AdminController {
     private final PublicationService publicationService;
+    private final PublicationMapper mapper;
 
-    public AdminController(PublicationService publicationService) {
+    public AdminController(PublicationService publicationService, PublicationMapper mapper) {
         this.publicationService = publicationService;
+        this.mapper = mapper;
     }
 
     @PutMapping("/confirm/{publicationId}")
@@ -26,8 +29,8 @@ public class AdminController {
     }
 
     @GetMapping("/rejected/getAll")
-    public List<Publication> showRejectedPublications(){
-        return publicationService.getAllRejected();
+    public List<PublicationDto> getAllRejectedPublications(){
+        return mapper.convertToDTOList(publicationService.getAllRejected());
     }
 
 }

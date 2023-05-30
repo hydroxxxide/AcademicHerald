@@ -9,11 +9,15 @@ import java.util.Collection;
 import java.util.Collections;
 
 public class DetailsUser implements UserDetails {
-    private final User user;
+    private User user;
 
     public DetailsUser(User user) {
         this.user = user;
     }
+
+    public DetailsUser() {
+    }
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return Collections.singletonList(new SimpleGrantedAuthority(String.valueOf(this.user.getRole())));

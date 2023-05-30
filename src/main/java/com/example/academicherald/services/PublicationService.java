@@ -1,7 +1,5 @@
 package com.example.academicherald.services;
 
-import com.example.academicherald.mappers.CategoryMapper;
-import com.example.academicherald.mappers.UserMapper;
 import com.example.academicherald.models.Category;
 import com.example.academicherald.models.Publication;
 import com.example.academicherald.models.User;
@@ -15,17 +13,12 @@ import java.util.List;
 public class PublicationService {
     private final PublicationRepository publicationRepository;
     private final UserService userService;
-    private final UserMapper userMapper;
     private final CategoryService categoryService;
-    private final CategoryMapper categoryMapper;
 
-    public PublicationService(PublicationRepository publicationRepository, UserService userService, UserMapper userMapper, CategoryService categoryService, CategoryMapper categoryMapper) {
+    public PublicationService(PublicationRepository publicationRepository, UserService userService, CategoryService categoryService) {
         this.publicationRepository = publicationRepository;
         this.userService = userService;
-        this.userMapper = userMapper;
-
         this.categoryService = categoryService;
-        this.categoryMapper = categoryMapper;
     }
 
     public Publication create(Publication publication, Long userId, Long categoryId) {
@@ -68,9 +61,9 @@ public class PublicationService {
     }
 
     public void confirmPublication(Long id, Boolean res){
-        Publication publication = getById(id);
+        Publication publication = publicationRepository.findById(id).orElse(null);
         publication.setPass(res);
-        update(publication);
+        publicationRepository.save(publication);
     }
 
 }

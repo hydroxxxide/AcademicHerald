@@ -1,7 +1,6 @@
 package com.example.academicherald.services;
 
 import com.example.academicherald.models.Category;
-import com.example.academicherald.models.Publication;
 import com.example.academicherald.repositories.CategoryRepository;
 import org.springframework.stereotype.Service;
 

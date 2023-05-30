@@ -12,7 +12,7 @@ import java.util.List;
 @RequestMapping("/comment")
 public class CommentController {
     private final CommentService commentService;
-    private CommentMapper commentMapper;
+    private final CommentMapper commentMapper;
 
     public CommentController(CommentService commentService, CommentMapper commentMapper) {
         this.commentService = commentService;
@@ -31,13 +31,13 @@ public class CommentController {
         return commentMapper.convertToDto(commentService.getCommentById(id));
     }
 
-    @GetMapping("/get")
-    public List<CommentDto> get(@RequestParam Long publicationId) {
+    @GetMapping("/getByPublication/{publicationId}")
+    public List<CommentDto> getByPublicationId(@PathVariable Long publicationId) {
         return commentMapper.convertToDTOList(commentService.allCommentsByIdPublic(publicationId));
     }
 
-    @GetMapping("/getByUser")
-    public List<CommentDto> getCommentByUser(@RequestParam Long userId) {
+    @GetMapping("/getByUser/{userId}")
+    public List<CommentDto> getCommentByUserId(@PathVariable Long userId) {
         return commentMapper.convertToDTOList(commentService.allCommentsByUser(userId));
     }
 
