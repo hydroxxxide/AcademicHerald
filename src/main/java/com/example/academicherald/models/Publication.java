@@ -11,6 +11,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -24,22 +26,36 @@ public class Publication {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @NotNull
     private String title;
+
+    @NotNull
     private String subtitle;
+
+    @NotNull
     private String text;
+
+    @NotNull
     @DateTimeFormat(pattern = "dd-MM-yyyy HH:mm:ss")
     private LocalDateTime dateOfCreation = LocalDateTime.now();
 
+    @ManyToOne
+    @NotNull
     @ManyToOne
     @JoinColumn(name = "category")
 //    @Size(max = 1)
     @JsonIgnore
     private Category category;
+    private Category category;
+
+    @NotNull
     @ManyToOne
     @JoinColumn(name = "author")
     @JsonBackReference
     private User author;
 
+    @NotNull
     @Enumerated(EnumType.STRING)
     private PublicationType type;
 
@@ -51,4 +67,9 @@ public class Publication {
     )
     @JsonIgnore
     private List<Tag> tags;
+
+    private Boolean pass = false;
+
+    private LocalDateTime rdt;
+
 }

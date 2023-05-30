@@ -1,12 +1,16 @@
 package com.example.academicherald.models;
 
-import javax.persistence.*;
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "comments")
@@ -23,4 +27,6 @@ public class Comment {
     @JoinColumn(name = "publication_id")
 
     private Publication publication;
+
+    private LocalDateTime rdt;
 }

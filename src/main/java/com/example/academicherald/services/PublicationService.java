@@ -54,6 +54,7 @@ public class PublicationService {
         return publicationRepository.save(publication);
     }
 
+
     //Вытаскиваем список публикаций по id тега
     public List<Publication> getPublicationsByTagId(Long tagId) {
         return publicationRepository.findByTagsId(tagId);
@@ -73,11 +74,15 @@ public class PublicationService {
     }
 
     public Publication getById(Long id) {
-        return publicationRepository.findById(id).orElse(null);
+        return publicationRepository.findByIdAndPassAndRdtIsNull(id, true);
     }
 
-    public List<Publication> getAll() {
-        return publicationRepository.findAll();
+    public List<Publication> getAllAccepted() {
+        return publicationRepository.getAllByPassAndRdtIsNull(true);
+    }
+
+    public List<Publication> getAllRejected() {
+        return publicationRepository.getAllByPassAndRdtIsNull(false);
     }
 
     public Publication update(Publication newPublication) {
@@ -92,8 +97,15 @@ public class PublicationService {
         return publicationRepository.save(oldPublication);
     }
     public void delete(Long id) {
-        publicationRepository.deleteById(id);
+        Publication publication = getById(id);
+        publication.setRdt(LocalDateTime.now());
+        publicationRepository.save(publication);
     }
 
+    public void confirmPublication(Long id, Boolean res){
+        Publication publication = publicationRepository.findById(id).orElse(null);
+        publication.setPass(res);
+        publicationRepository.save(publication);
+    }
 
 }

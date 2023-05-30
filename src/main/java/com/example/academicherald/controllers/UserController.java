@@ -13,7 +13,6 @@ import java.util.List;
 public class UserController {
     private final UserService userService;
     private final UserMapper mapper;
-
     public UserController(UserService userService, UserMapper mapper) {
         this.userService = userService;
         this.mapper = mapper;
@@ -45,25 +44,15 @@ public class UserController {
     public void delete(@PathVariable Long id) {
         userService.delete(id);
     }
-    @GetMapping("/getAllGuests")
-    public List<UserDto> getAllGuests(){
-        return mapper.convertToDTOList(userService.getAllGuests());
+
+    @GetMapping("/reset")
+    public boolean resetPassword(@RequestParam String email){
+        return userService.resetPassword(email);
     }
-    @GetMapping("/getAllStudents")
-    public List<UserDto> getAllStudent(){
-        return mapper.convertToDTOList(userService.getAllStudent());
-    }
-    @GetMapping("/getAllMentors")
-    public List<UserDto> getAllMentors(){
-        return mapper.convertToDTOList(userService.getAllMentors());
-    }
-    @GetMapping("/getAllReviewer")
-    public List<UserDto> getAllReviewer(){
-        return mapper.convertToDTOList(userService.getAllReviewer());
-    }
-    @GetMapping("/getAllManager")
-    public List<UserDto> getAllManager(){
-        return mapper.convertToDTOList(userService.getAllManager());
+
+    @PostMapping("/reset/{resetToken}")
+    public boolean saveNewPassword(@PathVariable String resetToken, @RequestParam String password) {
+        return userService.saveNewPassword(resetToken, password);
     }
 
 }

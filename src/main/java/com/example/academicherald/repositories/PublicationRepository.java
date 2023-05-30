@@ -1,6 +1,6 @@
 package com.example.academicherald.repositories;
 
-import com.example.academicherald.models.*;
+import com.example.academicherald.models.Publication;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -8,9 +8,7 @@ import java.util.List;
 
 @Repository
 public interface PublicationRepository extends JpaRepository<Publication, Long> {
-    List<Publication> findByTagsId(Long tagId);
+    List<Publication> getAllByPassAndRdtIsNull(Boolean pass);
 
-    List<Publication> findByCategory(Category category);
-
-    List<Publication> findByAuthor(User author);
+    Publication findByIdAndPassAndRdtIsNull(Long id, Boolean pass);
 }

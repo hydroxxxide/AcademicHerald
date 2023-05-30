@@ -20,6 +20,9 @@ public class CommentMapper {
     public CommentDto convertToDto(Comment comment) {
         return mapper.map(comment, CommentDto.class);
     }
+    public Comment convertToEntity(CommentDto commentDto){
+        return mapper.map(commentDto, Comment.class);
+    }
     public List<CommentDto> convertToDTOList(List<Comment> comments) {
         List<CommentDto> commentDtoList = new ArrayList<>();
         for (Comment comment : comments) {

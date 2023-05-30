@@ -1,13 +1,12 @@
 package com.example.academicherald.controllers;
 
 import com.example.academicherald.dto.PublicationDto;
+import com.example.academicherald.enums.PublicationType;
 import com.example.academicherald.mappers.PublicationMapper;
-import com.example.academicherald.models.Category;
 import com.example.academicherald.models.Publication;
-import com.example.academicherald.services.CategoryService;
+import com.example.academicherald.services.EmailService;
 import com.example.academicherald.services.PublicationService;
 import org.modelmapper.ModelMapper;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,17 +16,19 @@ import java.util.stream.Collectors;
 @RequestMapping("/publication")
 public class PublicationController {
     private final PublicationService publicationService;
-    private final CategoryService categoryService;
     private final PublicationMapper mapper;
-    private final ModelMapper modelMapper;
-    ;
+    private final EmailService emailService;
+    ;    private final ModelMapper modelMapper;
 
-    public PublicationController(PublicationService publicationService, CategoryService categoryService, PublicationMapper mapper, ModelMapper modelMapper) {
+
+    public PublicationController(PublicationService publicationService, PublicationMapper mapper, EmailService emailService, ModelMapper modelMapper) {
         this.publicationService = publicationService;
-        this.categoryService = categoryService;
         this.mapper = mapper;
+        this.emailService = emailService;
         this.modelMapper = modelMapper;
+
     }
+
 
     @PostMapping("/create")
     public PublicationDto createPublication(
@@ -35,10 +36,17 @@ public class PublicationController {
             @RequestParam Long userId,
             @RequestParam Long categoryId,
             @RequestParam Long[] tagIds
+
     ) {
         Publication publication = mapper.convertToEntity(publicationDto);
         Publication createdPublication = publicationService.createPublication(publication, userId, categoryId, tagIds);
-        return  mapper.convertToDto(createdPublication);
+        if (createdPublication.getType().equals(PublicationType.NEWS)){
+            String email = createdPublication.getAuthor().getEmail();
+            String subject = "Новая новость";
+            String text = "Добрый день, у нас есть новая новость!";
+            emailService.sendSimpleMessage(email, subject, text);
+        }
+        return mapper.convertToDto(createdPublication);
     }
 
     @GetMapping("/get/{id}")
@@ -48,12 +56,17 @@ public class PublicationController {
 
     @GetMapping("/get/all")
     public List<PublicationDto> getAll() {
-        return mapper.convertToDTOList(publicationService.getAll());
+        return mapper.convertToDTOList(publicationService.getAllAccepted());
     }
 
     @PutMapping("/update")
     public PublicationDto update(@RequestBody Publication publication) {
         return mapper.convertToDto(publicationService.update(publication));
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public void delete(@PathVariable Long id) {
+        publicationService.delete(id);
     }
     //Вытаскиваем список публикаций по id тега
     @GetMapping("/listByTag/{tagId}")
@@ -77,6 +90,7 @@ public class PublicationController {
         List<Publication> publications = publicationService.getPublicationsByAuthorId(authorId);
         return mapper.convertToDTOList(publications);
     }
+
     @DeleteMapping("/delete/{id}")
     public void delete(@PathVariable Long id) {
         publicationService.delete(id);

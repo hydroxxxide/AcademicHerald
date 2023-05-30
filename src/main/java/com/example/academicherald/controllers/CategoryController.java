@@ -37,8 +37,8 @@ public class CategoryController {
     }
 
     @PutMapping("/update")
-    public CategoryDto update(@RequestBody Category category) {
-        return mapper.convertToDto(categoryService.update(category));
+    public CategoryDto update(@RequestBody CategoryDto categoryDto) {
+        return mapper.convertToDto(categoryService.update(mapper.convertToEntity(categoryDto)));
     }
 
     @DeleteMapping("/delete/{id}")

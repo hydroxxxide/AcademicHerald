@@ -12,6 +12,7 @@ import lombok.Setter;
 import org.hibernate.annotations.Where;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -34,7 +35,6 @@ public class Course {
     @JsonManagedReference
     private User mentor;
     @OneToMany
-
     private List<User> students;
     @OneToMany
     @JsonIgnore
