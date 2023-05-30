@@ -21,8 +21,10 @@ public class TagController {
     }
 
     @PostMapping("/create")
-    public TagDto create(@RequestBody Tag tag){
-        return tagMapper.convertToDTO(tagService.create(tag));
+    public TagDto create(@RequestBody TagDto tagDto){
+        Tag tag = tagMapper.convertToEntity(tagDto);
+        Tag createdDto = tagService.create(tag);
+        return tagMapper.convertToDTO(createdDto);
     }
     @GetMapping("/getById/{id}")
     public TagDto getById(@PathVariable Long id){

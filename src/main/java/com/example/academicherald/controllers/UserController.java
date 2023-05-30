@@ -20,8 +20,10 @@ public class UserController {
     }
 
     @PostMapping("/create")
-    public UserDto create(@RequestBody User user) {
-        return mapper.convertToDTO(userService.create(user));
+    public UserDto create(@RequestBody UserDto userDto) {
+        User user = mapper.convertToEntity(userDto);
+        User createdUser = userService.create(user);
+        return mapper.convertToDTO(createdUser);
     }
 
     @GetMapping("/get/{id}")

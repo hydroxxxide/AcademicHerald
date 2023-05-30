@@ -1,7 +1,8 @@
 package com.example.academicherald.models.lms;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import jakarta.persistence.*;
+import javax.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -27,5 +28,13 @@ public class Exercise {
     private String name;
     private String text;
     @OneToMany
+    @JsonBackReference
     private List<SubmittedExercise> submittedExerciseList;
+
+    public void setChapter(Chapter chapter) {
+        this.chapter = chapter;
+        if (chapter != null) {
+            chapter.getExercises().add(this);
+        }
+    }
 }

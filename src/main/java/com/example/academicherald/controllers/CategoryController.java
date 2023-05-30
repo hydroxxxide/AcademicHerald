@@ -20,8 +20,10 @@ public class CategoryController {
     }
 
     @PostMapping("/create")
-    public CategoryDto create(@RequestBody Category category) {
-        return mapper.convertToDto(categoryService.create(category));
+    public CategoryDto create(@RequestBody CategoryDto categoryDto) {
+        Category category = mapper.convertToEntity(categoryDto);
+        Category createdCategory = categoryService.create(category);
+        return mapper.convertToDto(createdCategory);
     }
 
     @GetMapping("/get/{id}")

@@ -1,7 +1,7 @@
 package com.example.academicherald.models.lms;
 
 import com.example.academicherald.models.User;
-import jakarta.persistence.*;
+import javax.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -18,6 +18,7 @@ public class SubmittedExercise {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @OneToOne
+    @JoinColumn(name = "exercise_id")
     private Exercise exerciseId;
     @OneToOne
     @JoinColumn(name = "student_id")

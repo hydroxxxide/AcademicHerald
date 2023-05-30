@@ -2,8 +2,8 @@ package com.example.academicherald.dto;
 
 import com.example.academicherald.enums.UserRole;
 import com.example.academicherald.models.lms.Course;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import lombok.Data;
 
 @Data

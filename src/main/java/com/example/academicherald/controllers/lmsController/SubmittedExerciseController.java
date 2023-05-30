@@ -5,5 +5,5 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/handingInHomework")
-public class HandingInHomeworkController {
+public class SubmittedExerciseController {
 }

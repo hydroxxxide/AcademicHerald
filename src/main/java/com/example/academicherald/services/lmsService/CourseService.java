@@ -8,7 +8,6 @@ import com.example.academicherald.repositories.lmsRepo.CourseRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -31,7 +30,7 @@ public class CourseService {
         Course course = courseRepository.findById(courseId)
                 .orElseThrow(() -> new IllegalArgumentException("Курс с указанным ID не найден"));
 
-        List<User> studentsId = userRepository.findAllById(studentIds);
+        List<User> studentsId = userRepository.findAllByIdAndRole(studentIds, UserRole.STUDENT);
         if (studentsId.isEmpty()) {
             throw new IllegalArgumentException("Нет студентов с указанными ID");
         }

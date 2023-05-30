@@ -30,17 +30,15 @@ public class PublicationController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<PublicationDto> createPublication(
+    public PublicationDto createPublication(
             @RequestBody PublicationDto publicationDto,
             @RequestParam Long userId,
-            @RequestParam List<Long> categoryIds,
+            @RequestParam Long categoryId,
             @RequestParam Long[] tagIds
     ) {
-        Publication publication = modelMapper.map(publicationDto, Publication.class);
-        List<Category> categories = categoryService.getCategoriesByIds(categoryIds);
-        Publication createdPublication = publicationService.createPublication(publication, userId, categories, tagIds);
-        PublicationDto createdPublicationDto = modelMapper.map(createdPublication, PublicationDto.class);
-        return ResponseEntity.ok(createdPublicationDto);
+        Publication publication = mapper.convertToEntity(publicationDto);
+        Publication createdPublication = publicationService.createPublication(publication, userId, categoryId, tagIds);
+        return  mapper.convertToDto(createdPublication);
     }
 
     @GetMapping("/get/{id}")

@@ -6,6 +6,6 @@ import org.springframework.stereotype.Component;
 
 @Data
 public class LecturesDto {
-    private Chapter chapter;
-
+    private String lectureTheme;
+    private String text;
 }

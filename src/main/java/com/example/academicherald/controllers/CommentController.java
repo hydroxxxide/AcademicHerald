@@ -20,10 +20,12 @@ public class CommentController {
     }
 
     @PostMapping("/create")
-    public CommentDto create(@RequestBody Comment comment,
+    public CommentDto create(@RequestBody CommentDto commentDto,
                              @RequestParam Long userId,
                              @RequestParam Long publicationId) {
-        return commentMapper.convertToDto(commentService.create(comment, userId, publicationId));
+        Comment comment = commentMapper.convertToEntity(commentDto);
+        Comment createdComment = commentService.create(comment, userId, publicationId);
+        return commentMapper.convertToDto(createdComment);
     }
 
     @GetMapping("/getById/{id}")

@@ -1,7 +1,9 @@
 package com.example.academicherald.mappers;
 
 import com.example.academicherald.dto.CategoryDto;
+import com.example.academicherald.dto.lmsDto.ExerciseDto;
 import com.example.academicherald.models.Category;
+import com.example.academicherald.models.lms.Exercise;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 
@@ -23,7 +25,9 @@ public class CategoryMapper {
         }
         return categoryDtoList;
     }
-
+    public Category convertToEntity(CategoryDto categoryDto) {
+        return mapper.map(categoryDto, Category.class);
+    }
     public CategoryDto convertToDto(Category category) {
         return mapper.map(category, CategoryDto.class);
     }

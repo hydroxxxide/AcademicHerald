@@ -2,8 +2,10 @@ package com.example.academicherald.mappers.lmsMapper;
 
 import com.example.academicherald.dto.PublicationDto;
 import com.example.academicherald.dto.lmsDto.CourseDto;
+import com.example.academicherald.dto.lmsDto.SubmittedExerciseDto;
 import com.example.academicherald.models.Publication;
 import com.example.academicherald.models.lms.Course;
+import com.example.academicherald.models.lms.SubmittedExercise;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 
@@ -29,4 +31,8 @@ public class CourseMapper {
         }
         return courseDtoList;
     }
+    public Course convertToEntity(CourseDto courseDto) {
+        return mapper.map(courseDto, Course.class);
+    }
+
 }

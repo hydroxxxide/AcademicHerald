@@ -4,7 +4,7 @@ import com.example.academicherald.enums.UserRole;
 import com.example.academicherald.models.lms.Chapter;
 import com.example.academicherald.models.lms.Course;
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import jakarta.persistence.*;
+import javax.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

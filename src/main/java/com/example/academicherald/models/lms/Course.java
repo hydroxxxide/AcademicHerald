@@ -4,7 +4,7 @@ import com.example.academicherald.enums.CourseType;
 import com.example.academicherald.models.User;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import jakarta.persistence.*;
+import javax.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -34,6 +34,7 @@ public class Course {
     @JsonManagedReference
     private User mentor;
     @OneToMany
+
     private List<User> students;
     @OneToMany
     @JsonIgnore

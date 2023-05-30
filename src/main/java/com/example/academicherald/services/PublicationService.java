@@ -28,9 +28,10 @@ public class PublicationService {
         this.userRepository = userRepository;
     }
 
-    public Publication createPublication(Publication publication, Long userId, List<Category> categories, Long[] tagIds) {
+    public Publication createPublication(Publication publication, Long userId, Long categories, Long[] tagIds) {
         publication.setDateOfCreation(LocalDateTime.now());
         User author = userService.getById(userId);
+        Category category = categoryService.getById(categories);
 
         List<Tag> tags = new ArrayList<>();
         for (Long tagId : tagIds) {
@@ -42,22 +43,16 @@ public class PublicationService {
         if (author != null) {
             author.getPublications().add(publication); // добавляем публикацию в список публикаций пользователя
         }
-        if (categories != null) {
-            for (Category category : categories) {
-                category.getPublications().add(publication); // добавляем публикацию в список публикаций категории
-            }
-        }
         if (tags != null) {
             for (Tag tag : tags) {
                 tag.getPublications().add(publication); // добавляем публикацию в список публикаций тега
             }
         }
-        publication.setCategory(categories);
+        publication.setCategory(category);
         publication.setTags(tags);
 
         return publicationRepository.save(publication);
     }
-
 
     //Вытаскиваем список публикаций по id тега
     public List<Publication> getPublicationsByTagId(Long tagId) {

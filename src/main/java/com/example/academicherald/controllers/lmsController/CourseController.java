@@ -22,10 +22,11 @@ public class CourseController {
     }
 
     @PostMapping("/create")
-    public CourseDto createCourse(@RequestBody Course course,
+    public CourseDto createCourse(@RequestBody CourseDto courseDto,
                                   @RequestParam Long mentorId) {
-        return courseMapper.convertToDto(courseService.create(course, mentorId));
-
+        Course course = courseMapper.convertToEntity(courseDto);
+        Course createdCourse = courseService.create(course, mentorId);
+        return courseMapper.convertToDto(createdCourse);
     }
 
     @PostMapping("/{courseId}/addStudents")

@@ -1,7 +1,7 @@
 package com.example.academicherald.models.lms;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import jakarta.persistence.*;
+import javax.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -21,7 +21,7 @@ public class Chapter {
     private Long id;
     private String name;
     @ManyToOne
-    @JsonIgnore
+
     private Course course;
     @OneToMany
 //    @JsonIgnore

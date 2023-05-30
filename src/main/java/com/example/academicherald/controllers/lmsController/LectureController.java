@@ -26,10 +26,11 @@ public class LectureController {
         this.courseService = courseService;
     }
     @PostMapping("/create")
-    public LecturesDto createLecture(@RequestBody Lectures lectures,
+    public LecturesDto createLecture(@RequestBody LecturesDto lecturesDto,
                                      @RequestParam Long chapterId) {
-        return lecturesMapper.convertToDto(lecturesService.createLecture(lectures, chapterId));
-
+        Lectures lectures = lecturesMapper.convertToEntity(lecturesDto);
+        Lectures createdLectures = lecturesService.createLecture(lectures, chapterId);
+        return lecturesMapper.convertToDto(createdLectures);
     }
     @GetMapping("/get/{id}")
     public LecturesDto getById(@PathVariable Long id) {
