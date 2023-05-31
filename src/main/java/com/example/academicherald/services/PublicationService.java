@@ -1,5 +1,6 @@
 package com.example.academicherald.services;
 
+import com.example.academicherald.enums.PublicationType;
 import com.example.academicherald.models.*;
 import com.example.academicherald.repositories.PublicationRepository;
 import com.example.academicherald.repositories.UserRepository;
@@ -17,21 +18,23 @@ public class PublicationService {
     private final CategoryService categoryService;
     private final TagService tagService;
     private final UserRepository userRepository;
+    private final EmailService emailService;
 
 
-    public PublicationService(PublicationRepository publicationRepository, UserService userService, CategoryService categoryService, TagService tagService, UserRepository userRepository
-    ) {
+    public PublicationService(PublicationRepository publicationRepository, UserService userService, CategoryService categoryService, TagService tagService, UserRepository userRepository,
+                              EmailService emailService) {
         this.publicationRepository = publicationRepository;
         this.userService = userService;
         this.categoryService = categoryService;
         this.tagService = tagService;
         this.userRepository = userRepository;
+        this.emailService = emailService;
     }
 
-    public Publication createPublication(Publication publication, Long userId, Long categories, Long[] tagIds) {
+    public Publication create(Publication publication, Long userId, Long categoryId, Long[] tagIds) {
         publication.setDateOfCreation(LocalDateTime.now());
         User author = userService.getById(userId);
-        Category category = categoryService.getById(categories);
+        Category category = categoryService.getById(categoryId);
 
         List<Tag> tags = new ArrayList<>();
         for (Long tagId : tagIds) {
@@ -51,6 +54,17 @@ public class PublicationService {
         publication.setCategory(category);
         publication.setTags(tags);
 
+        if (publication.getType().equals(PublicationType.NEWS)){
+            for (String email:
+                    userRepository.findAllEmails()) {
+                String subject = "Новая новость";
+                String text = "Доброго времени суток, у нас есть новая новость!\n\n" +
+                        publication.getTitle() +
+                        "\n" +
+                        publication.getSubtitle();
+                emailService.sendSimpleMessage(email, subject, text);
+            }
+        }
         return publicationRepository.save(publication);
     }
 

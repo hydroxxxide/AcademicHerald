@@ -32,22 +32,11 @@ public class PublicationController {
     public PublicationDto createPublication(
             @RequestBody PublicationDto publicationDto,
             @RequestParam Long userId,
-            @RequestParam Long categoryId
+            @RequestParam Long categoryId,
+            @RequestParam Long[] tagsIds
     ) {
         Publication publication = mapper.convertToEntity(publicationDto);
-        Publication createdPublication = publicationService.create(publication, userId, categoryId);
-       if (createdPublication.getType().equals(PublicationType.NEWS)){
-           for (String email:
-                   userRepository.findAllEmails()) {
-               String subject = "Новая новость";
-               String text = "Добрый день, у нас есть новая новость!\n\n" +
-                       publication.getTitle() +
-                       "\n" +
-                       publication.getSubtitle();
-               emailService.sendSimpleMessage(email, subject, text);
-           }
-       }
-        return mapper.convertToDto(createdPublication);
+        return mapper.convertToDto(publicationService.create(publication, userId, categoryId, tagsIds));
     }
 
     @GetMapping("/get/{id}")
@@ -60,9 +49,9 @@ public class PublicationController {
         return mapper.convertToDTOList(publicationService.getAllAccepted());
     }
 
-    @PutMapping("/update")
-    public PublicationDto update(@RequestBody Publication publication) {
-        return mapper.convertToDto(publicationService.update(publication));
+    @PutMapping("/update/{userId}")
+    public PublicationDto update(@RequestBody Publication publication, @PathVariable Long userId) throws Exception{
+        return mapper.convertToDto(publicationService.update(publication, userId));
     }
 
     @DeleteMapping("/delete/{id}")
@@ -79,11 +68,7 @@ public class PublicationController {
     @GetMapping("/getByCategory/{categoryId}")
     public List<PublicationDto> getPublicationsByCategoryId(@PathVariable Long categoryId) {
         List<Publication> publications = publicationService.getPublicationsByCategoryId(categoryId);
-        // Преобразование сущностей Publication в DTO PublicationDto
-        List<PublicationDto> publicationDtos = publications.stream()
-                .map(publication -> modelMapper.map(publication, PublicationDto.class))
-                .collect(Collectors.toList());
-        return publicationDtos;
+        return mapper.convertToDTOList(publications);
     }
     //Вытаскиваем список публикаций по id автора(какие посты он выложил)
     @GetMapping("/user/{authorId}")
@@ -91,10 +76,5 @@ public class PublicationController {
         List<Publication> publications = publicationService.getPublicationsByAuthorId(authorId);
         return mapper.convertToDTOList(publications);
     }
-
-//    @DeleteMapping("/delete/{id}")
-//    public void delete(@PathVariable Long id) {
-//        publicationService.delete(id);
-//    }
 
 }
