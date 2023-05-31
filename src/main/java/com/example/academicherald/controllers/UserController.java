@@ -19,6 +19,7 @@ public class UserController {
     }
 
     @PostMapping("/create")
+    @ResponseBody
     public UserDto create(@RequestBody UserDto userDto) {
         User user = mapper.convertToEntity(userDto);
         User createdUser = userService.create(user);
@@ -26,33 +27,44 @@ public class UserController {
     }
 
     @GetMapping("/get/{id}")
+    @ResponseBody
     public UserDto getById(@PathVariable Long id) {
         return mapper.convertToDTO(userService.getById(id));
     }
 
     @GetMapping("/get/all")
+    @ResponseBody
     public List<UserDto> getAll() {
         return mapper.convertToDTOList(userService.getAll());
     }
 
     @PutMapping("/update")
+    @ResponseBody
     public UserDto update(@RequestBody User newUser) {
         return mapper.convertToDTO(userService.update(newUser));
     }
 
     @DeleteMapping("/delete/{id}")
+    @ResponseBody
     public void delete(@PathVariable Long id) {
         userService.delete(id);
     }
 
     @GetMapping("/reset")
+    @ResponseBody
     public boolean resetPassword(@RequestParam String email){
         return userService.resetPassword(email);
     }
 
     @PostMapping("/reset/{resetToken}")
+    @ResponseBody
     public boolean saveNewPassword(@PathVariable String resetToken, @RequestParam String password) {
         return userService.saveNewPassword(resetToken, password);
+    }
+
+    @GetMapping("/payment")
+    public String redirectToPaymentForm(){
+        return "redirect:https://docs.google.com/forms/d/e/1FAIpQLSedV3V8kaTlySCfodun9n-_QwzvMkWV8GYKmIRos7sZN6wawA/viewform";
     }
 
 }

@@ -6,5 +6,5 @@ public enum UserRole {
     ROLE_MENTOR,
     ROLE_REVIEWER,
     ROLE_MANAGER,
-    ROLE_ADMIN
+    ROLE_MENTORR, ROLE_ADMIN
 }

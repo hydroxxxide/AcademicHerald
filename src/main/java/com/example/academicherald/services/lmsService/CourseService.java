@@ -22,7 +22,7 @@ public class CourseService {
     }
 
     public Course create(Course course, Long mentorId) {
-        User mentor = userRepository.findByIdAndRole(mentorId, UserRole.MENTOR);
+        User mentor = userRepository.findByIdAndRole(mentorId, UserRole.ROLE_MENTORR);
         course.setMentor(mentor);
         return courseRepository.save(course);
     }
@@ -30,7 +30,7 @@ public class CourseService {
         Course course = courseRepository.findById(courseId)
                 .orElseThrow(() -> new IllegalArgumentException("Курс с указанным ID не найден"));
 
-        List<User> studentsId = userRepository.findAllByIdAndRole(studentIds, UserRole.STUDENT);
+        List<User> studentsId = userRepository.findAllByIdAndRole(studentIds, UserRole.ROLE_STUDENT);
         if (studentsId.isEmpty()) {
             throw new IllegalArgumentException("Нет студентов с указанными ID");
         }

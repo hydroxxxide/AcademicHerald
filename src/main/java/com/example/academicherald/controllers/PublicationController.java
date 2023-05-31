@@ -91,9 +91,9 @@ public class PublicationController {
         return mapper.convertToDTOList(publications);
     }
 
-    @DeleteMapping("/delete/{id}")
-    public void delete(@PathVariable Long id) {
-        publicationService.delete(id);
-    }
+//    @DeleteMapping("/delete/{id}")
+//    public void delete(@PathVariable Long id) {
+//        publicationService.delete(id);
+//    }
 
 }

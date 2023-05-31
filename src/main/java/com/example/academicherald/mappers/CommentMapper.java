@@ -30,7 +30,4 @@ public class CommentMapper {
         }
         return commentDtoList;
     }
-    public Comment convertToEntity(CommentDto commentDto) {
-        return mapper.map(commentDto, Comment.class);
-    }
 }

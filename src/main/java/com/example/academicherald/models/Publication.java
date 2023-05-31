@@ -40,13 +40,10 @@ public class Publication {
     @DateTimeFormat(pattern = "dd-MM-yyyy HH:mm:ss")
     private LocalDateTime dateOfCreation = LocalDateTime.now();
 
-    @ManyToOne
     @NotNull
     @ManyToOne
     @JoinColumn(name = "category")
-//    @Size(max = 1)
     @JsonIgnore
-    private Category category;
     private Category category;
 
     @NotNull
