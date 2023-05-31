@@ -21,12 +21,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private final DetailsUserService detailsUserService;
     private final JwtRequestFilter jwtRequestFilter;
     private final OAuth2AuthenticationSuccessHandler oAuth2AuthenticationSuccessHandler;
+    private final OAuth2AuthenticationFailureHandler oAuth2AuthenticationFailureHandler;
 
     @Autowired
-    public SecurityConfig(DetailsUserService detailsUserService, JwtRequestFilter jwtRequestFilter, OAuth2AuthenticationSuccessHandler oAuth2AuthenticationSuccessHandler) {
+    public SecurityConfig(DetailsUserService detailsUserService, JwtRequestFilter jwtRequestFilter, OAuth2AuthenticationSuccessHandler oAuth2AuthenticationSuccessHandler, OAuth2AuthenticationFailureHandler oAuth2AuthenticationFailureHandler) {
         this.detailsUserService = detailsUserService;
         this.jwtRequestFilter = jwtRequestFilter;
         this.oAuth2AuthenticationSuccessHandler = oAuth2AuthenticationSuccessHandler;
+        this.oAuth2AuthenticationFailureHandler = oAuth2AuthenticationFailureHandler;
     }
 
     @Bean
@@ -52,10 +54,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/auth/**").permitAll()
                 .antMatchers("/admin/**").hasRole("ADMIN")
                 .antMatchers("/user/**").permitAll()
-                .antMatchers("/student/**").hasRole("STUDENT")
+                .antMatchers("/category/**").hasRole("ADMIN")
+                .antMatchers("/comment/**").permitAll()
+                .antMatchers("/event/**").hasRole("MANAGER")
+                .antMatchers("/publication/**").permitAll()
+                .antMatchers("/tags/**").hasRole("ADMIN")
                 .and()
                 .oauth2Login()
                 .successHandler(oAuth2AuthenticationSuccessHandler)
+                .failureHandler(oAuth2AuthenticationFailureHandler)
                 .and()
                 .csrf().disable();
 

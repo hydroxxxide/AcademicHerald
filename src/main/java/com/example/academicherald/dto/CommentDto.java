@@ -1,7 +1,7 @@
 package com.example.academicherald.dto;
 
-import com.example.academicherald.models.Publication;
-import com.example.academicherald.models.User;
+import com.example.academicherald.entity.Publication;
+import com.example.academicherald.entity.User;
 import lombok.Data;
 
 @Data

@@ -1,4 +1,4 @@
-package com.example.academicherald.models.lms;
+package com.example.academicherald.entity.lms;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

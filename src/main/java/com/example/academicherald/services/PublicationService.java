@@ -1,8 +1,8 @@
 package com.example.academicherald.services;
 
-import com.example.academicherald.models.Category;
-import com.example.academicherald.models.Publication;
-import com.example.academicherald.models.User;
+import com.example.academicherald.entity.Category;
+import com.example.academicherald.entity.Publication;
+import com.example.academicherald.entity.User;
 import com.example.academicherald.repositories.PublicationRepository;
 import org.springframework.stereotype.Service;
 
@@ -42,16 +42,20 @@ public class PublicationService {
         return publicationRepository.getAllByPassAndRdtIsNull(false);
     }
 
-    public Publication update(Publication newPublication) {
+    public Publication update(Publication newPublication, Long userId) throws Exception{
         Publication oldPublication = getById(newPublication.getId());
-        oldPublication.setTitle(newPublication.getTitle());
-        oldPublication.setSubtitle(newPublication.getSubtitle());
-        oldPublication.setText(newPublication.getText());
-        oldPublication.setDateOfCreation(newPublication.getDateOfCreation());
-        oldPublication.setCategory(newPublication.getCategory());
-        oldPublication.setAuthor(newPublication.getAuthor());
-        oldPublication.setType(newPublication.getType());
-        return publicationRepository.save(oldPublication);
+        User author = userService.getById(userId);
+        if (author.equals(oldPublication.getAuthor())){
+            oldPublication.setTitle(newPublication.getTitle());
+            oldPublication.setSubtitle(newPublication.getSubtitle());
+            oldPublication.setText(newPublication.getText());
+            oldPublication.setDateOfCreation(newPublication.getDateOfCreation());
+            oldPublication.setCategory(newPublication.getCategory());
+            oldPublication.setType(newPublication.getType());
+            return publicationRepository.save(oldPublication);
+        }
+        else throw new Exception("Пользователь " + oldPublication.getAuthor().getUsername() +
+                " не является автором данной публикации");
     }
 
     public void delete(Long id) {

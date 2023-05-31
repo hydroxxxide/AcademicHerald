@@ -1,7 +1,7 @@
 package com.example.academicherald.security;
 
 
-import com.example.academicherald.models.User;
+import com.example.academicherald.entity.User;
 import com.example.academicherald.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;

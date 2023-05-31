@@ -2,7 +2,7 @@ package com.example.academicherald.controllers;
 
 
 import com.example.academicherald.enums.UserRole;
-import com.example.academicherald.models.User;
+import com.example.academicherald.entity.User;
 import com.example.academicherald.requests.AuthenticationRequest;
 import com.example.academicherald.requests.AuthenticationResponse;
 import com.example.academicherald.requests.RegistrationRequest;

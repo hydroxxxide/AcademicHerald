@@ -1,29 +1,25 @@
-package com.example.academicherald.models;
+package com.example.academicherald.entity.lms;
 
+import com.example.academicherald.entity.User;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
-import java.util.List;
 
 @Entity
-@Table(name = "categories")
+@Table(name = "HandingInHomework")
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
-public class Category {
+public class HandingInHomework {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    private String name;
-
-    @OneToMany
-    private List<Publication> publications;
-
-    private LocalDateTime rdt;
+    @OneToOne
+    @JoinColumn(name = "student_id")
+    private User studentId;
+    private String linkGitHubHw;
 }
