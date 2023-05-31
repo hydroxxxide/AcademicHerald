@@ -12,6 +12,8 @@
 1.3 Аудитория
 
 Пользователями нашего проекта станут обычные студенты IT Академии, а также менторы и ревьюверы.
+
+1.4 Структура
   
 В приложении есть пользователи с ролями (GUEST, STUDENT, REVIEWER, MENTOR, MANAGER, ADMIN), публикации с типами (ARTICLE, DISCUSSION, NEWS, POST, EVENT) и курсы с основными направалениями (JAVA, PYTHON, JAVASCRIPT, UX_DESIGN и др). Также присутствуют комментарии, категории, теги, разделы, лекции и задания к ним. Форум заточен под создание публикаций (статей, обсуждений и постов) пользователями и их регулировку администрацией форума. 
 
@@ -20,8 +22,8 @@
 Ссылка на workspace с постман коллекцией - 
 https://api.postman.com/collections/25576057-aeb39435-bcff-49d2-9c40-3ff1b67bca9a?access_key=PMAT-01H0MX4A5H70R7QE4388S2VDQB
 ## Установка 
-1. Создайте новую базу данных _"yourdatabase"_ используя PgAdmin (вы можете заменить имя вашей бд "yourdatabase" на любое другое)
-2. Добавьте в application.properties следующий код (поле "yourdatabase" измените на имя вашей новой базы данных):
+2.1 Создайте новую базу данных _"yourdatabase"_ используя PgAdmin (вы можете заменить имя вашей бд "yourdatabase" на любое другое)
+2.2 Добавьте в application.properties следующий код (поле "yourdatabase" измените на имя вашей новой базы данных):
 ```sh
    server.port=9090
 spring.datasource.url=jdbc:postgresql://localhost:5432/yourdatabase
@@ -33,6 +35,6 @@ spring.jpa.hibernate.ddl-auto=create
 
 spring.datasource.driver-class-name=org.postgresql.Driver
 ```
-3. Запустите приложение в PartnershipProgramsApplication.
-4. После первого запуска, замените ```sh spring.jpa.hibernate.ddl-auto=create field``` на ```sh spring.jpa.hibernate.ddl-auto=update```
-5. Запустите sql insert запросы в файле V00002_insert_tables
+2.3 Запустите приложение в PartnershipProgramsApplication.
+2.4 После первого запуска, замените ```sh spring.jpa.hibernate.ddl-auto=create field``` на ```sh spring.jpa.hibernate.ddl-auto=update```
+2.5 Запустите sql insert запросы в файле V00002_insert_tables
