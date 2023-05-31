@@ -1,7 +1,7 @@
 package com.example.academicherald.mappers;
 
 import com.example.academicherald.dto.PublicationDto;
-import com.example.academicherald.models.Publication;
+import com.example.academicherald.entity.Publication;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 

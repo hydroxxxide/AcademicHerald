@@ -3,7 +3,8 @@ package com.example.academicherald.controllers;
 import com.example.academicherald.dto.PublicationDto;
 import com.example.academicherald.enums.PublicationType;
 import com.example.academicherald.mappers.PublicationMapper;
-import com.example.academicherald.models.Publication;
+import com.example.academicherald.entity.Publication;
+import com.example.academicherald.repositories.UserRepository;
 import com.example.academicherald.services.EmailService;
 import com.example.academicherald.services.PublicationService;
 import org.springframework.web.bind.annotation.*;
@@ -16,12 +17,14 @@ public class PublicationController {
     private final PublicationService publicationService;
     private final PublicationMapper mapper;
     private final EmailService emailService;
+    private final UserRepository userRepository;
     ;
 
-    public PublicationController(PublicationService publicationService, PublicationMapper mapper, EmailService emailService) {
+    public PublicationController(PublicationService publicationService, PublicationMapper mapper, EmailService emailService, UserRepository userRepository) {
         this.publicationService = publicationService;
         this.mapper = mapper;
         this.emailService = emailService;
+        this.userRepository = userRepository;
     }
 
 
@@ -34,10 +37,15 @@ public class PublicationController {
         Publication publication = mapper.convertToEntity(publicationDto);
         Publication createdPublication = publicationService.create(publication, userId, categoryId);
        if (createdPublication.getType().equals(PublicationType.NEWS)){
-           String email = createdPublication.getAuthor().getEmail();
-           String subject = "Новая новость";
-           String text = "Добрый день, у нас есть новая новость!";
-           emailService.sendSimpleMessage(email, subject, text);
+           for (String email:
+                   userRepository.findAllEmails()) {
+               String subject = "Новая новость";
+               String text = "Добрый день, у нас есть новая новость!\n\n" +
+                       publication.getTitle() +
+                       "\n" +
+                       publication.getSubtitle();
+               emailService.sendSimpleMessage(email, subject, text);
+           }
        }
         return mapper.convertToDto(createdPublication);
     }
@@ -52,9 +60,9 @@ public class PublicationController {
         return mapper.convertToDTOList(publicationService.getAllAccepted());
     }
 
-    @PutMapping("/update")
-    public PublicationDto update(@RequestBody Publication publication) {
-        return mapper.convertToDto(publicationService.update(publication));
+    @PutMapping("/update/{userId}")
+    public PublicationDto update(@RequestBody Publication publication, @PathVariable Long userId) throws Exception {
+        return mapper.convertToDto(publicationService.update(publication, userId));
     }
 
     @DeleteMapping("/delete/{id}")
