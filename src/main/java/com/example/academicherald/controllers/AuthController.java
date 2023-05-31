@@ -59,8 +59,7 @@ public class AuthController {
     }
 
 
-    @PostMapping(value = "/authenticate")
-    @ResponseBody
+    @PostMapping("/authenticate")
     public ResponseEntity<?> createAuthenticationToken(@RequestBody AuthenticationRequest authenticationRequest) throws Exception {
         try {
             authenticationManager.authenticate(

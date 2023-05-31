@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.EntityNotFoundException;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
@@ -25,11 +24,12 @@ public class UserService {
     }
 
     public User create(User user) {
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         return userRepository.save(user);
     }
 
     public User getById(Long id) {
-        return userRepository.findByIdAndRdtIsNull(id).orElseThrow(EntityNotFoundException::new);
+        return userRepository.findByIdAndRdtIsNull(id);
     }
 
     public List<User> getAll() {

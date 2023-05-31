@@ -5,6 +5,7 @@ import com.example.academicherald.models.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -16,7 +17,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
     User findByUsername(String username);
     User findByResetToken(String token);
 
-    Optional<User> findByIdAndRdtIsNull(Long id);
+    User findByIdAndRdtIsNull(Long id);
 
     List<User> findAllByRdtIsNull();
     @Query("SELECT u FROM User u WHERE u.role = :role")
@@ -27,5 +28,9 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @Query("SELECT u FROM User u WHERE u.id IN :id AND u.role = :role")
     List<User> findAllByIdAndRole(List<Long> id, UserRole role);
 
+
+
+    @Query(value = "select email from users", nativeQuery = true)
+    List<String> findAllEmails();
 
 }

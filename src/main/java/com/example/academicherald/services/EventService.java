@@ -49,6 +49,4 @@ public class EventService {
         event.setRdt(LocalDateTime.now());
         eventRepository.save(event);
     }
-
-
 }

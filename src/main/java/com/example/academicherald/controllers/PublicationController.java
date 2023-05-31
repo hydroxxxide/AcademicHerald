@@ -4,13 +4,12 @@ import com.example.academicherald.dto.PublicationDto;
 import com.example.academicherald.enums.PublicationType;
 import com.example.academicherald.mappers.PublicationMapper;
 import com.example.academicherald.models.Publication;
+import com.example.academicherald.repositories.UserRepository;
 import com.example.academicherald.services.EmailService;
 import com.example.academicherald.services.PublicationService;
-import org.modelmapper.ModelMapper;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/publication")
@@ -18,15 +17,14 @@ public class PublicationController {
     private final PublicationService publicationService;
     private final PublicationMapper mapper;
     private final EmailService emailService;
-    ;    private final ModelMapper modelMapper;
+    private final UserRepository userRepository;
 
 
-    public PublicationController(PublicationService publicationService, PublicationMapper mapper, EmailService emailService, ModelMapper modelMapper) {
+    public PublicationController(PublicationService publicationService, PublicationMapper mapper, EmailService emailService, UserRepository userRepository) {
         this.publicationService = publicationService;
         this.mapper = mapper;
         this.emailService = emailService;
-        this.modelMapper = modelMapper;
-
+        this.userRepository = userRepository;
     }
 
 
@@ -35,18 +33,10 @@ public class PublicationController {
             @RequestBody PublicationDto publicationDto,
             @RequestParam Long userId,
             @RequestParam Long categoryId,
-            @RequestParam Long[] tagIds
-
+            @RequestParam Long[] tagsIds
     ) {
         Publication publication = mapper.convertToEntity(publicationDto);
-        Publication createdPublication = publicationService.createPublication(publication, userId, categoryId, tagIds);
-        if (createdPublication.getType().equals(PublicationType.NEWS)){
-            String email = createdPublication.getAuthor().getEmail();
-            String subject = "Новая новость";
-            String text = "Добрый день, у нас есть новая новость!";
-            emailService.sendSimpleMessage(email, subject, text);
-        }
-        return mapper.convertToDto(createdPublication);
+        return mapper.convertToDto(publicationService.create(publication, userId, categoryId, tagsIds));
     }
 
     @GetMapping("/get/{id}")
@@ -59,9 +49,9 @@ public class PublicationController {
         return mapper.convertToDTOList(publicationService.getAllAccepted());
     }
 
-    @PutMapping("/update")
-    public PublicationDto update(@RequestBody Publication publication) {
-        return mapper.convertToDto(publicationService.update(publication));
+    @PutMapping("/update/{userId}")
+    public PublicationDto update(@RequestBody Publication publication, @PathVariable Long userId) throws Exception{
+        return mapper.convertToDto(publicationService.update(publication, userId));
     }
 
     @DeleteMapping("/delete/{id}")
@@ -78,11 +68,7 @@ public class PublicationController {
     @GetMapping("/getByCategory/{categoryId}")
     public List<PublicationDto> getPublicationsByCategoryId(@PathVariable Long categoryId) {
         List<Publication> publications = publicationService.getPublicationsByCategoryId(categoryId);
-        // Преобразование сущностей Publication в DTO PublicationDto
-        List<PublicationDto> publicationDtos = publications.stream()
-                .map(publication -> modelMapper.map(publication, PublicationDto.class))
-                .collect(Collectors.toList());
-        return publicationDtos;
+        return mapper.convertToDTOList(publications);
     }
     //Вытаскиваем список публикаций по id автора(какие посты он выложил)
     @GetMapping("/user/{authorId}")
@@ -90,10 +76,5 @@ public class PublicationController {
         List<Publication> publications = publicationService.getPublicationsByAuthorId(authorId);
         return mapper.convertToDTOList(publications);
     }
-
-//    @DeleteMapping("/delete/{id}")
-//    public void delete(@PathVariable Long id) {
-//        publicationService.delete(id);
-//    }
 
 }
