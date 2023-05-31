@@ -1,5 +1,6 @@
 package com.example.academicherald.dto.lmsDto;
 
+import com.example.academicherald.dto.UserDto;
 import com.example.academicherald.enums.CourseType;
 import com.example.academicherald.models.User;
 import com.example.academicherald.models.lms.Chapter;
@@ -20,8 +21,8 @@ public class CourseDto {
     @DateTimeFormat(pattern = "dd-MM-yyyy")
 
     private LocalDateTime startCourse = LocalDateTime.now();
-    private User mentor;
-    private List<User> students;
-    private List<Chapter> chapters;
+    private UserDto mentor;
+    private List<UserDto> students;
+    private List<ChapterDto> chapters;
 
 }
