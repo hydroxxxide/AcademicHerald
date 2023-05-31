@@ -19,13 +19,13 @@
 
 Всего 12 сущностей. Также задействован Spring Security + JWT token и авторизация через OAuth2 (Google & Github)
 
-Ссылка на workspace с постман коллекцией - 
+Ссылка на JSON postman коллекцию - 
 https://api.postman.com/collections/25576057-aeb39435-bcff-49d2-9c40-3ff1b67bca9a?access_key=PMAT-01H0MX4A5H70R7QE4388S2VDQB
 ## Установка 
 2.1 Создайте новую базу данных _"yourdatabase"_ используя PgAdmin (вы можете заменить имя вашей бд "yourdatabase" на любое другое)
 2.2 Добавьте в application.properties следующий код (поле "yourdatabase" измените на имя вашей новой базы данных):
 ```sh
-   server.port=9090
+server.port=9090
 spring.datasource.url=jdbc:postgresql://localhost:5432/yourdatabase
 spring.datasource.username=postgres
 spring.datasource.password=postgres
