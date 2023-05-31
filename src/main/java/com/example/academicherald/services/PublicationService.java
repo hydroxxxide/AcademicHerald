@@ -1,12 +1,13 @@
 package com.example.academicherald.services;
 
-import com.example.academicherald.models.Category;
-import com.example.academicherald.models.Publication;
-import com.example.academicherald.models.User;
+import com.example.academicherald.models.*;
 import com.example.academicherald.repositories.PublicationRepository;
+import com.example.academicherald.repositories.UserRepository;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -14,20 +15,62 @@ public class PublicationService {
     private final PublicationRepository publicationRepository;
     private final UserService userService;
     private final CategoryService categoryService;
+    private final TagService tagService;
+    private final UserRepository userRepository;
 
-    public PublicationService(PublicationRepository publicationRepository, UserService userService, CategoryService categoryService) {
+
+    public PublicationService(PublicationRepository publicationRepository, UserService userService, CategoryService categoryService, TagService tagService, UserRepository userRepository
+    ) {
         this.publicationRepository = publicationRepository;
         this.userService = userService;
         this.categoryService = categoryService;
+        this.tagService = tagService;
+        this.userRepository = userRepository;
     }
 
-    public Publication create(Publication publication, Long userId, Long categoryId) {
+    public Publication createPublication(Publication publication, Long userId, Long categories, Long[] tagIds) {
         publication.setDateOfCreation(LocalDateTime.now());
         User author = userService.getById(userId);
-        Category category = categoryService.getById(categoryId);
+        Category category = categoryService.getById(categories);
+
+        List<Tag> tags = new ArrayList<>();
+        for (Long tagId : tagIds) {
+            Tag tag = tagService.getById(tagId);
+            tags.add(tag);
+        }
+
         publication.setAuthor(author);
+        if (author != null) {
+            author.getPublications().add(publication); // добавляем публикацию в список публикаций пользователя
+        }
+        if (tags != null) {
+            for (Tag tag : tags) {
+                tag.getPublications().add(publication); // добавляем публикацию в список публикаций тега
+            }
+        }
         publication.setCategory(category);
+        publication.setTags(tags);
+
         return publicationRepository.save(publication);
+    }
+
+
+    //Вытаскиваем список публикаций по id тега
+    public List<Publication> getPublicationsByTagId(Long tagId) {
+        return publicationRepository.findByTagsId(tagId);
+    }
+    //Вытаскиваем список публикаций по id категории
+    public List<Publication> getPublicationsByCategoryId(Long categoryId) {
+        Category category = categoryService.getById(categoryId);
+        return publicationRepository.findByCategory(category);
+    }
+    //Вытаскиваем список публикаций по id автора(какие посты он выложил)
+    public List<Publication> getPublicationsByAuthorId(Long authorId) {
+        User author = userRepository.findById(authorId).orElse(null);
+        if (author != null) {
+            return publicationRepository.findByAuthor(author);
+        }
+        return Collections.emptyList();
     }
 
     public Publication getById(Long id) {
@@ -57,7 +100,6 @@ public class PublicationService {
         else throw new Exception("Пользователь " + oldPublication.getAuthor().getUsername() +
                 " не является автором данной публикации");
     }
-
     public void delete(Long id) {
         Publication publication = getById(id);
         publication.setRdt(LocalDateTime.now());

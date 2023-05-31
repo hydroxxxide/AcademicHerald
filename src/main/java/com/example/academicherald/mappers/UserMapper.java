@@ -1,7 +1,9 @@
 package com.example.academicherald.mappers;
 
 import com.example.academicherald.dto.UserDto;
+import com.example.academicherald.dto.lmsDto.ExerciseDto;
 import com.example.academicherald.models.User;
+import com.example.academicherald.models.lms.Exercise;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 
@@ -23,12 +25,12 @@ public class UserMapper {
         }
         return userDtoList;
     }
+    public User convertToEntity(UserDto userDto) {
+        return mapper.map(userDto, User.class);
+    }
 
     public UserDto convertToDTO(User user) {
         return mapper.map(user, UserDto.class);
     }
 
-    public User convertToEntity(UserDto userDto) {
-        return mapper.map(userDto, User.class);
-    }
 }

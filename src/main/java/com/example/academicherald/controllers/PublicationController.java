@@ -60,14 +60,41 @@ public class PublicationController {
         return mapper.convertToDTOList(publicationService.getAllAccepted());
     }
 
-    @PutMapping("/update/{userId}")
-    public PublicationDto update(@RequestBody Publication publication, @PathVariable Long userId) throws Exception {
-        return mapper.convertToDto(publicationService.update(publication, userId));
+    @PutMapping("/update")
+    public PublicationDto update(@RequestBody Publication publication) {
+        return mapper.convertToDto(publicationService.update(publication));
     }
 
     @DeleteMapping("/delete/{id}")
     public void delete(@PathVariable Long id) {
         publicationService.delete(id);
     }
+    //Вытаскиваем список публикаций по id тега
+    @GetMapping("/listByTag/{tagId}")
+    public List<PublicationDto> listByTag(@PathVariable Long tagId) {
+        List<Publication> publications = publicationService.getPublicationsByTagId(tagId);
+        return mapper.convertToDTOList(publications);
+    }
+    //Вытаскиваем список публикаций по id категории
+    @GetMapping("/getByCategory/{categoryId}")
+    public List<PublicationDto> getPublicationsByCategoryId(@PathVariable Long categoryId) {
+        List<Publication> publications = publicationService.getPublicationsByCategoryId(categoryId);
+        // Преобразование сущностей Publication в DTO PublicationDto
+        List<PublicationDto> publicationDtos = publications.stream()
+                .map(publication -> modelMapper.map(publication, PublicationDto.class))
+                .collect(Collectors.toList());
+        return publicationDtos;
+    }
+    //Вытаскиваем список публикаций по id автора(какие посты он выложил)
+    @GetMapping("/user/{authorId}")
+    public List<PublicationDto> getPublicationsByUser(@PathVariable Long authorId) {
+        List<Publication> publications = publicationService.getPublicationsByAuthorId(authorId);
+        return mapper.convertToDTOList(publications);
+    }
+
+//    @DeleteMapping("/delete/{id}")
+//    public void delete(@PathVariable Long id) {
+//        publicationService.delete(id);
+//    }
 
 }

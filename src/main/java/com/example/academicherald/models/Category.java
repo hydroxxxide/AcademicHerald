@@ -19,10 +19,8 @@ public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     private String name;
-
-    @OneToMany
+    @ManyToMany
     private List<Publication> publications;
 
     private LocalDateTime rdt;

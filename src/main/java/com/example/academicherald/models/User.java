@@ -1,6 +1,10 @@
 package com.example.academicherald.models;
 
 import com.example.academicherald.enums.UserRole;
+import com.example.academicherald.models.lms.Chapter;
+import com.example.academicherald.models.lms.Course;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import javax.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -35,9 +39,13 @@ public class User {
 
     @Enumerated(EnumType.STRING)
     private UserRole role;
-
     @OneToMany
     private List<Publication> publications;
+    @ManyToOne
+    @JsonBackReference
+    private Course courses;
+
+
 
     @Column(name = "reset_token")
     private String resetToken;

@@ -2,6 +2,7 @@ package com.example.academicherald.controllers;
 
 import com.example.academicherald.dto.CategoryDto;
 import com.example.academicherald.mappers.CategoryMapper;
+import com.example.academicherald.models.Category;
 import com.example.academicherald.services.CategoryService;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,7 +21,9 @@ public class CategoryController {
 
     @PostMapping("/create")
     public CategoryDto create(@RequestBody CategoryDto categoryDto) {
-        return mapper.convertToDto(categoryService.create(mapper.convertToEntity(categoryDto)));
+        Category category = mapper.convertToEntity(categoryDto);
+        Category createdCategory = categoryService.create(category);
+        return mapper.convertToDto(createdCategory);
     }
 
     @GetMapping("/get/{id}")

@@ -1,7 +1,9 @@
 package com.example.academicherald.mappers;
 
 import com.example.academicherald.dto.TagDto;
+import com.example.academicherald.dto.lmsDto.ExerciseDto;
 import com.example.academicherald.models.Tag;
+import com.example.academicherald.models.lms.Exercise;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 
@@ -24,7 +26,9 @@ public class TagMapper {
         }
         return tagDtoList;
     }
-
+    public Tag convertToEntity(TagDto tagDto) {
+        return mapper.map(tagDto, Tag.class);
+    }
     public TagDto convertToDTO(Tag tag) {
         return mapper.map(tag, TagDto.class);
     }
