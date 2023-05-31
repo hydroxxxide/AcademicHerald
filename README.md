@@ -20,7 +20,7 @@
 Всего 12 сущностей. Также задействован Spring Security + JWT token и авторизация через OAuth2 (Google & Github)
 
 Ссылка на JSON postman коллекцию - 
-https://api.postman.com/collections/25576057-aeb39435-bcff-49d2-9c40-3ff1b67bca9a?access_key=PMAT-01H0MX4A5H70R7QE4388S2VDQB
+[https://api.postman.com/collections/25576057-aeb39435-bcff-49d2-9c40-3ff1b67bca9a?access_key=PMAT-01H0MX4A5H70R7QE4388S2VDQB](https://api.postman.com/collections/25575773-dd8a5fc5-fb67-457b-8737-fefe7698360e?access_key=PMAT-01H1S33MVSSH3Q6TGYXZ76PCPB) - РАБОЧИЙ!!!!
 ## Установка 
 2.1 Создайте новую базу данных _"yourdatabase"_ используя PgAdmin (вы можете заменить имя вашей бд "yourdatabase" на любое другое)
 2.2 Добавьте в application.properties следующий код (поле "yourdatabase" измените на имя вашей новой базы данных):
