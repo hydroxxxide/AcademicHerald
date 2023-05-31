@@ -2,7 +2,7 @@ package com.example.academicherald.controllers;
 
 import com.example.academicherald.dto.EventDto;
 import com.example.academicherald.mappers.EventMapper;
-import com.example.academicherald.entity.Event;
+import com.example.academicherald.models.Event;
 import com.example.academicherald.services.EventService;
 import org.springframework.web.bind.annotation.*;
 

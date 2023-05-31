@@ -1,6 +1,6 @@
 package com.example.academicherald.repositories;
 
-import com.example.academicherald.entity.Event;
+import com.example.academicherald.models.Event;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

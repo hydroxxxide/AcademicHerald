@@ -1,4 +1,4 @@
-package com.example.academicherald.entity;
+package com.example.academicherald.models;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

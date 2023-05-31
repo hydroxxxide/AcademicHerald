@@ -2,7 +2,7 @@ package com.example.academicherald.controllers;
 
 import com.example.academicherald.dto.CommentDto;
 import com.example.academicherald.mappers.CommentMapper;
-import com.example.academicherald.entity.Comment;
+import com.example.academicherald.models.Comment;
 import com.example.academicherald.services.CommentService;
 import org.springframework.web.bind.annotation.*;
 

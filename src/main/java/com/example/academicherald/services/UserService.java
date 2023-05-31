@@ -1,6 +1,6 @@
 package com.example.academicherald.services;
 
-import com.example.academicherald.entity.User;
+import com.example.academicherald.models.User;
 import com.example.academicherald.repositories.UserRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;

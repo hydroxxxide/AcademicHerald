@@ -1,6 +1,6 @@
 package com.example.academicherald.repositories;
 
-import com.example.academicherald.entity.Tag;
+import com.example.academicherald.models.Tag;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

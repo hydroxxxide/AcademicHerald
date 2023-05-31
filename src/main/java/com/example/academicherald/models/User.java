@@ -1,4 +1,4 @@
-package com.example.academicherald.entity;
+package com.example.academicherald.models;
 
 import com.example.academicherald.enums.UserRole;
 import lombok.AllArgsConstructor;

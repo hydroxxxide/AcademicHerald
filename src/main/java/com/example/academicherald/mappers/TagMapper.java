@@ -1,7 +1,7 @@
 package com.example.academicherald.mappers;
 
 import com.example.academicherald.dto.TagDto;
-import com.example.academicherald.entity.Tag;
+import com.example.academicherald.models.Tag;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 

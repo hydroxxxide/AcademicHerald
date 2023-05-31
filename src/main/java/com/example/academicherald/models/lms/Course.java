@@ -1,7 +1,7 @@
-package com.example.academicherald.entity.lms;
+package com.example.academicherald.models.lms;
 
 import com.example.academicherald.enums.CourseType;
-import com.example.academicherald.entity.User;
+import com.example.academicherald.models.User;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

@@ -2,7 +2,7 @@ package com.example.academicherald.controllers;
 
 import com.example.academicherald.dto.UserDto;
 import com.example.academicherald.mappers.UserMapper;
-import com.example.academicherald.entity.User;
+import com.example.academicherald.models.User;
 import com.example.academicherald.services.UserService;
 import org.springframework.web.bind.annotation.*;
 
