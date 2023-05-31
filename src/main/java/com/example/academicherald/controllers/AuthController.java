@@ -40,7 +40,6 @@ public class AuthController {
 
 
     @PostMapping("/register")
-    @ResponseBody
     public ResponseEntity<String> registerUser(@RequestBody RegistrationRequest registrationRequest) {
         if (userService.isPresentUsername(registrationRequest.getUsername())) {
             return ResponseEntity.badRequest().body("Username is already taken!");
@@ -74,26 +73,26 @@ public class AuthController {
     }
 
 
-    @GetMapping("/login/oauth2")
-    public String redirectToAuthorizationEndpoint() {
-        return "redirect:/login/oauth2/code/github";
-    }
-
-    @GetMapping("/login/oauth2/code/github")
-    @ResponseBody
-    public ResponseEntity<?> handleGitLabCallback(@RequestParam("code") String code, OAuth2AuthenticationToken authenticationToken) {
-        DefaultOAuth2User oauth2User = (DefaultOAuth2User) authenticationToken.getPrincipal();
-
-        // Get the user's name attribute, if available
-        String userName = oauth2User.getAttribute("name");
-        System.out.println();
-        if (userName == null) {
-            // Handle the case when the name attribute is null
-            // You can choose to set a default name or return an error response
-            return ResponseEntity.badRequest().body("User name attribute is missing");
-        }
-
-        // Perform necessary actions with the user's name
-        return ResponseEntity.ok("GitHub OAuth2 Login successful for user: " + userName);
-    }
+//    @GetMapping("/login/oauth2")
+//    public String redirectToAuthorizationEndpoint() {
+//        return "redirect:/login/oauth2/code/github";
+//    }
+//
+//    @GetMapping("/login/oauth2/code/github")
+//    @ResponseBody
+//    public ResponseEntity<?> handleGitLabCallback(@RequestParam("code") String code, OAuth2AuthenticationToken authenticationToken) {
+//        DefaultOAuth2User oauth2User = (DefaultOAuth2User) authenticationToken.getPrincipal();
+//
+//        // Get the user's name attribute, if available
+//        String userName = oauth2User.getAttribute("name");
+//        System.out.println();
+//        if (userName == null) {
+//            // Handle the case when the name attribute is null
+//            // You can choose to set a default name or return an error response
+//            return ResponseEntity.badRequest().body("User name attribute is missing");
+//        }
+//
+//        // Perform necessary actions with the user's name
+//        return ResponseEntity.ok("GitHub OAuth2 Login successful for user: " + userName);
+//    }
 }
