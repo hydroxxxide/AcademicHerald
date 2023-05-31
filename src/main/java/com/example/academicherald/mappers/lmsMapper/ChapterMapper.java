@@ -30,7 +30,7 @@ public class ChapterMapper {
         }
         return chapterDtoList;
     }
-//    public Chapter convertToEntity(ChapterDto chapterDto) {
-//        return mapper.map(chapterDto, Chapter.class);
-//    }
+    public Chapter convertToEntity(ChapterDto chapterDto) {
+        return mapper.map(chapterDto, Chapter.class);
+    }
 }
