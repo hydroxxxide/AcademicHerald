@@ -41,7 +41,7 @@ public class ExerciseController {
     ) {
         try {
             exerciseService.submitExercise(exerciseId, studentId, submittedExercise);
-            return ResponseEntity.ok("Exercise submitted successfully.");
+            return ResponseEntity.ok("Вы сдали домашнюю работу!");
         } catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }

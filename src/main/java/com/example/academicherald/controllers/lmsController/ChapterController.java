@@ -23,8 +23,9 @@ public class ChapterController {
     }
 
     @PostMapping("/create")
-    public ChapterDto createChapter(@RequestBody Chapter chapter,
-                                   @RequestParam Long courseId) {
+    public ChapterDto createChapter(@RequestBody ChapterDto chapterDto,
+                                    @RequestParam Long courseId) {
+        Chapter chapter = chapterMapper.convertToEntity(chapterDto);
         Chapter createdChapter = chapterService.createChapter(chapter, courseId);
         return chapterMapper.convertToDto(createdChapter);
     }

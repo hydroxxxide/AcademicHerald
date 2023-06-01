@@ -22,7 +22,7 @@ public class CourseService {
     }
 
     public Course create(Course course, Long mentorId) {
-        User mentor = userRepository.findByIdAndRole(mentorId, UserRole.ROLE_MENTORR);
+        User mentor = userRepository.findByIdAndRole(mentorId, UserRole.ROLE_MENTOR);
         course.setMentor(mentor);
         return courseRepository.save(course);
     }

@@ -29,7 +29,8 @@ public class LecturesService {
     }
 
     public Lectures createLecture(Lectures lecture, Long chapterId) {
-        Chapter chapter = chapterRepository.findById(chapterId).orElse(null);
+        Chapter chapter = chapterRepository.findById(chapterId).orElseThrow(() -> new IllegalArgumentException("Chapter not found with ID: " + chapterId));
+
         lecture.setChapter(chapter);
         return lecturesRepository.save(lecture);
     }
