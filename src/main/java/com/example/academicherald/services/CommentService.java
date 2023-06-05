@@ -25,8 +25,8 @@ public class CommentService {
     }
 
     public Comment create(Comment comment, Long userId, Long publicationId) {
-        User author = userRepository.findById(userId).orElse(null);
-        Publication publication = publicationRepository.findById(publicationId).orElse(null);
+        User author = userRepository.findByIdAndRdtIsNull(userId);
+        Publication publication = publicationRepository.findByIdAndPassAndRdtIsNull(publicationId, true);
         comment.setUser(author);
         comment.setPublication(publication);
         return commentRepository.save(comment);
@@ -44,16 +44,14 @@ public class CommentService {
 
     //Вытаскиваем список комментариев к определенному посту по id
     public List<Comment> allCommentsByIdPublic(Long publicationId) {
-        Publication publication = publicationRepository.findById(publicationId).orElse(null);
-        List<Comment> comments = commentRepository.findByPublicationAndRdtIsNull(publication);
-        return comments;
+        Publication publication = publicationRepository.findByIdAndPassAndRdtIsNull(publicationId, true);
+        return commentRepository.findByPublicationAndRdtIsNull(publication);
     }
 
     //Вытаскиваем список комментариев который написал пользователь за все время
     public List<Comment> allCommentsByUser(Long userId) {
-        User user = userRepository.findById(userId).orElse(null);
-        List<Comment> comments = commentRepository.findByUserAndRdtIsNull(user);
-        return comments;
+        User user = userRepository.findByIdAndRdtIsNull(userId);
+        return commentRepository.findByUserAndRdtIsNull(user);
     }
 
     public void deleteComment(Long id) {

@@ -1,12 +1,11 @@
 package com.example.academicherald.dto;
 
 import com.example.academicherald.enums.PublicationType;
-
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import java.time.LocalDateTime;
 import java.util.List;
 

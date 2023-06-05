@@ -1,14 +1,14 @@
 package com.example.academicherald.entity;
 
-import com.example.academicherald.enums.UserRole;
 import com.example.academicherald.entity.lms.Course;
+import com.example.academicherald.enums.UserRole;
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import javax.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;

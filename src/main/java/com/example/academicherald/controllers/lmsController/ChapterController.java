@@ -1,8 +1,8 @@
 package com.example.academicherald.controllers.lmsController;
 
 import com.example.academicherald.dto.lmsDto.ChapterDto;
-import com.example.academicherald.mappers.lmsMapper.ChapterMapper;
 import com.example.academicherald.entity.lms.Chapter;
+import com.example.academicherald.mappers.lmsMapper.ChapterMapper;
 import com.example.academicherald.services.lmsService.ChapterService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

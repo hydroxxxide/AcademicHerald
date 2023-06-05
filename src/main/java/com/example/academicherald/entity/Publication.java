@@ -3,14 +3,13 @@ package com.example.academicherald.entity;
 import com.example.academicherald.enums.PublicationType;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import javax.persistence.*;
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -63,6 +62,9 @@ public class Publication {
     )
     @JsonIgnore
     private List<Tag> tags;
+
+    @OneToMany
+    private List<Like> likes;
 
     private Boolean pass = false;
 

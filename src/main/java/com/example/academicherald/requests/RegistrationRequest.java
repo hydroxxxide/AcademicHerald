@@ -14,10 +14,4 @@ public class RegistrationRequest {
     private String username;
     private String password;
     private String email;
-
-    // Дополнительные поля, такие как имя, фамилия, электронная почта и т.д.
-
-    // Конструкторы, геттеры и сеттеры
-
-    // Дополнительные методы, если необходимо
 }

@@ -1,11 +1,12 @@
 package com.example.academicherald.entity.lms;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import javax.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import javax.persistence.*;
 
 @Entity
 @Table(name = "lectures")
@@ -29,8 +30,4 @@ public class Lectures {
             chapter.getLectures().add(this); // Добавляем текущую лекцию в список лекций главы
         }
     }
-
-
-    //    private String lectureTheme;
-//    private String text;
 }

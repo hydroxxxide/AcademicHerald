@@ -1,8 +1,8 @@
 package com.example.academicherald.controllers;
 
 import com.example.academicherald.dto.CategoryDto;
-import com.example.academicherald.mappers.CategoryMapper;
 import com.example.academicherald.entity.Category;
+import com.example.academicherald.mappers.CategoryMapper;
 import com.example.academicherald.services.CategoryService;
 import org.springframework.web.bind.annotation.*;
 
@@ -37,8 +37,8 @@ public class CategoryController {
     }
 
     @PutMapping("/update")
-    public CategoryDto update(@RequestBody CategoryDto categoryDto) {
-        return mapper.convertToDto(categoryService.update(mapper.convertToEntity(categoryDto)));
+    public CategoryDto update(@RequestBody Category category) {
+        return mapper.convertToDto(categoryService.update(category));
     }
 
     @DeleteMapping("/delete/{id}")

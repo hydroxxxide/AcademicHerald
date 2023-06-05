@@ -1,8 +1,8 @@
 package com.example.academicherald.controllers;
 
 import com.example.academicherald.dto.UserDto;
-import com.example.academicherald.mappers.UserMapper;
 import com.example.academicherald.entity.User;
+import com.example.academicherald.mappers.UserMapper;
 import com.example.academicherald.services.UserService;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,7 +19,6 @@ public class UserController {
     }
 
     @PostMapping("/create")
-    @ResponseBody
     public UserDto create(@RequestBody User user) {
         return mapper.convertToDTO(userService.create(user));
     }
@@ -56,7 +55,11 @@ public class UserController {
 
     @GetMapping("/payment")
     public String redirectToPaymentForm(){
-        return "redirect:https://docs.google.com/forms/d/e/1FAIpQLSedV3V8kaTlySCfodun9n-_QwzvMkWV8GYKmIRos7sZN6wawA/viewform";
+        return "https://docs.google.com/forms/d/e/1FAIpQLSedV3V8kaTlySCfodun9n-_QwzvMkWV8GYKmIRos7sZN6wawA/viewform";
     }
 
+    @PostMapping("/like/{pId}/{uId}")
+    public void likePublication(@PathVariable Long pId, @PathVariable Long uId){
+        userService.likePublication(pId, uId);
+    }
 }

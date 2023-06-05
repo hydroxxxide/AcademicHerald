@@ -9,14 +9,13 @@ import java.util.Collection;
 import java.util.Collections;
 
 public class DetailsUser implements UserDetails {
-    private User user;
+    private final User user;
 
     public DetailsUser(User user) {
         this.user = user;
     }
 
-    public DetailsUser() {
-    }
+
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

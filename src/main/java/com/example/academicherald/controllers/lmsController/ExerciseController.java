@@ -2,11 +2,10 @@ package com.example.academicherald.controllers.lmsController;
 
 import com.example.academicherald.dto.lmsDto.ExerciseDto;
 import com.example.academicherald.dto.lmsDto.SubmittedExerciseDto;
-import com.example.academicherald.mappers.lmsMapper.ExerciseMapper;
-import com.example.academicherald.mappers.lmsMapper.SubmittedExerciseMapper;
 import com.example.academicherald.entity.lms.Exercise;
 import com.example.academicherald.entity.lms.SubmittedExercise;
-import com.example.academicherald.services.UserService;
+import com.example.academicherald.mappers.lmsMapper.ExerciseMapper;
+import com.example.academicherald.mappers.lmsMapper.SubmittedExerciseMapper;
 import com.example.academicherald.services.lmsService.ExerciseService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,13 +17,11 @@ import org.springframework.web.bind.annotation.*;
 public class ExerciseController {
     private final ExerciseService exerciseService;
     private final ExerciseMapper exerciseMapper;
-    private final UserService userService;
     private final SubmittedExerciseMapper submittedExerciseMapper;
 
-    public ExerciseController(ExerciseService exerciseService, ExerciseMapper exerciseMapper, UserService userService, SubmittedExerciseMapper submittedExerciseMapper) {
+    public ExerciseController(ExerciseService exerciseService, ExerciseMapper exerciseMapper, SubmittedExerciseMapper submittedExerciseMapper) {
         this.exerciseService = exerciseService;
         this.exerciseMapper = exerciseMapper;
-        this.userService = userService;
         this.submittedExerciseMapper = submittedExerciseMapper;
     }
 

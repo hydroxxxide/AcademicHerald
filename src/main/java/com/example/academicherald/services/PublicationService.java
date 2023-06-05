@@ -1,7 +1,10 @@
 package com.example.academicherald.services;
 
+import com.example.academicherald.entity.Category;
+import com.example.academicherald.entity.Publication;
+import com.example.academicherald.entity.Tag;
+import com.example.academicherald.entity.User;
 import com.example.academicherald.enums.PublicationType;
-import com.example.academicherald.entity.*;
 import com.example.academicherald.repositories.PublicationRepository;
 import com.example.academicherald.repositories.UserRepository;
 import org.springframework.stereotype.Service;
@@ -10,6 +13,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class PublicationService {
@@ -57,16 +61,8 @@ public class PublicationService {
         publication.setCategory(category);
         publication.setTags(tags);
 
-        if (publication.getType().equals(PublicationType.NEWS)){
-            for (String email:
-                    userRepository.findAllEmails()) {
-                String subject = "Новая новость";
-                String text = "Доброго времени суток, у нас есть новая новость!\n\n" +
-                        publication.getTitle() +
-                        "\n" +
-                        publication.getSubtitle();
-                emailService.sendSimpleMessage(email, subject, text);
-            }
+        if (publication.getType().equals(PublicationType.NEWS)) {
+            emailService.sendNewsPublicationMessage(publication);
         }
         return publicationRepository.save(publication);
     }
@@ -102,15 +98,16 @@ public class PublicationService {
         return publicationRepository.getAllByPassAndRdtIsNull(false);
     }
 
-    public Publication update(Publication newPublication, Long userId) throws Exception{
+    public Publication update(Publication newPublication, Long userId, Long categoryId) throws Exception{
         Publication oldPublication = getById(newPublication.getId());
         User author = userService.getById(userId);
         if (author.equals(oldPublication.getAuthor())){
+            oldPublication.setAuthor(userService.getById(userId));
             oldPublication.setTitle(newPublication.getTitle());
             oldPublication.setSubtitle(newPublication.getSubtitle());
             oldPublication.setText(newPublication.getText());
             oldPublication.setDateOfCreation(newPublication.getDateOfCreation());
-            oldPublication.setCategory(newPublication.getCategory());
+            oldPublication.setCategory(categoryService.getById(categoryId));
             oldPublication.setType(newPublication.getType());
             return publicationRepository.save(oldPublication);
         }
@@ -125,8 +122,16 @@ public class PublicationService {
 
     public void confirmPublication(Long id, Boolean res){
         Publication publication = publicationRepository.findById(id).orElse(null);
+        assert publication != null;
         publication.setPass(res);
         publicationRepository.save(publication);
+    }
+
+    public List<Publication> sortByPopularity() {
+        List<Publication> programs = publicationRepository.findAll();
+        return programs.stream()
+                .sorted((p1, p2) -> Integer.compare(p2.getLikes().size(), p1.getLikes().size()))
+                .collect(Collectors.toList());
     }
 
 }

@@ -2,7 +2,6 @@ package com.example.academicherald.dto.lmsDto;
 
 import com.example.academicherald.dto.UserDto;
 import com.example.academicherald.enums.CourseType;
-
 import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 

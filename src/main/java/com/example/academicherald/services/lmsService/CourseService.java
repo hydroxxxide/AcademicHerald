@@ -1,8 +1,8 @@
 package com.example.academicherald.services.lmsService;
 
-import com.example.academicherald.enums.UserRole;
 import com.example.academicherald.entity.User;
 import com.example.academicherald.entity.lms.Course;
+import com.example.academicherald.enums.UserRole;
 import com.example.academicherald.repositories.UserRepository;
 import com.example.academicherald.repositories.lmsRepo.CourseRepository;
 import org.springframework.stereotype.Service;

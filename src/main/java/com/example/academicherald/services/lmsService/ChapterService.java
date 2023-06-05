@@ -26,6 +26,7 @@ public class ChapterService {
 
     public Chapter createChapter(Chapter chapter, Long courseId) {
         Course course = courseRepository.findById(courseId).orElse(null);
+        assert course != null;
         chapter.setCourse(course);
         return chapterRepository.save(chapter);
     }

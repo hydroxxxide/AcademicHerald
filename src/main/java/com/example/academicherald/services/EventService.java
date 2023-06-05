@@ -3,6 +3,7 @@ package com.example.academicherald.services;
 import com.example.academicherald.entity.Event;
 import com.example.academicherald.entity.User;
 import com.example.academicherald.repositories.EventRepository;
+import com.example.academicherald.repositories.UserRepository;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -12,16 +13,21 @@ import java.util.List;
 public class EventService {
     private final EventRepository eventRepository;
     private final UserService userService;
+    private final UserRepository userRepository;
+    private final EmailService emailService;
 
-    public EventService(EventRepository eventRepository, UserService userService) {
+    public EventService(EventRepository eventRepository, UserService userService, UserRepository userRepository, EmailService emailService) {
         this.eventRepository = eventRepository;
         this.userService = userService;
+        this.userRepository = userRepository;
+        this.emailService = emailService;
     }
 
     public Event create(Event event, Long userId) {
         event.setDateOfCreation(LocalDateTime.now());
         User author = userService.getById(userId);
         event.setAuthor(author);
+        emailService.sendEventPublicationMessage(event);
         return eventRepository.save(event);
     }
 

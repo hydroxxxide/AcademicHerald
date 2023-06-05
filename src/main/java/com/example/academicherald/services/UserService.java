@@ -1,6 +1,10 @@
 package com.example.academicherald.services;
 
+import com.example.academicherald.entity.Like;
+import com.example.academicherald.entity.Publication;
 import com.example.academicherald.entity.User;
+import com.example.academicherald.repositories.LikeRepository;
+import com.example.academicherald.repositories.PublicationRepository;
 import com.example.academicherald.repositories.UserRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -14,11 +18,19 @@ import java.util.UUID;
 @Service
 public class UserService {
     private final UserRepository userRepository;
+    private final PublicationRepository publicationRepository;
+    private final LikeRepository likeRepository;
     private final EmailService emailService;
     private final PasswordEncoder passwordEncoder;
 
-    public UserService(UserRepository userRepository, EmailService emailService, PasswordEncoder passwordEncoder) {
+    public UserService(UserRepository userRepository,
+                       PublicationRepository publicationRepository,
+                       LikeRepository likeRepository,
+                       EmailService emailService,
+                       PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
+        this.publicationRepository = publicationRepository;
+        this.likeRepository = likeRepository;
         this.emailService = emailService;
         this.passwordEncoder = passwordEncoder;
     }
@@ -88,5 +100,20 @@ public class UserService {
     public boolean isPresentUsername(String username) {
         User user = userRepository.findByUsername(username);
         return user != null;
+    }
+
+    public void likePublication(Long publicationId, Long userId){
+        User user = getById(userId);
+        Publication publication = publicationRepository.findById(publicationId).orElseThrow();
+        Like like = new Like();
+        if (likeRepository.findByPublicationIdAndUserId(publicationId, userId) == null){
+            like.setUser(user);
+            like.setPublication(publication);
+            publication.getLikes().add(like);
+            likeRepository.save(like);
+        }else{
+            publication.getLikes().remove(likeRepository.findByPublicationIdAndUserId(publicationId, userId));
+            likeRepository.delete(likeRepository.findByPublicationIdAndUserId(publicationId, userId));
+        }
     }
 }

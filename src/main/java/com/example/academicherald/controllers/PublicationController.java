@@ -1,10 +1,8 @@
 package com.example.academicherald.controllers;
 
 import com.example.academicherald.dto.PublicationDto;
-import com.example.academicherald.mappers.PublicationMapper;
 import com.example.academicherald.entity.Publication;
-import com.example.academicherald.repositories.UserRepository;
-import com.example.academicherald.services.EmailService;
+import com.example.academicherald.mappers.PublicationMapper;
 import com.example.academicherald.services.PublicationService;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,15 +13,11 @@ import java.util.List;
 public class PublicationController {
     private final PublicationService publicationService;
     private final PublicationMapper mapper;
-    private final EmailService emailService;
-    private final UserRepository userRepository;
 
 
-    public PublicationController(PublicationService publicationService, PublicationMapper mapper, EmailService emailService, UserRepository userRepository) {
+    public PublicationController(PublicationService publicationService, PublicationMapper mapper) {
         this.publicationService = publicationService;
         this.mapper = mapper;
-        this.emailService = emailService;
-        this.userRepository = userRepository;
     }
 
 
@@ -48,9 +42,11 @@ public class PublicationController {
         return mapper.convertToDTOList(publicationService.getAllAccepted());
     }
 
-    @PutMapping("/update/{userId}")
-    public PublicationDto update(@RequestBody Publication publication, @PathVariable Long userId) throws Exception{
-        return mapper.convertToDto(publicationService.update(publication, userId));
+    @PutMapping("/update")
+    public PublicationDto update(@RequestBody Publication publication,
+                                 @RequestParam Long userId,
+                                 @RequestParam Long categoryId) throws Exception{
+        return mapper.convertToDto(publicationService.update(publication, userId, categoryId));
     }
 
     @DeleteMapping("/delete/{id}")
@@ -76,4 +72,8 @@ public class PublicationController {
         return mapper.convertToDTOList(publications);
     }
 
+    @GetMapping("/popular")
+    public List<PublicationDto> getPopularPublicationList() {
+        return mapper.convertToDTOList(publicationService.sortByPopularity());
+    }
 }

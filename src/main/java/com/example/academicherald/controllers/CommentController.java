@@ -1,8 +1,8 @@
 package com.example.academicherald.controllers;
 
 import com.example.academicherald.dto.CommentDto;
-import com.example.academicherald.mappers.CommentMapper;
 import com.example.academicherald.entity.Comment;
+import com.example.academicherald.mappers.CommentMapper;
 import com.example.academicherald.services.CommentService;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,8 +24,7 @@ public class CommentController {
                              @RequestParam Long userId,
                              @RequestParam Long publicationId) {
         Comment comment = commentMapper.convertToEntity(commentDto);
-        Comment createdComment = commentService.create(comment, userId, publicationId);
-        return commentMapper.convertToDto(createdComment);
+        return commentMapper.convertToDto(commentService.create(comment, userId, publicationId));
     }
 
     @GetMapping("/getById/{id}")

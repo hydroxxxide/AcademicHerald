@@ -7,23 +7,23 @@ import java.sql.Timestamp;
 import java.time.LocalDateTime;
 @Data
 public class EventDto {
-    private String title;
+    private String title; // заголовок ивента
 
-    private String subtitle;
+    private String subtitle; // подзаголовок
 
-    private String text;
-
-    @DateTimeFormat(pattern = "dd-MM-yyyy HH:mm:ss")
-    private LocalDateTime dateOfCreation;
-
-    private UserDto author;
+    private String text; // текст, описание
 
     @DateTimeFormat(pattern = "dd-MM-yyyy HH:mm:ss")
-    private LocalDateTime dateOfEvent;
+    private LocalDateTime dateOfCreation; // дата создания, публикации
 
-    private Timestamp startTime;
+    private UserDto author; // автор публикации
 
-    private String location;
+    @DateTimeFormat(pattern = "dd-MM-yyyy HH:mm:ss")
+    private LocalDateTime dateOfEvent; // дата проведения ивента
 
-    private Double duration;
+    private Timestamp startTime; // начало ивента
+
+    private String location; // место проведения ивента
+
+    private Double duration; // продолжительность ивента
 }
