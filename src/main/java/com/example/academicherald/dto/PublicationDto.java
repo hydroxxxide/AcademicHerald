@@ -1,9 +1,7 @@
 package com.example.academicherald.dto;
 
 import com.example.academicherald.enums.PublicationType;
-import com.example.academicherald.models.Category;
-import com.example.academicherald.models.Tag;
-import com.example.academicherald.models.User;
+
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import lombok.Data;
@@ -11,7 +9,6 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Set;
 
 @Data
 public class PublicationDto {

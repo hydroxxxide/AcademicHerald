@@ -1,13 +1,12 @@
 package com.example.academicherald.services.lmsService;
 
 import com.example.academicherald.enums.UserRole;
-import com.example.academicherald.models.User;
-import com.example.academicherald.models.lms.Course;
+import com.example.academicherald.entity.User;
+import com.example.academicherald.entity.lms.Course;
 import com.example.academicherald.repositories.UserRepository;
 import com.example.academicherald.repositories.lmsRepo.CourseRepository;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -23,6 +22,9 @@ public class CourseService {
 
     public Course create(Course course, Long mentorId) {
         User mentor = userRepository.findByIdAndRole(mentorId, UserRole.ROLE_MENTOR);
+        if(mentor == null){
+            throw new IllegalArgumentException("Укажите ментора курса");
+        }
         course.setMentor(mentor);
         return courseRepository.save(course);
     }

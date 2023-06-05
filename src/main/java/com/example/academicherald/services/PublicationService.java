@@ -1,7 +1,7 @@
 package com.example.academicherald.services;
 
 import com.example.academicherald.enums.PublicationType;
-import com.example.academicherald.models.*;
+import com.example.academicherald.entity.*;
 import com.example.academicherald.repositories.PublicationRepository;
 import com.example.academicherald.repositories.UserRepository;
 import org.springframework.stereotype.Service;
@@ -39,6 +39,9 @@ public class PublicationService {
         List<Tag> tags = new ArrayList<>();
         for (Long tagId : tagIds) {
             Tag tag = tagService.getById(tagId);
+            if (tags.contains(tag)) {
+                throw new IllegalArgumentException("Теги должны быть уникальными");
+            }
             tags.add(tag);
         }
 

@@ -1,6 +1,5 @@
-package com.example.academicherald.models.lms;
+package com.example.academicherald.entity.lms;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import javax.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

@@ -1,9 +1,8 @@
 package com.example.academicherald.controllers;
 
 import com.example.academicherald.dto.PublicationDto;
-import com.example.academicherald.enums.PublicationType;
 import com.example.academicherald.mappers.PublicationMapper;
-import com.example.academicherald.models.Publication;
+import com.example.academicherald.entity.Publication;
 import com.example.academicherald.repositories.UserRepository;
 import com.example.academicherald.services.EmailService;
 import com.example.academicherald.services.PublicationService;

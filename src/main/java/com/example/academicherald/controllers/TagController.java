@@ -2,7 +2,7 @@ package com.example.academicherald.controllers;
 
 import com.example.academicherald.dto.TagDto;
 import com.example.academicherald.mappers.TagMapper;
-import com.example.academicherald.models.Tag;
+import com.example.academicherald.entity.Tag;
 import com.example.academicherald.services.TagService;
 import org.springframework.web.bind.annotation.*;
 

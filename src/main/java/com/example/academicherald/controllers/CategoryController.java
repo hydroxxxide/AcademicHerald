@@ -2,7 +2,7 @@ package com.example.academicherald.controllers;
 
 import com.example.academicherald.dto.CategoryDto;
 import com.example.academicherald.mappers.CategoryMapper;
-import com.example.academicherald.models.Category;
+import com.example.academicherald.entity.Category;
 import com.example.academicherald.services.CategoryService;
 import org.springframework.web.bind.annotation.*;
 

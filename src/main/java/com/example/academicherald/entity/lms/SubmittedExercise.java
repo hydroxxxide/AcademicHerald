@@ -1,6 +1,6 @@
-package com.example.academicherald.models.lms;
+package com.example.academicherald.entity.lms;
 
-import com.example.academicherald.models.User;
+import com.example.academicherald.entity.User;
 import javax.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

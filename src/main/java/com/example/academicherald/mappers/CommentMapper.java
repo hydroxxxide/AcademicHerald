@@ -1,9 +1,7 @@
 package com.example.academicherald.mappers;
 
 import com.example.academicherald.dto.CommentDto;
-import com.example.academicherald.dto.lmsDto.ExerciseDto;
-import com.example.academicherald.models.Comment;
-import com.example.academicherald.models.lms.Exercise;
+import com.example.academicherald.entity.Comment;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 
