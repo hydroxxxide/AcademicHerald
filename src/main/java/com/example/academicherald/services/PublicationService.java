@@ -35,7 +35,7 @@ public class PublicationService {
         this.emailService = emailService;
     }
 
-    public Publication create(Publication publication, Long userId, Long categoryId, Long[] tagIds) {
+    public Publication create(Publication publication, Long userId, Long categoryId, Long[] tagIds) throws Exception {
         publication.setDateOfCreation(LocalDateTime.now());
         User author = userService.getById(userId);
         Category category = categoryService.getById(categoryId);

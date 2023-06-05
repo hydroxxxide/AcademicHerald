@@ -24,7 +24,7 @@ public class UserController {
     }
 
     @GetMapping("/get/{id}")
-    public UserDto getById(@PathVariable Long id) {
+    public UserDto getById(@PathVariable Long id) throws Exception {
         return mapper.convertToDTO(userService.getById(id));
     }
 
@@ -34,12 +34,12 @@ public class UserController {
     }
 
     @PutMapping("/update")
-    public UserDto update(@RequestBody User newUser) {
+    public UserDto update(@RequestBody User newUser) throws Exception {
         return mapper.convertToDTO(userService.update(newUser));
     }
 
     @DeleteMapping("/delete/{id}")
-    public void delete(@PathVariable Long id) {
+    public void delete(@PathVariable Long id) throws Exception {
         userService.delete(id);
     }
 
@@ -59,7 +59,7 @@ public class UserController {
     }
 
     @PostMapping("/like/{pId}/{uId}")
-    public void likePublication(@PathVariable Long pId, @PathVariable Long uId){
+    public void likePublication(@PathVariable Long pId, @PathVariable Long uId) throws Exception {
         userService.likePublication(pId, uId);
     }
 }
