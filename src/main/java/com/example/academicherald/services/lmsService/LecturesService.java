@@ -1,37 +1,38 @@
 package com.example.academicherald.services.lmsService;
 
-import com.example.academicherald.enums.CourseType;
-import com.example.academicherald.enums.UserRole;
-import com.example.academicherald.models.User;
-import com.example.academicherald.models.lms.Chapter;
-import com.example.academicherald.models.lms.Course;
-import com.example.academicherald.models.lms.Lectures;
+import com.example.academicherald.entity.lms.Chapter;
+import com.example.academicherald.entity.lms.Lectures;
+import com.example.academicherald.entity.lms.Material;
 import com.example.academicherald.repositories.lmsRepo.ChapterRepository;
-import com.example.academicherald.repositories.lmsRepo.CourseRepository;
 import com.example.academicherald.repositories.lmsRepo.LecturesRepository;
+import com.example.academicherald.repositories.lmsRepo.MaterialRepository;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 public class LecturesService {
     private final LecturesRepository lecturesRepository;
-    private final CourseRepository courseRepository;
-    private final CourseService courseService;
-    private final ChapterRepository chapterRepository;
 
-    public LecturesService(LecturesRepository lecturesRepository, CourseRepository courseRepository, CourseService courseService,
-                           ChapterRepository chapterRepository) {
+    private final ChapterRepository chapterRepository;
+    private final MaterialRepository materialRepository;
+
+    public LecturesService(LecturesRepository lecturesRepository,
+                           ChapterRepository chapterRepository, MaterialRepository materialRepository) {
         this.lecturesRepository = lecturesRepository;
-        this.courseRepository = courseRepository;
-        this.courseService = courseService;
+
         this.chapterRepository = chapterRepository;
+        this.materialRepository = materialRepository;
     }
 
     public Lectures createLecture(Lectures lecture, Long chapterId) {
         Chapter chapter = chapterRepository.findById(chapterId).orElseThrow(() -> new IllegalArgumentException("Chapter not found with ID: " + chapterId));
+        Material material1 = lecture.getMaterial();
+        Material material = new Material();
+        material.setTheme(material1.getTheme());
+        material.setText(material1.getText());
+        material = materialRepository.save(material);
 
         lecture.setChapter(chapter);
+        lecture.setMaterial(material);
         return lecturesRepository.save(lecture);
     }
 

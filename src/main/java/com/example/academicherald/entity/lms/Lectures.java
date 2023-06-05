@@ -1,4 +1,4 @@
-package com.example.academicherald.models.lms;
+package com.example.academicherald.entity.lms;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import javax.persistence.*;
@@ -6,8 +6,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
-import javax.persistence.*;
 
 @Entity
 @Table(name = "lectures")
@@ -22,9 +20,9 @@ public class Lectures {
     @ManyToOne
     @JsonIgnore
     private Chapter chapter;
-    private String lectureTheme;
-    private String text;
-
+    private String title;
+    @OneToOne
+    private Material material;
     public void setChapter(Chapter chapter) {
         this.chapter = chapter;
         if (chapter != null) {
@@ -32,4 +30,7 @@ public class Lectures {
         }
     }
 
+
+    //    private String lectureTheme;
+//    private String text;
 }

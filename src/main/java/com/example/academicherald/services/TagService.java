@@ -1,6 +1,6 @@
 package com.example.academicherald.services;
 
-import com.example.academicherald.models.Tag;
+import com.example.academicherald.entity.Tag;
 import com.example.academicherald.repositories.TagRepository;
 import org.springframework.stereotype.Service;
 

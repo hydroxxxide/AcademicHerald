@@ -1,12 +1,13 @@
 package com.example.academicherald.controllers.lmsController;
 
 import com.example.academicherald.dto.lmsDto.ExerciseDto;
+import com.example.academicherald.dto.lmsDto.SubmittedExerciseDto;
 import com.example.academicherald.mappers.lmsMapper.ExerciseMapper;
-import com.example.academicherald.models.lms.Exercise;
-import com.example.academicherald.models.lms.SubmittedExercise;
+import com.example.academicherald.mappers.lmsMapper.SubmittedExerciseMapper;
+import com.example.academicherald.entity.lms.Exercise;
+import com.example.academicherald.entity.lms.SubmittedExercise;
 import com.example.academicherald.services.UserService;
 import com.example.academicherald.services.lmsService.ExerciseService;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,11 +19,13 @@ public class ExerciseController {
     private final ExerciseService exerciseService;
     private final ExerciseMapper exerciseMapper;
     private final UserService userService;
+    private final SubmittedExerciseMapper submittedExerciseMapper;
 
-    public ExerciseController(ExerciseService exerciseService, ExerciseMapper exerciseMapper, UserService userService) {
+    public ExerciseController(ExerciseService exerciseService, ExerciseMapper exerciseMapper, UserService userService, SubmittedExerciseMapper submittedExerciseMapper) {
         this.exerciseService = exerciseService;
         this.exerciseMapper = exerciseMapper;
         this.userService = userService;
+        this.submittedExerciseMapper = submittedExerciseMapper;
     }
 
     @PostMapping("/create")
@@ -37,9 +40,10 @@ public class ExerciseController {
     public ResponseEntity<String> submitExercise(
             @PathVariable Long exerciseId,
             @RequestParam Long studentId,
-            @RequestBody SubmittedExercise submittedExercise
+            @RequestBody SubmittedExerciseDto submittedExerciseDto
     ) {
         try {
+            SubmittedExercise submittedExercise = submittedExerciseMapper.convertToEntity(submittedExerciseDto);
             exerciseService.submitExercise(exerciseId, studentId, submittedExercise);
             return ResponseEntity.ok("Вы сдали домашнюю работу!");
         } catch (IllegalArgumentException e) {

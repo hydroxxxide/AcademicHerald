@@ -1,4 +1,4 @@
-package com.example.academicherald.models.lms;
+package com.example.academicherald.entity.lms;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -25,8 +25,9 @@ public class Exercise {
     @JsonIgnore
     private Chapter chapter;
     private LocalDateTime deadline;
-    private String name;
-    private String text;
+    private String title;
+    @OneToOne
+    private Material material;
     @OneToMany
     @JsonBackReference
     private List<SubmittedExercise> submittedExerciseList;

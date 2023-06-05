@@ -2,7 +2,7 @@ package com.example.academicherald.controllers;
 
 
 import com.example.academicherald.enums.UserRole;
-import com.example.academicherald.models.User;
+import com.example.academicherald.entity.User;
 import com.example.academicherald.requests.AuthenticationRequest;
 import com.example.academicherald.requests.AuthenticationResponse;
 import com.example.academicherald.requests.RegistrationRequest;
@@ -15,8 +15,6 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
-import org.springframework.security.oauth2.core.user.DefaultOAuth2User;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 

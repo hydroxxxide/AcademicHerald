@@ -1,7 +1,7 @@
 package com.example.academicherald.mappers;
 
 import com.example.academicherald.dto.EventDto;
-import com.example.academicherald.models.Event;
+import com.example.academicherald.entity.Event;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 

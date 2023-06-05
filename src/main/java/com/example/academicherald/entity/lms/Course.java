@@ -1,7 +1,7 @@
-package com.example.academicherald.models.lms;
+package com.example.academicherald.entity.lms;
 
 import com.example.academicherald.enums.CourseType;
-import com.example.academicherald.models.User;
+import com.example.academicherald.entity.User;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import javax.persistence.*;
@@ -9,10 +9,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.annotations.Where;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.List;
 

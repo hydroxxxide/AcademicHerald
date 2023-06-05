@@ -1,4 +1,4 @@
-package com.example.academicherald.models;
+package com.example.academicherald.entity;
 
 import com.example.academicherald.enums.PublicationType;
 import com.fasterxml.jackson.annotation.JsonBackReference;
@@ -11,7 +11,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 import java.util.List;

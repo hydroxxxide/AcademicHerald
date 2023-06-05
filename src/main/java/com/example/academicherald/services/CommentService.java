@@ -1,8 +1,8 @@
 package com.example.academicherald.services;
 
-import com.example.academicherald.models.Comment;
-import com.example.academicherald.models.Publication;
-import com.example.academicherald.models.User;
+import com.example.academicherald.entity.Comment;
+import com.example.academicherald.entity.Publication;
+import com.example.academicherald.entity.User;
 import com.example.academicherald.repositories.CommentRepository;
 import com.example.academicherald.repositories.PublicationRepository;
 import com.example.academicherald.repositories.UserRepository;

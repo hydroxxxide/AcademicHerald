@@ -1,7 +1,7 @@
 package com.example.academicherald.services;
 
-import com.example.academicherald.models.Event;
-import com.example.academicherald.models.User;
+import com.example.academicherald.entity.Event;
+import com.example.academicherald.entity.User;
 import com.example.academicherald.repositories.EventRepository;
 import org.springframework.stereotype.Service;
 

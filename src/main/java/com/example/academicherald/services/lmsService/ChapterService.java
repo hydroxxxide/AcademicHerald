@@ -1,9 +1,9 @@
 package com.example.academicherald.services.lmsService;
 
-import com.example.academicherald.models.lms.Chapter;
-import com.example.academicherald.models.lms.Course;
-import com.example.academicherald.models.lms.Exercise;
-import com.example.academicherald.models.lms.Lectures;
+import com.example.academicherald.entity.lms.Chapter;
+import com.example.academicherald.entity.lms.Course;
+import com.example.academicherald.entity.lms.Exercise;
+import com.example.academicherald.entity.lms.Lectures;
 import com.example.academicherald.repositories.lmsRepo.ChapterRepository;
 import com.example.academicherald.repositories.lmsRepo.CourseRepository;
 import com.example.academicherald.repositories.lmsRepo.LecturesRepository;

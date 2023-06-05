@@ -2,7 +2,7 @@ package com.example.academicherald.controllers.lmsController;
 
 import com.example.academicherald.dto.lmsDto.CourseDto;
 import com.example.academicherald.mappers.lmsMapper.CourseMapper;
-import com.example.academicherald.models.lms.Course;
+import com.example.academicherald.entity.lms.Course;
 import com.example.academicherald.services.lmsService.CourseService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
