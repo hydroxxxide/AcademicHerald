@@ -6,6 +6,7 @@ import com.example.academicherald.repositories.lmsRepo.ChapterRepository;
 import com.example.academicherald.repositories.lmsRepo.CourseRepository;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -28,20 +29,24 @@ public class ChapterService {
     }
 
     public Chapter updateChapter(Chapter newChapter) {
-        Chapter oldChapter = chapterRepository.getById(newChapter.getId());
+        Chapter oldChapter = getById(newChapter.getId());
         oldChapter.setName(newChapter.getName());
         oldChapter.setCourse(newChapter.getCourse());
         oldChapter.setExercises(newChapter.getExercises());
         return chapterRepository.save(oldChapter);
-
     }
 
-    public Optional<Chapter> getById(Long id) {
-        return chapterRepository.findById(id);
+    public Chapter getById(Long id) {
+        return chapterRepository.findByIdAndRdtIsNull(id);
     }
 
-    public List<Chapter> getAllChapterByCourse(Long courseId) {
-        return chapterRepository.findByCourseId(courseId);
+    public void delete(Long id) {
+        Chapter chapter = getById(id);
+        chapter.setRdt(LocalDateTime.now());
+        chapterRepository.save(chapter);
     }
 
+    public List<Chapter> getAllChaptersByCourse(Long courseId) {
+        return chapterRepository.findByCourseIdAndRdtIsNull(courseId);
+    }
 }

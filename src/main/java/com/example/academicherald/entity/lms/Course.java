@@ -24,20 +24,24 @@ public class Course {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @Enumerated(EnumType.STRING)
     private CourseType type;
+
     @DateTimeFormat(pattern = "dd-MM-yyyy")
     private LocalDateTime startCourse = LocalDateTime.now();
+
     @ManyToOne
     @JoinColumn(name = "mentor_id")
     @JsonManagedReference
     private User mentor;
+
     @OneToMany
     private List<User> students;
+
     @OneToMany
     @JsonIgnore
     private List<Chapter> chapters;
 
-
-
+    private LocalDateTime rdt;
 }

@@ -21,16 +21,22 @@ public class Exercise {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @ManyToOne
     @JsonIgnore
     private Chapter chapter;
+
     private LocalDateTime deadline;
+
     private String title;
+
     @OneToOne
     private Material material;
+
     @OneToMany
     @JsonBackReference
     private List<SubmittedExercise> submittedExerciseList;
+
 
     public void setChapter(Chapter chapter) {
         this.chapter = chapter;
@@ -38,4 +44,6 @@ public class Exercise {
             chapter.getExercises().add(this);
         }
     }
+
+    private LocalDateTime rdt;
 }

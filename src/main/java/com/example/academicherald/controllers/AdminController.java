@@ -1,8 +1,11 @@
 package com.example.academicherald.controllers;
 
 import com.example.academicherald.dto.PublicationDto;
+import com.example.academicherald.dto.UserDto;
 import com.example.academicherald.mappers.PublicationMapper;
+import com.example.academicherald.mappers.UserMapper;
 import com.example.academicherald.services.PublicationService;
+import com.example.academicherald.services.UserService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -13,11 +16,15 @@ import java.util.List;
 
 public class AdminController {
     private final PublicationService publicationService;
-    private final PublicationMapper mapper;
+    private final UserService userService;
+    private final PublicationMapper publicationMapper;
+    private final UserMapper userMapper;
 
-    public AdminController(PublicationService publicationService, PublicationMapper mapper) {
+    public AdminController(PublicationService publicationService, UserService userService, PublicationMapper publicationMapper, UserMapper userMapper) {
         this.publicationService = publicationService;
-        this.mapper = mapper;
+        this.userService = userService;
+        this.publicationMapper = publicationMapper;
+        this.userMapper = userMapper;
     }
 
     @PutMapping("/confirm/{publicationId}")
@@ -32,7 +39,16 @@ public class AdminController {
 
     @GetMapping("/rejected/getAll")
     public List<PublicationDto> getAllRejectedPublications(){
-        return mapper.convertToDTOList(publicationService.getAllRejected());
+        return publicationMapper.convertToDTOList(publicationService.getAllRejected());
     }
 
+    @GetMapping("/get/all")
+    public List<UserDto> getAll() {
+        return userMapper.convertToDTOList(userService.getAll());
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public void deleteUser(@PathVariable Long id) {
+        userService.delete(id);
+    }
 }

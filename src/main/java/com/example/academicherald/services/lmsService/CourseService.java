@@ -7,6 +7,7 @@ import com.example.academicherald.repositories.UserRepository;
 import com.example.academicherald.repositories.lmsRepo.CourseRepository;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -48,15 +49,15 @@ public class CourseService {
     }
 
     public Course getById(Long id) {
-        return courseRepository.findById(id).orElse(null);
+        return courseRepository.findByIdAndRdtIsNull(id);
     }
 
     public List<Course> getAll() {
-        return courseRepository.findAll();
+        return courseRepository.findAllByRdtIsNull();
     }
 
     public Course update(Course newCourse) {
-        Course oldCourse = courseRepository.getById(newCourse.getId());
+        Course oldCourse = getById(newCourse.getId());
         oldCourse.setType(newCourse.getType());
         oldCourse.setMentor(newCourse.getMentor());
         oldCourse.setStudents(newCourse.getStudents());
@@ -65,8 +66,8 @@ public class CourseService {
     }
 
     public void delete(Long id) {
-        courseRepository.deleteById(id);
+        Course course = getById(id);
+        course.setRdt(LocalDateTime.now());
+        courseRepository.save(course);
     }
-
-
 }

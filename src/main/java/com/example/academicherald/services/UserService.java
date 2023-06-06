@@ -65,10 +65,10 @@ public class UserService {
 
 
     @Transactional(isolation = Isolation.SERIALIZABLE)
-    public boolean resetPassword(String email) {
+    public String resetPassword(String email) {
         User user = userRepository.findByEmail(email);
         if (user == null) {
-            return false;
+            return "Пользователя с таким адресом эл.почты не существует";
         }
 
         String resetToken = UUID.randomUUID().toString();
@@ -76,25 +76,25 @@ public class UserService {
         user.setResetTokenExpireTime(LocalDateTime.now().plusMinutes(60));
         userRepository.save(user);
 
-        String resetUrl = "http://localhost:8080/auth/reset/form/" + resetToken;
+        String resetUrl = "http://localhost:9090/auth/reset/" + resetToken;
         String emailText = "Здравствуйте, " + user.getUsername() +
-                "\nДля сброса пароля перейдите по ссылке: " + resetUrl;
+                "\n\nДля сброса пароля перейдите по ссылке: " + resetUrl;
 
         emailService.sendSimpleMessage(email, "Сброс пароля", emailText);
-        return true;
+        return "Ссылка для сброса пароля была отправлена ваш на адрес электронной почты " + email;
     }
 
     @Transactional(isolation = Isolation.SERIALIZABLE)
-    public boolean saveNewPassword(String resetToken, String newPassword) {
+    public String saveNewPassword(String resetToken, String newPassword) {
         User user = userRepository.findByResetToken(resetToken);
         if (user == null || user.getResetTokenExpireTime().isBefore(LocalDateTime.now()))
-            return false;
+            return "Ссылка для сброса пароля устарела или не найден пользователь";
 
         user.setPassword(passwordEncoder.encode(newPassword));
         user.setResetToken(null);
         user.setResetTokenExpireTime(null);
         userRepository.save(user);
-        return true;
+        return "Пароль успешно изменен!";
     }
 
     public boolean isPresentUsername(String username) {

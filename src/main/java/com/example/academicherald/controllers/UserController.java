@@ -1,14 +1,18 @@
 package com.example.academicherald.controllers;
 
 import com.example.academicherald.dto.UserDto;
+import com.example.academicherald.entity.ResponseMessage;
 import com.example.academicherald.entity.User;
+import com.example.academicherald.enums.ResultCode;
 import com.example.academicherald.mappers.UserMapper;
 import com.example.academicherald.services.UserService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
+@Slf4j
 @RequestMapping("/user")
 @CrossOrigin(origins = "http://127.0.0.1:5500")
 
@@ -30,29 +34,9 @@ public class UserController {
         return mapper.convertToDTO(userService.getById(id));
     }
 
-    @GetMapping("/get/all")
-    public List<UserDto> getAll() {
-        return mapper.convertToDTOList(userService.getAll());
-    }
-
     @PutMapping("/update")
-    public UserDto update(@RequestBody User newUser) throws Exception {
+    public UserDto update(@RequestBody User newUser){
         return mapper.convertToDTO(userService.update(newUser));
-    }
-
-    @DeleteMapping("/delete/{id}")
-    public void delete(@PathVariable Long id) throws Exception {
-        userService.delete(id);
-    }
-
-    @GetMapping("/reset")
-    public boolean resetPassword(@RequestParam String email){
-        return userService.resetPassword(email);
-    }
-
-    @PostMapping("/reset/{resetToken}")
-    public boolean saveNewPassword(@PathVariable String resetToken, @RequestParam String password) {
-        return userService.saveNewPassword(resetToken, password);
     }
 
     @GetMapping("/payment")

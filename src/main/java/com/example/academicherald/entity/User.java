@@ -41,7 +41,7 @@ public class User {
     private List<Publication> publications;
     @ManyToOne
     @JsonBackReference
-    private Course courses;
+    private Course course;
 
     @Column(name = "reset_token")
     private String resetToken;

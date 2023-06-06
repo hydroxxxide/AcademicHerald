@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
@@ -18,15 +19,16 @@ public class Chapter {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String name;
-    @ManyToOne
 
+    private String name;
+
+    @ManyToOne
     private Course course;
+
     @OneToMany
-//    @JsonIgnore
     private List<Lectures> lectures;
+
     @OneToMany
-//    @JsonIgnore
     private List<Exercise> exercises;
 
     public void setCourse(Course course) {
@@ -34,4 +36,5 @@ public class Chapter {
         course.getChapters().add(this); // Добавляем текущую главу в список глав курса
     }
 
+    private LocalDateTime rdt;
 }

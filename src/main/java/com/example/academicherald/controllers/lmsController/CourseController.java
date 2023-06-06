@@ -7,6 +7,7 @@ import com.example.academicherald.services.lmsService.CourseService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -31,6 +32,26 @@ public class CourseController {
         return courseMapper.convertToDto(createdCourse);
     }
 
+    @GetMapping("/get/{id}")
+    public CourseDto getById(@PathVariable Long id){
+        return courseMapper.convertToDto(courseService.getById(id));
+    }
+
+    @GetMapping("/get/all")
+    public List<CourseDto> getAll(){
+        return courseMapper.convertToDTOList(courseService.getAll());
+    }
+
+    @GetMapping("/update")
+    public CourseDto update(@RequestBody Course course){
+        return courseMapper.convertToDto(courseService.update(course));
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public void delete(@PathVariable Long id){
+        courseService.delete(id);
+    }
+
     @PostMapping("/{courseId}/addStudents")
     public ResponseEntity<?> addStudentsToCourse(@PathVariable Long courseId,
                                                       @RequestBody List<Long> studentIds) {
@@ -42,9 +63,4 @@ public class CourseController {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
-    @GetMapping("/get/{id}")
-    public CourseDto getById(@PathVariable Long id){
-        return courseMapper.convertToDto(courseService.getById(id));
-    }
-
 }

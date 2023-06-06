@@ -1,7 +1,9 @@
 package com.example.academicherald.controllers;
 
 
+import com.example.academicherald.entity.ResponseMessage;
 import com.example.academicherald.entity.User;
+import com.example.academicherald.enums.ResultCode;
 import com.example.academicherald.enums.UserRole;
 import com.example.academicherald.requests.AuthenticationRequest;
 import com.example.academicherald.requests.AuthenticationResponse;
@@ -10,17 +12,17 @@ import com.example.academicherald.security.DetailsUser;
 import com.example.academicherald.security.DetailsUserService;
 import com.example.academicherald.services.UserService;
 import com.example.academicherald.util.JWTUtil;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
-@Controller
+@RestController
+@Slf4j
 @RequestMapping("/auth")
 @CrossOrigin(origins = "http://127.0.0.1:5500")
 public class AuthController {
@@ -36,7 +38,6 @@ public class AuthController {
         this.userDetailsService = userDetailsService;
         this.jwtUtil = jwtUtil;
     }
-
 
     @PostMapping("/register")
     public ResponseEntity<String> registerUser(@RequestBody RegistrationRequest registrationRequest) {
@@ -56,7 +57,6 @@ public class AuthController {
         return ResponseEntity.ok("User registered successfully!");
     }
 
-
     @PostMapping("/authenticate")
     public ResponseEntity<?> createAuthenticationToken(@RequestBody AuthenticationRequest authenticationRequest) throws Exception {
         try {
@@ -71,5 +71,33 @@ public class AuthController {
         final DetailsUser userDetails = userDetailsService.loadUserByUsername(authenticationRequest.getUsername());
         final String jwt = jwtUtil.generateToken(userDetails);
         return ResponseEntity.ok(new AuthenticationResponse(jwt));
+    }
+
+    @GetMapping("/reset")
+    public ResponseMessage<String> resetPassword(@RequestParam String email){
+        try {
+            return new ResponseMessage<>(
+                    userService.resetPassword(email),
+                    ResultCode.SUCCESS,
+                    "Success",
+                    ResultCode.SUCCESS.getHttpCode());
+        }catch (Exception e){
+            log.error("AuthController: resetPassword", e);
+            return new ResponseMessage<>(null, ResultCode.FAIL, e.getMessage(), ResultCode.FAIL.getHttpCode());
+        }
+    }
+
+    @PostMapping("/reset/{resetToken}")
+    public ResponseMessage<String> saveNewPassword(@PathVariable String resetToken, @RequestParam String password) {
+        try {
+            return new ResponseMessage<>(
+                    userService.saveNewPassword(resetToken, password),
+                    ResultCode.SUCCESS,
+                    "Success",
+                    ResultCode.SUCCESS.getHttpCode());
+        }catch (Exception e){
+            log.error("AuthController: saveNewPassword", e);
+            return new ResponseMessage<>(null, ResultCode.FAIL, e.getMessage(), ResultCode.FAIL.getHttpCode());
+        }
     }
 }

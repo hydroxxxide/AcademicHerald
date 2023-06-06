@@ -9,6 +9,9 @@ import java.util.List;
 
 @Repository
 public interface ExerciseRepository extends JpaRepository<Exercise, Long> {
-    List<Exercise> findByChapterId(Long chapterId);
+    List<Exercise> findAllByChapterIdAndRdtIsNull(Long chapterId);
 
+    Exercise findByIdAndRdtIsNull(Long id);
+
+    List<Exercise> findAllByRdtIsNull();
 }

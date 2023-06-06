@@ -42,7 +42,7 @@ public class ExerciseService {
         return exerciseRepository.save(exercise);
     }
 
-    public SubmittedExercise submitExercise(Long exerciseId, Long studentId, SubmittedExercise submittedExercise) {
+    public void submitExercise(Long exerciseId, Long studentId, SubmittedExercise submittedExercise) {
         Exercise exercise = exerciseRepository.findById(exerciseId)
                 .orElseThrow(() -> new IllegalArgumentException("Задание с указанным ID не найдено"));
 
@@ -71,25 +71,34 @@ public class ExerciseService {
         submittedExercises.add(savedSubmission);
 
         exerciseRepository.save(exercise);
-        return savedSubmission;
     }
 
     public Exercise getById(Long id) {
-        return exerciseRepository.findById(id).orElse(null);
+        return exerciseRepository.findByIdAndRdtIsNull(id);
     }
+
+    public List<Exercise> getAllExercise() {
+        return exerciseRepository.findAllByRdtIsNull();
+    }
+
     public List<Exercise> findByChapter(Long chapterId) {
-        return exerciseRepository.findByChapterId(chapterId);
+        return exerciseRepository.findAllByChapterIdAndRdtIsNull(chapterId);
     }
 
     public Exercise updateExercise(Exercise newExercise){
-        Exercise oldExercise = exerciseRepository.getById(newExercise.getId());
+        Exercise oldExercise = exerciseRepository.findByIdAndRdtIsNull(newExercise.getId());
         oldExercise.setChapter(newExercise.getChapter());
         oldExercise.setDeadline(newExercise.getDeadline());
         oldExercise.setTitle(newExercise.getTitle());
         oldExercise.setMaterial(newExercise.getMaterial());
 //        oldExercise.setSubmittedExerciseList(newExercise.getSubmittedExerciseList());
-
         return exerciseRepository.save(oldExercise);
+    }
+
+    public void deleteExercise(Long id){
+        Exercise exercise = getById(id);
+        exercise.setRdt(LocalDateTime.now());
+        exerciseRepository.save(exercise);
     }
 }
 
