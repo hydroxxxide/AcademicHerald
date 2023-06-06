@@ -10,6 +10,8 @@ import com.example.academicherald.services.lmsService.ExerciseService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/exercises")
 @CrossOrigin(origins = "http://127.0.0.1:5500")
@@ -47,4 +49,14 @@ public class ExerciseController {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
+
+    @PutMapping("/update")
+    public ExerciseDto update(@RequestBody Exercise exercise){
+        return exerciseMapper.convertToDto(exerciseService.updateExercise(exercise));
+    }
+    @GetMapping("/getAllByChapter/{chapterId}")
+    public List<ExerciseDto> findByChapter(@PathVariable Long chapterId){
+        return exerciseMapper.convertToDTOList(exerciseService.findByChapter(chapterId));
+    }
+
 }

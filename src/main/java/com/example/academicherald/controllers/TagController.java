@@ -10,6 +10,8 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/tags")
+@CrossOrigin(origins = "http://127.0.0.1:5500")
+
 public class TagController {
     private final TagService tagService;
     private final TagMapper tagMapper;

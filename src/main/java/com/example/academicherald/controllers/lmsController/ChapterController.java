@@ -1,6 +1,8 @@
 package com.example.academicherald.controllers.lmsController;
 
+import com.example.academicherald.dto.CommentDto;
 import com.example.academicherald.dto.lmsDto.ChapterDto;
+import com.example.academicherald.entity.Comment;
 import com.example.academicherald.entity.lms.Chapter;
 import com.example.academicherald.mappers.lmsMapper.ChapterMapper;
 import com.example.academicherald.services.lmsService.ChapterService;
@@ -27,15 +29,16 @@ public class ChapterController {
         Chapter createdChapter = chapterService.createChapter(chapter, courseId);
         return chapterMapper.convertToDto(createdChapter);
     }
-    @PostMapping("/addStudents/{chapterId}")
-    public ResponseEntity<?> addLectureToChapter(@PathVariable Long chapterId,
-                                                 @RequestBody List<Long> lectureIds) {
-        try {
-            Chapter updatedChapter= chapterService.addLectures(chapterId, lectureIds);
-            ChapterDto chapterDto = chapterMapper.convertToDto(updatedChapter);
-            return ResponseEntity.ok(chapterDto);
-        } catch (IllegalArgumentException e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
-        }
+
+    @PutMapping("/update")
+    public ChapterDto updateChapter(@RequestBody Chapter chapter){
+        return chapterMapper.convertToDto(chapterService.updateChapter(chapter));
     }
+
+    @GetMapping("/getAllByChapter/{courseId}")
+    public List<ChapterDto> getAllChapterByCourse(@PathVariable Long courseId){
+        return chapterMapper.convertToDTOList(chapterService.getAllChapterByCourse(courseId));
+
+    }
+
 }

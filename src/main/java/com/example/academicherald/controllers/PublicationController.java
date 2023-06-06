@@ -14,6 +14,8 @@ import java.util.List;
 @RestController
 @Slf4j
 @RequestMapping("/publication")
+@CrossOrigin(origins = "http://127.0.0.1:5500")
+
 public class PublicationController {
     private final PublicationService publicationService;
     private final PublicationMapper mapper;

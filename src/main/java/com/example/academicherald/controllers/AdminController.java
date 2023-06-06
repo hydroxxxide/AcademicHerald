@@ -9,6 +9,8 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/admin")
+@CrossOrigin(origins = "http://127.0.0.1:5500")
+
 public class AdminController {
     private final PublicationService publicationService;
     private final PublicationMapper mapper;

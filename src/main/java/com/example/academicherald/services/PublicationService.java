@@ -74,8 +74,7 @@ public class PublicationService {
     }
     //Вытаскиваем список публикаций по id категории
     public List<Publication> getPublicationsByCategoryId(Long categoryId) {
-        Category category = categoryService.getById(categoryId);
-        return publicationRepository.findByCategory(category);
+        return publicationRepository.findByCategory(categoryId);
     }
     //Вытаскиваем список публикаций по id автора(какие посты он выложил)
     public List<Publication> getPublicationsByAuthorId(Long authorId) {

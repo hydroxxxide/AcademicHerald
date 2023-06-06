@@ -31,10 +31,10 @@ public class ExerciseService {
 
     public Exercise createExercise(Exercise exercise, Long chapterId) {
         Chapter chapter = chapterRepository.findById(chapterId).orElse(null);
-        Material material1 = exercise.getMaterial();
+        Material materials = exercise.getMaterial();
         Material material = new Material();
-        material.setTheme(material1.getTheme());
-        material.setText(material1.getText());
+        material.setTheme(materials.getTheme());
+        material.setText(materials.getText());
         material = materialRepository.save(material);
 
         exercise.setChapter(chapter);
@@ -64,7 +64,6 @@ public class ExerciseService {
 
         if (currentDateTime.isAfter(deadline)) {
             throw new IllegalArgumentException("Вы сдали домашнее задание с опозданием");
-            // Здесь вы можете отправить сообщение студенту о его опоздании или выполнить другие действия
         }
         SubmittedExercise savedSubmission = submittedExerciseRepository.save(submittedExercise);
 
@@ -72,13 +71,25 @@ public class ExerciseService {
         submittedExercises.add(savedSubmission);
 
         exerciseRepository.save(exercise);
-
         return savedSubmission;
     }
 
+    public Exercise getById(Long id) {
+        return exerciseRepository.findById(id).orElse(null);
+    }
+    public List<Exercise> findByChapter(Long chapterId) {
+        return exerciseRepository.findByChapterId(chapterId);
+    }
 
-    public static List<Exercise> findByChapter(Chapter chapter) {
-        // код для поиска заданий по главе
-        return null;
+    public Exercise updateExercise(Exercise newExercise){
+        Exercise oldExercise = exerciseRepository.getById(newExercise.getId());
+        oldExercise.setChapter(newExercise.getChapter());
+        oldExercise.setDeadline(newExercise.getDeadline());
+        oldExercise.setTitle(newExercise.getTitle());
+        oldExercise.setMaterial(newExercise.getMaterial());
+//        oldExercise.setSubmittedExerciseList(newExercise.getSubmittedExerciseList());
+
+        return exerciseRepository.save(oldExercise);
     }
 }
+

@@ -25,4 +25,5 @@ public class SubmittedExercise {
     @JoinColumn(name = "student_id")
     private User studentId;
     private String linkGitHubHw;
+
 }

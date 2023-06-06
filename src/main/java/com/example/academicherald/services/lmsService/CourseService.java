@@ -36,7 +36,6 @@ public class CourseService {
         if (studentsId.isEmpty()) {
             throw new IllegalArgumentException("Нет студентов с указанными ID");
         }
-
         List<User> existingStudents = course.getStudents();
         for (User student : studentsId) {
             if (!existingStudents.contains(student)) {
@@ -45,7 +44,6 @@ public class CourseService {
                 throw new IllegalArgumentException("Студенты проходят курс");
             }
         }
-
         return courseRepository.save(course);
     }
 
@@ -57,14 +55,14 @@ public class CourseService {
         return courseRepository.findAll();
     }
 
-//    public Course update(Course newCourse) {
-//        Course oldCourse = courseRepository.getById(newCourse.getId());
-//        oldCourse.setType(newCourse.getType());
-//        oldCourse.setMentor(newCourse.getMentor());
-//        oldCourse.setStudents(newCourse.getStudents());
-//        oldCourse.setLectures(newCourse.getLectures());
-//        return courseRepository.save(oldCourse);
-//    }
+    public Course update(Course newCourse) {
+        Course oldCourse = courseRepository.getById(newCourse.getId());
+        oldCourse.setType(newCourse.getType());
+        oldCourse.setMentor(newCourse.getMentor());
+        oldCourse.setStudents(newCourse.getStudents());
+        oldCourse.setChapters(newCourse.getChapters());
+        return courseRepository.save(oldCourse);
+    }
 
     public void delete(Long id) {
         courseRepository.deleteById(id);

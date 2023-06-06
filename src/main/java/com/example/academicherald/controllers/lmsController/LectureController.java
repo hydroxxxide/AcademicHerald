@@ -1,13 +1,19 @@
 package com.example.academicherald.controllers.lmsController;
 
+import com.example.academicherald.dto.lmsDto.ExerciseDto;
 import com.example.academicherald.dto.lmsDto.LecturesDto;
+import com.example.academicherald.entity.lms.Exercise;
 import com.example.academicherald.entity.lms.Lectures;
 import com.example.academicherald.mappers.lmsMapper.LecturesMapper;
 import com.example.academicherald.services.lmsService.LecturesService;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/lecture")
+@CrossOrigin(origins = "http://127.0.0.1:5500")
+
 public class LectureController {
     private final LecturesService lecturesService;
     private final LecturesMapper lecturesMapper;
@@ -26,5 +32,13 @@ public class LectureController {
     @GetMapping("/get/{id}")
     public LecturesDto getById(@PathVariable Long id) {
         return lecturesMapper.convertToDto(lecturesService.getById(id));
+    }
+    @GetMapping("/getAllByChapter/{chapterId}")
+    public List<LecturesDto> findByChapter(@PathVariable Long chapterId){
+        return lecturesMapper.convertToDTOList(lecturesService.findByChapter(chapterId));
+    }
+    @PutMapping("/update")
+    public LecturesDto update(@RequestBody Lectures lectures){
+        return lecturesMapper.convertToDto(lecturesService.updateLecture(lectures));
     }
 }

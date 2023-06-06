@@ -1,12 +1,15 @@
 package com.example.academicherald.services.lmsService;
 
 import com.example.academicherald.entity.lms.Chapter;
+import com.example.academicherald.entity.lms.Exercise;
 import com.example.academicherald.entity.lms.Lectures;
 import com.example.academicherald.entity.lms.Material;
 import com.example.academicherald.repositories.lmsRepo.ChapterRepository;
 import com.example.academicherald.repositories.lmsRepo.LecturesRepository;
 import com.example.academicherald.repositories.lmsRepo.MaterialRepository;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class LecturesService {
@@ -18,7 +21,6 @@ public class LecturesService {
     public LecturesService(LecturesRepository lecturesRepository,
                            ChapterRepository chapterRepository, MaterialRepository materialRepository) {
         this.lecturesRepository = lecturesRepository;
-
         this.chapterRepository = chapterRepository;
         this.materialRepository = materialRepository;
     }
@@ -39,5 +41,19 @@ public class LecturesService {
     public Lectures getById(Long id) {
         return lecturesRepository.findById(id).orElse(null);
     }
+    public List<Lectures> findByChapter(Long chapterId) {
+        return lecturesRepository.findByChapterId(chapterId);
+    }
 
+    public Lectures updateLecture(Lectures newLecture){
+        Lectures oldLecture = lecturesRepository.getById(newLecture.getId());
+        oldLecture.setChapter(newLecture.getChapter());
+        oldLecture.setTitle(newLecture.getTitle());
+        oldLecture.setMaterial(newLecture.getMaterial());
+        return lecturesRepository.save(oldLecture);
+    }
+
+//    public void delete(Long id){
+//
+//    }
 }

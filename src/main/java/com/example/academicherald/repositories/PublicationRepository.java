@@ -15,7 +15,7 @@ public interface PublicationRepository extends JpaRepository<Publication, Long> 
     Publication findByIdAndPassAndRdtIsNull(Long id, Boolean pass);
     List<Publication> findByTagsId(Long tagId);
 
-    List<Publication> findByCategory(Category category);
+    List<Publication> findByCategory(Long categoryId);
 
     List<Publication> findByAuthor(User author);
 }
