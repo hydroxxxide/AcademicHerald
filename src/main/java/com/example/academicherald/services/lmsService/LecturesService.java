@@ -9,6 +9,7 @@ import com.example.academicherald.repositories.lmsRepo.LecturesRepository;
 import com.example.academicherald.repositories.lmsRepo.MaterialRepository;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -47,13 +48,17 @@ public class LecturesService {
 
     public Lectures updateLecture(Lectures newLecture){
         Lectures oldLecture = lecturesRepository.getById(newLecture.getId());
-        oldLecture.setChapter(newLecture.getChapter());
         oldLecture.setTitle(newLecture.getTitle());
-        oldLecture.setMaterial(newLecture.getMaterial());
+        Material updatedMaterial = newLecture.getMaterial();
+        Material existingMaterial = oldLecture.getMaterial();
+        existingMaterial.setTheme(updatedMaterial.getTheme());
+        existingMaterial.setText(updatedMaterial.getText());
         return lecturesRepository.save(oldLecture);
     }
 
-//    public void delete(Long id){
-//
-//    }
+    public void deleteLecture(Long id){
+        Lectures lectures = getById(id);
+        lectures.setRdt(LocalDateTime.now());
+        lecturesRepository.save(lectures);
+    }
 }

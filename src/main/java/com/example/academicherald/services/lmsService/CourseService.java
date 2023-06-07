@@ -47,6 +47,10 @@ public class CourseService {
         }
         return courseRepository.save(course);
     }
+    public List<User> getCourseStudents(Long courseId) {
+        Course course = courseRepository.findById(courseId).orElse(null);
+       return course.getStudents();
+    }
 
     public Course getById(Long id) {
         return courseRepository.findByIdAndRdtIsNull(id);

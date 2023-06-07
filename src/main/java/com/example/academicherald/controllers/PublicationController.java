@@ -62,17 +62,8 @@ public class PublicationController {
     }
 
     @GetMapping("/get/all")
-    public ResponseMessage<List<PublicationDto>> getAll() {
-        try {
-            return new ResponseMessage<>(
-                    mapper.convertToDTOList(publicationService.getAllAccepted()),
-                    ResultCode.SUCCESS,
-                    "Список публикаций",
-                    ResultCode.SUCCESS.getHttpCode());
-        } catch (Exception e) {
-            log.error("PublicationController: getAll", e);
-            return new ResponseMessage<>(null, ResultCode.FAIL, e.getMessage(), ResultCode.FAIL.getHttpCode());
-        }
+    public List<PublicationDto> getAll() {
+        return mapper.convertToDTOList(publicationService.getAllAccepted());
     }
 
     @PutMapping("/update")

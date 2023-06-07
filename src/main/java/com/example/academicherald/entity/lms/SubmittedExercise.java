@@ -31,4 +31,7 @@ public class SubmittedExercise {
     private String linkGitHubHw;
 
     private LocalDateTime rdt;
+    private Boolean pass = false;
+    private String feedback;
+
 }

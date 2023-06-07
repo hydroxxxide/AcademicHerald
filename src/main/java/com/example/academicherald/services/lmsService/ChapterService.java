@@ -31,8 +31,6 @@ public class ChapterService {
     public Chapter updateChapter(Chapter newChapter) {
         Chapter oldChapter = getById(newChapter.getId());
         oldChapter.setName(newChapter.getName());
-        oldChapter.setCourse(newChapter.getCourse());
-        oldChapter.setExercises(newChapter.getExercises());
         return chapterRepository.save(oldChapter);
     }
 

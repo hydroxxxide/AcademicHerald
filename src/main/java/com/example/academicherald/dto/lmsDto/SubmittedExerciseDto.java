@@ -7,4 +7,6 @@ import lombok.Data;
 public class SubmittedExerciseDto {
     private UserDto studentId;
     private String linkGitHubHw;
+    private Boolean pass = false;
+    private String feedback;
 }

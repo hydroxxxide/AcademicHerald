@@ -39,6 +39,11 @@ public class UserController {
         }
     }
 
+    @GetMapping("/get/all")
+    public List<UserDto> getAll() {
+        return mapper.convertToDTOList(userService.getAll());
+    }
+
     @PutMapping("/update")
     public ResponseMessage<UserDto> update(@RequestBody User newUser){
         try {

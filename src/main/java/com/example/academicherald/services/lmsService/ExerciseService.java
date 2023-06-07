@@ -87,11 +87,9 @@ public class ExerciseService {
 
     public Exercise updateExercise(Exercise newExercise){
         Exercise oldExercise = exerciseRepository.findByIdAndRdtIsNull(newExercise.getId());
-        oldExercise.setChapter(newExercise.getChapter());
         oldExercise.setDeadline(newExercise.getDeadline());
         oldExercise.setTitle(newExercise.getTitle());
-        oldExercise.setMaterial(newExercise.getMaterial());
-//        oldExercise.setSubmittedExerciseList(newExercise.getSubmittedExerciseList());
+
         return exerciseRepository.save(oldExercise);
     }
 

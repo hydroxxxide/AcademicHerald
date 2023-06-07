@@ -30,23 +30,5 @@ public class ChapterController {
         return chapterMapper.convertToDto(createdChapter);
     }
 
-    @GetMapping("/get/{id}")
-    public ChapterDto getById(@PathVariable Long id){
-        return chapterMapper.convertToDto(chapterService.getById(id));
-    }
 
-    @PutMapping("/update")
-    public ChapterDto updateChapter(@RequestBody Chapter chapter){
-        return chapterMapper.convertToDto(chapterService.updateChapter(chapter));
-    }
-
-    @DeleteMapping("/delete/{id}")
-    public void deleteChapter(@PathVariable Long id){
-        chapterService.delete(id);
-    }
-
-    @GetMapping("/getAllByChapter/{courseId}")
-    public List<ChapterDto> getAllChaptersByCourse(@PathVariable Long courseId){
-        return chapterMapper.convertToDTOList(chapterService.getAllChaptersByCourse(courseId));
-    }
 }

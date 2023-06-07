@@ -42,25 +42,4 @@ public class CourseController {
         return courseMapper.convertToDTOList(courseService.getAll());
     }
 
-    @GetMapping("/update")
-    public CourseDto update(@RequestBody Course course){
-        return courseMapper.convertToDto(courseService.update(course));
-    }
-
-    @DeleteMapping("/delete/{id}")
-    public void delete(@PathVariable Long id){
-        courseService.delete(id);
-    }
-
-    @PostMapping("/{courseId}/addStudents")
-    public ResponseEntity<?> addStudentsToCourse(@PathVariable Long courseId,
-                                                      @RequestBody List<Long> studentIds) {
-        try {
-            Course updatedCourse = courseService.addStudentsToCourse(courseId, studentIds);
-            CourseDto courseDto = courseMapper.convertToDto(updatedCourse);
-            return ResponseEntity.ok(courseDto);
-        } catch (IllegalArgumentException e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
-        }
-    }
 }

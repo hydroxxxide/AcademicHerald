@@ -29,16 +29,5 @@ public class LectureController {
         Lectures createdLectures = lecturesService.createLecture(lectures, chapterId);
         return lecturesMapper.convertToDto(createdLectures);
     }
-    @GetMapping("/get/{id}")
-    public LecturesDto getById(@PathVariable Long id) {
-        return lecturesMapper.convertToDto(lecturesService.getById(id));
-    }
-    @GetMapping("/getAllByChapter/{chapterId}")
-    public List<LecturesDto> findByChapter(@PathVariable Long chapterId){
-        return lecturesMapper.convertToDTOList(lecturesService.findByChapter(chapterId));
-    }
-    @PutMapping("/update")
-    public LecturesDto update(@RequestBody Lectures lectures){
-        return lecturesMapper.convertToDto(lecturesService.updateLecture(lectures));
-    }
+
 }

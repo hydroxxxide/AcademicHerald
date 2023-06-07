@@ -13,21 +13,5 @@ import java.util.List;
 @RestController
 @RequestMapping("/homework")
 public class SubmittedExerciseController {
-    private final SubmittedExerciseMapper submittedExerciseMapper;
-    private final SubmittedExerciseService submittedExerciseService;
 
-    public SubmittedExerciseController(SubmittedExerciseMapper submittedExerciseMapper, SubmittedExerciseService submittedExerciseService) {
-        this.submittedExerciseMapper = submittedExerciseMapper;
-        this.submittedExerciseService = submittedExerciseService;
-    }
-
-//    @GetMapping("/getAllByChapter/{chapterId}")
-//    public List<SubmittedExerciseDto> findByChapter(@PathVariable Long chapterId){
-//        return submittedExerciseMapper.convertToDTOList(submittedExerciseService.findByChapter(chapterId));
-//    }
-
-//    @PutMapping("/update")
-//    public SubmittedExerciseDto update(@RequestBody SubmittedExercise submittedExercise){
-//        return submittedExerciseMapper.convertToDto(submittedExerciseService.updateSubmittedExercise(submittedExercise));
-//    }
 }
