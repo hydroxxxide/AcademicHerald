@@ -3,14 +3,17 @@ package com.example.academicherald.controllers;
 import com.example.academicherald.dto.PublicationDto;
 import com.example.academicherald.dto.UserDto;
 import com.example.academicherald.entity.ResponseMessage;
+import com.example.academicherald.entity.User;
 import com.example.academicherald.enums.ResultCode;
 import com.example.academicherald.mappers.PublicationMapper;
 import com.example.academicherald.mappers.UserMapper;
 import com.example.academicherald.services.PublicationService;
 import com.example.academicherald.services.UserService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -31,7 +34,7 @@ public class AdminController {
     }
 
     @PutMapping("/confirm/{publicationId}")
-    public ResponseMessage<?> confirmPublication(@PathVariable Long publicationId){
+    public ResponseMessage<?> confirmPublication(@PathVariable Long publicationId) {
         try {
             return new ResponseMessage<>(
                     publicationService.confirmAndRejectPublication(publicationId, true),
@@ -45,7 +48,7 @@ public class AdminController {
     }
 
     @PutMapping("/reject/{publicationId}")
-    public ResponseMessage<String> rejectPublication(@PathVariable Long publicationId){
+    public ResponseMessage<String> rejectPublication(@PathVariable Long publicationId) {
         try {
             return new ResponseMessage<>(
                     publicationService.confirmAndRejectPublication(publicationId, false),
@@ -59,17 +62,36 @@ public class AdminController {
     }
 
     @GetMapping("/rejected/getAll")
-    public List<PublicationDto> getAllRejectedPublications(){
-        return publicationMapper.convertToDTOList(publicationService.getAllRejected());
+    public ResponseMessage<List<PublicationDto>> getAllRejectedPublications() {
+        try {
+            return new ResponseMessage<>(
+                    publicationMapper.convertToDTOList(publicationService.getAllRejected()),
+                    ResultCode.SUCCESS,
+                    "Список отклоненных публикаций",
+                    ResultCode.SUCCESS.getHttpCode());
+        } catch (Exception e) {
+            log.error("AdminController: getAllRejectedPublications", e);
+            return new ResponseMessage<>(null, ResultCode.FAIL, e.getMessage(), ResultCode.FAIL.getHttpCode());
+        }
     }
 
-    @GetMapping("/get/all")
-    public List<UserDto> getAll() {
-        return userMapper.convertToDTOList(userService.getAll());
+    @GetMapping("/get/users")
+    public ResponseEntity<byte[]> downloadUsersInfo() throws IOException {
+        List<User> users = userService.getAll();
+        return userService.exportToExcel(users);
     }
 
     @DeleteMapping("/delete/{id}")
-    public void deleteUser(@PathVariable Long id) {
-        userService.delete(id);
+    public ResponseMessage<String> deleteUser(@PathVariable Long id) {
+        try {
+            return new ResponseMessage<>(
+                    userService.delete(id),
+                    ResultCode.SUCCESS,
+                    "Успешное удаление",
+                    ResultCode.SUCCESS.getHttpCode());
+        } catch (Exception e) {
+            log.error("AdminController: deleteUser", e);
+            return new ResponseMessage<>(null, ResultCode.FAIL, e.getMessage(), ResultCode.FAIL.getHttpCode());
+        }
     }
 }

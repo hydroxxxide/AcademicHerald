@@ -7,8 +7,10 @@ import com.example.academicherald.enums.ResultCode;
 import com.example.academicherald.mappers.UserMapper;
 import com.example.academicherald.services.UserService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -75,5 +77,11 @@ public class UserController {
             log.error("UserController: likePublication", e);
             return new ResponseMessage<>(null, ResultCode.FAIL, e.getMessage(), ResultCode.FAIL.getHttpCode());
         }
+    }
+
+    @GetMapping("/get/users")
+    public ResponseEntity<byte[]> downloadUsersInfo() throws IOException {
+        List<User> users = userService.getAll();
+        return userService.exportToExcel(users);
     }
 }

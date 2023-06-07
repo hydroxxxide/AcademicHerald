@@ -61,7 +61,7 @@ public class CommentController {
             return new ResponseMessage<>(
                     commentMapper.convertToDTOList(commentService.allCommentsByIdPublic(publicationId)),
                     ResultCode.SUCCESS,
-                    "Комментарии по публикации успешно найден",
+                    "Комментарии по публикации успешно найдены",
                     ResultCode.SUCCESS.getHttpCode());
         } catch (Exception e) {
             log.error("CommentController: getByPublicationId", e);
@@ -75,7 +75,7 @@ public class CommentController {
             return new ResponseMessage<>(
                     commentMapper.convertToDTOList(commentService.allCommentsByUser(userId)),
                     ResultCode.SUCCESS,
-                    "Комментарии по пользователю успешно найден",
+                    "Комментарии по пользователю успешно найдены",
                     ResultCode.SUCCESS.getHttpCode());
         } catch (Exception e) {
             log.error("CommentController: getCommentByUserId", e);
