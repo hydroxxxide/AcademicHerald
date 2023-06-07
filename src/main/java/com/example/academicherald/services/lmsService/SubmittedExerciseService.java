@@ -1,7 +1,7 @@
 package com.example.academicherald.services.lmsService;
 
-import com.example.academicherald.entity.User;
-import com.example.academicherald.entity.lms.*;
+import com.example.academicherald.entity.lms.Exercise;
+import com.example.academicherald.entity.lms.SubmittedExercise;
 import com.example.academicherald.repositories.lmsRepo.ChapterRepository;
 import com.example.academicherald.repositories.lmsRepo.ExerciseRepository;
 import com.example.academicherald.repositories.lmsRepo.SubmittedExerciseRepository;
@@ -25,7 +25,8 @@ public class SubmittedExerciseService {
     public SubmittedExercise getById(Long id) {
         return submittedExerciseRepository.findById(id).orElse(null);
     }
-    public SubmittedExercise updateSubmittedExercise(SubmittedExercise newSubmittedExercise){
+
+    public SubmittedExercise updateSubmittedExercise(SubmittedExercise newSubmittedExercise) {
         SubmittedExercise oldSubmittedExercise = submittedExerciseRepository.getById(newSubmittedExercise.getId());
         oldSubmittedExercise.setExerciseId(newSubmittedExercise.getExerciseId());
         oldSubmittedExercise.setStudentId(newSubmittedExercise.getStudentId());

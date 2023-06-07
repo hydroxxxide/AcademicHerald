@@ -3,7 +3,6 @@ package com.example.academicherald.services;
 import com.example.academicherald.entity.Event;
 import com.example.academicherald.entity.User;
 import com.example.academicherald.repositories.EventRepository;
-import com.example.academicherald.repositories.UserRepository;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;

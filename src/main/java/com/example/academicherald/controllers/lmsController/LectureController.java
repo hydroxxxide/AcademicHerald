@@ -1,14 +1,10 @@
 package com.example.academicherald.controllers.lmsController;
 
-import com.example.academicherald.dto.lmsDto.ExerciseDto;
 import com.example.academicherald.dto.lmsDto.LecturesDto;
-import com.example.academicherald.entity.lms.Exercise;
 import com.example.academicherald.entity.lms.Lectures;
 import com.example.academicherald.mappers.lmsMapper.LecturesMapper;
 import com.example.academicherald.services.lmsService.LecturesService;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/lecture")
@@ -22,6 +18,7 @@ public class LectureController {
         this.lecturesService = lecturesService;
         this.lecturesMapper = lecturesMapper;
     }
+
     @PostMapping("/create")
     public LecturesDto createLecture(@RequestBody LecturesDto lecturesDto,
                                      @RequestParam Long chapterId) {

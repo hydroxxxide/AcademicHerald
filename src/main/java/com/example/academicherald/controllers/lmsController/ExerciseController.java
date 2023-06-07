@@ -1,16 +1,11 @@
 package com.example.academicherald.controllers.lmsController;
 
 import com.example.academicherald.dto.lmsDto.ExerciseDto;
-import com.example.academicherald.dto.lmsDto.SubmittedExerciseDto;
 import com.example.academicherald.entity.lms.Exercise;
-import com.example.academicherald.entity.lms.SubmittedExercise;
 import com.example.academicherald.mappers.lmsMapper.ExerciseMapper;
 import com.example.academicherald.mappers.lmsMapper.SubmittedExerciseMapper;
 import com.example.academicherald.services.lmsService.ExerciseService;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/exercises")
@@ -32,7 +27,7 @@ public class ExerciseController {
                                       @RequestParam Long chapterId) {
         Exercise exercise = exerciseMapper.convertToEntity(exerciseDto);
         Exercise createdExercise = exerciseService.createExercise(exercise, chapterId);
-    return exerciseMapper.convertToDto(createdExercise);
+        return exerciseMapper.convertToDto(createdExercise);
     }
 
 

@@ -1,4 +1,4 @@
-package com.example.academicherald.controllers.lmsController;
+package com.example.academicherald.controllers;
 
 import com.example.academicherald.dto.lmsDto.*;
 import com.example.academicherald.entity.lms.SubmittedExercise;
@@ -38,30 +38,35 @@ public class StudentController {
     }
 
     @GetMapping("/getCourse/{id}")
-    public CourseDto getCourseById(@PathVariable Long id){
+    public CourseDto getCourseById(@PathVariable Long id) {
         return courseMapper.convertToDto(courseService.getById(id));
     }
+
     @GetMapping("/getChapter/{id}")
-    public ChapterDto getChapterById(@PathVariable Long id){
+    public ChapterDto getChapterById(@PathVariable Long id) {
         return chapterMapper.convertToDto(chapterService.getById(id));
     }
 
     @GetMapping("/getAllLecturesByChapter/{chapterId}")
-    public List<LecturesDto> findByLectureInChapter(@PathVariable Long chapterId){
+    public List<LecturesDto> findByLectureInChapter(@PathVariable Long chapterId) {
         return lecturesMapper.convertToDTOList(lecturesService.findByChapter(chapterId));
     }
+
     @GetMapping("/getLecture/{id}")
     public LecturesDto getLectureById(@PathVariable Long id) {
         return lecturesMapper.convertToDto(lecturesService.getById(id));
     }
+
     @GetMapping("/getAllExerciseByChapter/{chapterId}")
-    public List<ExerciseDto> findByExerciseInChapter(@PathVariable Long chapterId){
+    public List<ExerciseDto> findByExerciseInChapter(@PathVariable Long chapterId) {
         return exerciseMapper.convertToDTOList(exerciseService.findByChapter(chapterId));
     }
+
     @GetMapping("/getExercise/{id}")
-    public ExerciseDto getExerciseById(@PathVariable Long id){
+    public ExerciseDto getExerciseById(@PathVariable Long id) {
         return exerciseMapper.convertToDto(exerciseService.getById(id));
     }
+
     @PostMapping("/{exerciseId}/submit")
     public ResponseEntity<String> submitExercise(
             @PathVariable Long exerciseId,
@@ -76,8 +81,9 @@ public class StudentController {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
+
     @GetMapping("/geSubmittedExercise/{id}")
-    public SubmittedExerciseDto geSubmittedExerciseById(@PathVariable Long id){
+    public SubmittedExerciseDto geSubmittedExerciseById(@PathVariable Long id) {
         return submittedExerciseMapper.convertToDto(submittedExerciseService.getById(id));
     }
 }

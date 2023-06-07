@@ -11,6 +11,7 @@ import java.util.List;
 
 @Data
 public class PublicationDto {
+    private Long id;
     private String title;
     private String subtitle;
     private String text;

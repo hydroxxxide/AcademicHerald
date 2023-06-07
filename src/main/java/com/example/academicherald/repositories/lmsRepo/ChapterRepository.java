@@ -9,6 +9,8 @@ import java.util.List;
 @Repository
 public interface ChapterRepository extends JpaRepository<Chapter, Long> {
     Chapter findByIdAndRdtIsNull(Long id);
+
     List<Chapter> findByCourseIdAndRdtIsNull(Long courseId);
 
+    List<Chapter> findAllByRdtIsNull();
 }

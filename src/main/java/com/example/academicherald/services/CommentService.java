@@ -54,11 +54,13 @@ public class CommentService {
         return commentRepository.findByUserAndRdtIsNull(user);
     }
 
-    public String deleteComment(Long id) {
-        Comment comment = getCommentById(id);
-        comment.setRdt(LocalDateTime.now());
-        commentRepository.save(comment);
-        return "Комментарий удален";
+    public String deleteComment(Long commentId, Long userId) throws Exception {
+        Comment comment = getCommentById(commentId);
+        if (userId.equals(comment.getUser().getId())) {
+            comment.setRdt(LocalDateTime.now());
+            commentRepository.save(comment);
+            return "Комментарий удален";
+        } else throw new Exception("Пользователь не является автором комментария");
     }
 
 }

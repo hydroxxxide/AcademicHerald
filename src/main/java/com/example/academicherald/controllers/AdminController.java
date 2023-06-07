@@ -1,19 +1,19 @@
 package com.example.academicherald.controllers;
 
+import com.example.academicherald.dto.CommentDto;
 import com.example.academicherald.dto.PublicationDto;
-import com.example.academicherald.dto.UserDto;
 import com.example.academicherald.entity.ResponseMessage;
 import com.example.academicherald.entity.User;
 import com.example.academicherald.enums.ResultCode;
+import com.example.academicherald.mappers.CommentMapper;
 import com.example.academicherald.mappers.PublicationMapper;
-import com.example.academicherald.mappers.UserMapper;
+import com.example.academicherald.services.CommentService;
 import com.example.academicherald.services.PublicationService;
 import com.example.academicherald.services.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -24,15 +24,22 @@ public class AdminController {
     private final PublicationService publicationService;
     private final UserService userService;
     private final PublicationMapper publicationMapper;
-    private final UserMapper userMapper;
+    private final CommentService commentService;
+    private final CommentMapper commentMapper;
 
-    public AdminController(PublicationService publicationService, UserService userService, PublicationMapper publicationMapper, UserMapper userMapper) {
+    public AdminController(PublicationService publicationService,
+                           UserService userService,
+                           PublicationMapper publicationMapper,
+                           CommentService commentService,
+                           CommentMapper commentMapper) {
         this.publicationService = publicationService;
         this.userService = userService;
         this.publicationMapper = publicationMapper;
-        this.userMapper = userMapper;
+        this.commentService = commentService;
+        this.commentMapper = commentMapper;
     }
 
+    // управление публикациями
     @PutMapping("/confirm/{publicationId}")
     public ResponseMessage<?> confirmPublication(@PathVariable Long publicationId) {
         try {
@@ -75,13 +82,15 @@ public class AdminController {
         }
     }
 
+
+    //управление пользователями
     @GetMapping("/get/users")
-    public ResponseEntity<byte[]> downloadUsersInfo() throws IOException {
+    public ResponseEntity<byte[]> downloadUsersInfo() {
         List<User> users = userService.getAll();
         return userService.exportToExcel(users);
     }
 
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping("/user/delete/{id}")
     public ResponseMessage<String> deleteUser(@PathVariable Long id) {
         try {
             return new ResponseMessage<>(
@@ -91,6 +100,21 @@ public class AdminController {
                     ResultCode.SUCCESS.getHttpCode());
         } catch (Exception e) {
             log.error("AdminController: deleteUser", e);
+            return new ResponseMessage<>(null, ResultCode.FAIL, e.getMessage(), ResultCode.FAIL.getHttpCode());
+        }
+    }
+
+    // получение всех комментариев по пользователю
+    @GetMapping("/comment/user/{userId}")
+    public ResponseMessage<List<CommentDto>> getCommentByUserId(@PathVariable Long userId) {
+        try {
+            return new ResponseMessage<>(
+                    commentMapper.convertToDTOList(commentService.allCommentsByUser(userId)),
+                    ResultCode.SUCCESS,
+                    "Комментарии по пользователю успешно найдены",
+                    ResultCode.SUCCESS.getHttpCode());
+        } catch (Exception e) {
+            log.error("AdminController: getCommentByUserId", e);
             return new ResponseMessage<>(null, ResultCode.FAIL, e.getMessage(), ResultCode.FAIL.getHttpCode());
         }
     }

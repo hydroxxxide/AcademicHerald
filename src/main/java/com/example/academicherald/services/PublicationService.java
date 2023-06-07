@@ -72,10 +72,12 @@ public class PublicationService {
     public List<Publication> getPublicationsByTagId(Long tagId) {
         return publicationRepository.findByTagsId(tagId);
     }
+
     //Вытаскиваем список публикаций по id категории
     public List<Publication> getPublicationsByCategoryId(Long categoryId) {
         return publicationRepository.findByCategory(categoryId);
     }
+
     //Вытаскиваем список публикаций по id автора(какие посты он выложил)
     public List<Publication> getPublicationsByAuthorId(Long authorId) {
         User author = userRepository.findById(authorId).orElse(null);
@@ -97,10 +99,10 @@ public class PublicationService {
         return publicationRepository.getAllByPassAndRdtIsNull(false);
     }
 
-    public Publication update(Publication newPublication, Long userId, Long categoryId) throws Exception{
+    public Publication update(Publication newPublication, Long userId, Long categoryId) throws Exception {
         Publication oldPublication = getById(newPublication.getId());
         User author = userService.getById(userId);
-        if (author.equals(oldPublication.getAuthor())){
+        if (author.equals(oldPublication.getAuthor())) {
             oldPublication.setAuthor(userService.getById(userId));
             oldPublication.setTitle(newPublication.getTitle());
             oldPublication.setSubtitle(newPublication.getSubtitle());
@@ -109,24 +111,26 @@ public class PublicationService {
             oldPublication.setCategory(categoryService.getById(categoryId));
             oldPublication.setType(newPublication.getType());
             return publicationRepository.save(oldPublication);
-        }
-        else throw new Exception("Пользователь " + oldPublication.getAuthor().getUsername() +
+        } else throw new Exception("Пользователь " + oldPublication.getAuthor().getUsername() +
                 " не является автором данной публикации");
     }
-    public String delete(Long id) {
-        Publication publication = getById(id);
-        publication.setRdt(LocalDateTime.now());
-        publicationRepository.save(publication);
-        return "Публикация " + publication.getTitle() + " удалена";
+
+    public String delete(Long publicationId, Long userId) throws Exception {
+        Publication publication = getById(publicationId);
+        if (userId.equals(publication.getAuthor().getId())) {
+            publication.setRdt(LocalDateTime.now());
+            publicationRepository.save(publication);
+            return "Публикация " + publication.getTitle() + " удалена";
+        } else throw new Exception("Пользователь не является автором публикации");
     }
 
-    public String confirmAndRejectPublication(Long id, Boolean res){
+    public String confirmAndRejectPublication(Long id, Boolean res) {
         Publication publication = publicationRepository.findById(id).orElseThrow();
         publication.setPass(res);
         publicationRepository.save(publication);
-        if (res){
-            return "Публикация " +  publication.getTitle() + " принята и опубликована на сайте";
-        }else {
+        if (res) {
+            return "Публикация " + publication.getTitle() + " принята и опубликована на сайте";
+        } else {
             return "Публикация " + publication.getTitle() + " отклонена и не будет опубликована на сайте";
         }
     }

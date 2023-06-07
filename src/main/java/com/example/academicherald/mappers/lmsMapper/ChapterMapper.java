@@ -15,6 +15,7 @@ public class ChapterMapper {
     public ChapterMapper(ModelMapper mapper) {
         this.mapper = mapper;
     }
+
     public ChapterDto convertToDto(Chapter chapter) {
         return mapper.map(chapter, ChapterDto.class);
     }
@@ -26,6 +27,7 @@ public class ChapterMapper {
         }
         return chapterDtoList;
     }
+
     public Chapter convertToEntity(ChapterDto chapterDto) {
         return mapper.map(chapterDto, Chapter.class);
     }

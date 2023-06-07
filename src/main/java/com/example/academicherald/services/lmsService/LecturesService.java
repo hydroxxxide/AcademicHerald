@@ -1,7 +1,6 @@
 package com.example.academicherald.services.lmsService;
 
 import com.example.academicherald.entity.lms.Chapter;
-import com.example.academicherald.entity.lms.Exercise;
 import com.example.academicherald.entity.lms.Lectures;
 import com.example.academicherald.entity.lms.Material;
 import com.example.academicherald.repositories.lmsRepo.ChapterRepository;
@@ -42,11 +41,12 @@ public class LecturesService {
     public Lectures getById(Long id) {
         return lecturesRepository.findById(id).orElse(null);
     }
+
     public List<Lectures> findByChapter(Long chapterId) {
         return lecturesRepository.findByChapterId(chapterId);
     }
 
-    public Lectures updateLecture(Lectures newLecture){
+    public Lectures updateLecture(Lectures newLecture) {
         Lectures oldLecture = lecturesRepository.getById(newLecture.getId());
         oldLecture.setTitle(newLecture.getTitle());
         Material updatedMaterial = newLecture.getMaterial();
@@ -56,7 +56,7 @@ public class LecturesService {
         return lecturesRepository.save(oldLecture);
     }
 
-    public void deleteLecture(Long id){
+    public void deleteLecture(Long id) {
         Lectures lectures = getById(id);
         lectures.setRdt(LocalDateTime.now());
         lecturesRepository.save(lectures);

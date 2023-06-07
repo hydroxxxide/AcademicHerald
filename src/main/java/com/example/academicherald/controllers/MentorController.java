@@ -1,11 +1,9 @@
-package com.example.academicherald.controllers.lmsController;
+package com.example.academicherald.controllers;
 
 import com.example.academicherald.dto.UserDto;
-import com.example.academicherald.dto.lmsDto.ChapterDto;
-import com.example.academicherald.dto.lmsDto.ExerciseDto;
-import com.example.academicherald.dto.lmsDto.LecturesDto;
-import com.example.academicherald.dto.lmsDto.SubmittedExerciseDto;
+import com.example.academicherald.dto.lmsDto.*;
 import com.example.academicherald.entity.lms.Chapter;
+import com.example.academicherald.entity.lms.Course;
 import com.example.academicherald.entity.lms.Exercise;
 import com.example.academicherald.entity.lms.Lectures;
 import com.example.academicherald.mappers.UserMapper;
@@ -23,7 +21,7 @@ public class MentorController {
     private final ExerciseService exerciseService;
     private final ExerciseMapper exerciseMapper;
     private final SubmittedExerciseMapper submittedExerciseMapper;
-    private SubmittedExerciseService submittedExerciseService;
+    private final SubmittedExerciseService submittedExerciseService;
     private final LecturesService lecturesService;
     private final LecturesMapper lecturesMapper;
 
@@ -52,13 +50,43 @@ public class MentorController {
         this.submittedExerciseRepository = submittedExerciseRepository;
     }
 
+    // управление курсами
 
-    @GetMapping("/allStudentsInCourse/{courseId}")
+    @PostMapping("/course/create")
+    public CourseDto createCourse(@RequestBody CourseDto courseDto,
+                                  @RequestParam Long mentorId) {
+        Course course = courseMapper.convertToEntity(courseDto);
+        Course createdCourse = courseService.create(course, mentorId);
+        return courseMapper.convertToDto(createdCourse);
+    }
+
+    @GetMapping("/course/get/{id}")
+    public CourseDto getCourseById(@PathVariable Long id) {
+        return courseMapper.convertToDto(courseService.getById(id));
+    }
+
+    @GetMapping("/course/get/all")
+    public List<CourseDto> getAllCourses() {
+        return courseMapper.convertToDTOList(courseService.getAll());
+    }
+
+    @GetMapping("/course/update")
+    public CourseDto updateCourse(@RequestBody CourseDto courseDto) {
+        Course course = courseMapper.convertToEntity(courseDto);
+        return courseMapper.convertToDto(courseService.update(course));
+    }
+
+    @GetMapping("/course/delete/{id}")
+    public void deleteCourse(@PathVariable Long id) {
+        courseService.delete(id);
+    }
+
+    @GetMapping("/course/students/{courseId}")
     public List<UserDto> getAllStudentsInCourse(@PathVariable Long courseId) {
         return userMapper.convertToDTOList(courseService.getCourseStudents(courseId));
     }
 
-    @PostMapping("/createChapter")
+    @PostMapping("/chapter/create")
     public ChapterDto createChapter(@RequestBody ChapterDto chapterDto,
                                     @RequestParam Long courseId) {
         Chapter chapter = chapterMapper.convertToEntity(chapterDto);
@@ -66,17 +94,27 @@ public class MentorController {
         return chapterMapper.convertToDto(createdChapter);
     }
 
-    @PutMapping("/updateChapter")
+    @GetMapping("/chapter/get/{id}")
+    public ChapterDto getChapterById(@PathVariable Long id) {
+        return chapterMapper.convertToDto(chapterService.getById(id));
+    }
+
+    @GetMapping("/chapter/get/all")
+    public List<ChapterDto> getAllChapters() {
+        return chapterMapper.convertToDTOList(chapterService.getAll());
+    }
+
+    @PutMapping("/chapter/update")
     public ChapterDto updateChapter(@RequestBody Chapter chapter) {
         return chapterMapper.convertToDto(chapterService.updateChapter(chapter));
     }
 
-    @DeleteMapping("/deleteChapter/{id}")
+    @DeleteMapping("/chapter/delete/{id}")
     public void deleteChapter(@PathVariable Long id) {
         chapterService.delete(id);
     }
 
-    @PostMapping("/createLecture")
+    @PostMapping("/lecture/create")
     public LecturesDto createLecture(@RequestBody LecturesDto lecturesDto,
                                      @RequestParam Long chapterId) {
         Lectures lectures = lecturesMapper.convertToEntity(lecturesDto);
@@ -84,17 +122,17 @@ public class MentorController {
         return lecturesMapper.convertToDto(createdLectures);
     }
 
-    @PutMapping("/updateLecture")
+    @PutMapping("/lecture/update")
     public LecturesDto update(@RequestBody Lectures lectures) {
         return lecturesMapper.convertToDto(lecturesService.updateLecture(lectures));
     }
 
-    @DeleteMapping("/deleteLecture/{id}")
+    @DeleteMapping("/lecture/delete/{id}")
     public void delete(@PathVariable Long id) {
         lecturesService.deleteLecture(id);
     }
 
-    @PostMapping("/createExercise")
+    @PostMapping("/exercise/create")
     public ExerciseDto createExercise(@RequestBody ExerciseDto exerciseDto,
                                       @RequestParam Long chapterId) {
         Exercise exercise = exerciseMapper.convertToEntity(exerciseDto);
@@ -102,12 +140,12 @@ public class MentorController {
         return exerciseMapper.convertToDto(createdExercise);
     }
 
-    @PutMapping("/updateExercise")
+    @PutMapping("/exercise/update")
     public ExerciseDto update(@RequestBody Exercise exercise) {
         return exerciseMapper.convertToDto(exerciseService.updateExercise(exercise));
     }
 
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping("/exercise/delete/{id}")
     public void deleteExercise(@PathVariable Long id) {
         exerciseService.deleteExercise(id);
     }

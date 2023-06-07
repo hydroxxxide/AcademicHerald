@@ -20,7 +20,8 @@ public class EventMapper {
         return mapper.map(event, EventDto.class);
     }
 
-    public Event convertToEntity(EventDto eventDto){ return mapper.map(eventDto, Event.class);
+    public Event convertToEntity(EventDto eventDto) {
+        return mapper.map(eventDto, Event.class);
     }
 
     public List<EventDto> convertToDTOList(List<Event> events) {

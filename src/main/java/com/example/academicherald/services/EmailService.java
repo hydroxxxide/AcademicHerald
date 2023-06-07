@@ -32,8 +32,9 @@ public class EmailService {
             System.out.println(e.getMessage());
         }
     }
-    public void sendEventPublicationMessage(Event event){
-        if (!userRepository.findAllEmails().isEmpty()){
+
+    public void sendEventPublicationMessage(Event event) {
+        if (!userRepository.findAllEmails().isEmpty()) {
             for (String email :
                     userRepository.findAllEmails()) {
                 String subject = "Новый ивент!";
@@ -45,9 +46,10 @@ public class EmailService {
             }
         }
     }
-    public void sendNewsPublicationMessage(Publication publication){
-        if (!userRepository.findAllEmails().isEmpty()){
-            for (String email:
+
+    public void sendNewsPublicationMessage(Publication publication) {
+        if (!userRepository.findAllEmails().isEmpty()) {
+            for (String email :
                     userRepository.findAllEmails()) {
                 String subject = "Новая новость";
                 String text = "Доброго времени суток, у нас есть новая новость!\n\n" +
@@ -58,7 +60,8 @@ public class EmailService {
             }
         }
     }
-    public void sendEventRemind(){
+
+    public void sendEventRemind() {
 
     }
 }

@@ -24,9 +24,11 @@ public class TagMapper {
         }
         return tagDtoList;
     }
+
     public Tag convertToEntity(TagDto tagDto) {
         return mapper.map(tagDto, Tag.class);
     }
+
     public TagDto convertToDTO(Tag tag) {
         return mapper.map(tag, TagDto.class);
     }

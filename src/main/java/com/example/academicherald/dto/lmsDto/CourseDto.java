@@ -12,6 +12,7 @@ import java.util.List;
 
 @Data
 public class CourseDto {
+    Long id;
     @Enumerated(EnumType.STRING)
     private CourseType type;
     @DateTimeFormat(pattern = "dd-MM-yyyy")

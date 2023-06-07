@@ -85,7 +85,7 @@ public class ExerciseService {
         return exerciseRepository.findAllByChapterIdAndRdtIsNull(chapterId);
     }
 
-    public Exercise updateExercise(Exercise newExercise){
+    public Exercise updateExercise(Exercise newExercise) {
         Exercise oldExercise = exerciseRepository.findByIdAndRdtIsNull(newExercise.getId());
         oldExercise.setDeadline(newExercise.getDeadline());
         oldExercise.setTitle(newExercise.getTitle());
@@ -93,7 +93,7 @@ public class ExerciseService {
         return exerciseRepository.save(oldExercise);
     }
 
-    public void deleteExercise(Long id){
+    public void deleteExercise(Long id) {
         Exercise exercise = getById(id);
         exercise.setRdt(LocalDateTime.now());
         exerciseRepository.save(exercise);

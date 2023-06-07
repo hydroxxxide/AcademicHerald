@@ -5,8 +5,10 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
+
 @Data
 public class EventDto {
+    private Long id;
     private String title; // заголовок ивента
 
     private String subtitle; // подзаголовок

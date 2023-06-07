@@ -23,9 +23,11 @@ public class CategoryMapper {
         }
         return categoryDtoList;
     }
+
     public Category convertToEntity(CategoryDto categoryDto) {
         return mapper.map(categoryDto, Category.class);
     }
+
     public CategoryDto convertToDto(Category category) {
         return mapper.map(category, CategoryDto.class);
     }

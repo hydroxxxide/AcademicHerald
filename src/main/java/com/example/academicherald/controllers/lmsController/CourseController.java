@@ -4,10 +4,8 @@ import com.example.academicherald.dto.lmsDto.CourseDto;
 import com.example.academicherald.entity.lms.Course;
 import com.example.academicherald.mappers.lmsMapper.CourseMapper;
 import com.example.academicherald.services.lmsService.CourseService;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -33,12 +31,12 @@ public class CourseController {
     }
 
     @GetMapping("/get/{id}")
-    public CourseDto getById(@PathVariable Long id){
+    public CourseDto getCourseById(@PathVariable Long id) {
         return courseMapper.convertToDto(courseService.getById(id));
     }
 
     @GetMapping("/get/all")
-    public List<CourseDto> getAll(){
+    public List<CourseDto> getAllCourses() {
         return courseMapper.convertToDTOList(courseService.getAll());
     }
 

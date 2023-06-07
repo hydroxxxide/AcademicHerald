@@ -21,9 +21,9 @@ public interface UserRepository extends JpaRepository<User, Long> {
     List<User> findAllByRdtIsNull();
 
     User findByIdAndRole(Long id, UserRole role);
+
     @Query("SELECT u FROM User u WHERE u.id IN :id AND u.role = :role")
     List<User> findAllByIdAndRole(List<Long> id, UserRole role);
-
 
 
     @Query(value = "select email from users", nativeQuery = true)

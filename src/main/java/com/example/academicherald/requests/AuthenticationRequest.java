@@ -1,6 +1,6 @@
 package com.example.academicherald.requests;
 
-public class AuthenticationRequest  {
+public class AuthenticationRequest {
     private String username;
     private String password;
 

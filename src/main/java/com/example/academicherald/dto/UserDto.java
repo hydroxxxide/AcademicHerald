@@ -8,7 +8,6 @@ import javax.persistence.Enumerated;
 
 @Data
 public class UserDto {
-
     private Long id;
 
     private String username;

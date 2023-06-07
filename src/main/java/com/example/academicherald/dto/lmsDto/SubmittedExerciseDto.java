@@ -5,6 +5,7 @@ import lombok.Data;
 
 @Data
 public class SubmittedExerciseDto {
+    private Long id;
     private UserDto studentId;
     private String linkGitHubHw;
     private Boolean pass = false;

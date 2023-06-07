@@ -23,6 +23,7 @@ public class UserMapper {
         }
         return userDtoList;
     }
+
     public User convertToEntity(UserDto userDto) {
         return mapper.map(userDto, User.class);
     }

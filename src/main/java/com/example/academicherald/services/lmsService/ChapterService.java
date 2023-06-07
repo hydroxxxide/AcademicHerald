@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class ChapterService {
@@ -36,6 +35,10 @@ public class ChapterService {
 
     public Chapter getById(Long id) {
         return chapterRepository.findByIdAndRdtIsNull(id);
+    }
+
+    public List<Chapter> getAll() {
+        return chapterRepository.findAllByRdtIsNull();
     }
 
     public void delete(Long id) {

@@ -9,6 +9,7 @@ import com.example.academicherald.repositories.UserRepository;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -56,66 +57,68 @@ public class UserService {
         return userRepository.findAllByRdtIsNull();
     }
 
-    public ResponseEntity<byte[]> exportToExcel(List<User> users) throws IOException {
-        Workbook workbook = new XSSFWorkbook();
-        Sheet sheet = workbook.createSheet("Users from AHeld");
+    public ResponseEntity<byte[]> exportToExcel(List<User> users) {
+        try (Workbook workbook = new XSSFWorkbook()) {
+            Sheet sheet = workbook.createSheet("Users from AHeld");
 
-        // Задаем стиль заголовков
-        CellStyle headerStyle = workbook.createCellStyle();
-        Font font = workbook.createFont();
-        font.setBold(true);
-        headerStyle.setFont(font);
+            // Задаем стиль заголовков
+            CellStyle headerStyle = workbook.createCellStyle();
+            Font font = workbook.createFont();
+            font.setBold(true);
+            headerStyle.setFont(font);
 
-        // Создаем заголовки столбцов
-        Row headerRow = sheet.createRow(0);
-        headerRow.createCell(0).setCellValue("ID");
-        headerRow.createCell(1).setCellValue("Username");
-        headerRow.createCell(2).setCellValue("Email");
-        headerRow.createCell(3).setCellValue("Role");
-        headerRow.createCell(4).setCellValue("Course");
+            // Создаем заголовки столбцов
+            Row headerRow = sheet.createRow(0);
+            headerRow.createCell(0).setCellValue("ID");
+            headerRow.createCell(1).setCellValue("Username");
+            headerRow.createCell(2).setCellValue("Email");
+            headerRow.createCell(3).setCellValue("Role");
+            headerRow.createCell(4).setCellValue("Course");
 
-
-        // Устанавливаем стиль заголовков
-        for (Cell cell : headerRow) {
-            cell.setCellStyle(headerStyle);
-        }
-
-        // Заполняем таблицу данными
-        int rowNum = 1;
-        for (User user : users) {
-            Row row = sheet.createRow(rowNum++);
-
-            row.createCell(0).setCellValue(user.getId());
-            row.createCell(1).setCellValue(user.getUsername());
-            row.createCell(2).setCellValue(user.getEmail());
-            row.createCell(3).setCellValue(user.getRole().toString());
-            if (user.getCourse() != null){
-                row.createCell(4).setCellValue(user.getCourse().getType().toString());
-            }else {
-                row.createCell(4).setCellValue(" - ");
+            // Устанавливаем стиль заголовков
+            for (Cell cell : headerRow) {
+                cell.setCellStyle(headerStyle);
             }
+
+            // Заполняем таблицу данными
+            int rowNum = 1;
+            for (User user : users) {
+                Row row = sheet.createRow(rowNum++);
+
+                row.createCell(0).setCellValue(user.getId());
+                row.createCell(1).setCellValue(user.getUsername());
+                row.createCell(2).setCellValue(user.getEmail());
+                row.createCell(3).setCellValue(user.getRole().toString());
+                if (user.getCourse() != null) {
+                    row.createCell(4).setCellValue(user.getCourse().getType().toString());
+                } else {
+                    row.createCell(4).setCellValue(" - ");
+                }
+            }
+
+            // Авторазмер столбцов
+            for (int i = 0; i < 5; i++) {
+                sheet.autoSizeColumn(i);
+            }
+
+            // Переводим книгу Excel в массив байтов
+            ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+            workbook.write(outputStream);
+
+            String fileName = "users info " +
+                    LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy"));
+
+            // Формируем ответ с файлом Excel
+            byte[] bytes = outputStream.toByteArray();
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+            headers.setContentDispositionFormData("attachment", fileName + ".xlsx");
+            headers.setContentLength(bytes.length);
+            return new ResponseEntity<>(bytes, headers, HttpStatus.OK);
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
         }
-
-        // Авторазмер столбцов
-        for (int i = 0; i < 5; i++) {
-            sheet.autoSizeColumn(i);
-        }
-
-        // Переводим книгу Excel в массив байтов
-        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-        workbook.write(outputStream);
-
-
-        String fileName = "users info " +
-                LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy"));
-
-        // Формируем ответ с файлом Excel
-        byte[] bytes = outputStream.toByteArray();
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
-        headers.setContentDispositionFormData("attachment", fileName + ".xlsx");
-        headers.setContentLength(bytes.length);
-        return new ResponseEntity<>(bytes, headers, 200);
+        return null;
     }
 
     public User update(User newUser) {
@@ -173,16 +176,16 @@ public class UserService {
         return user != null;
     }
 
-    public String likePublication(Long publicationId, Long userId){
+    public String likePublication(Long publicationId, Long userId) {
         User user = getById(userId);
         Publication publication = publicationRepository.findById(publicationId).orElseThrow();
         Like like = new Like();
-        if (likeRepository.findByPublicationIdAndUserId(publicationId, userId) == null){
+        if (likeRepository.findByPublicationIdAndUserId(publicationId, userId) == null) {
             like.setUser(user);
             like.setPublication(publication);
             publication.getLikes().add(like);
             likeRepository.save(like);
-        }else{
+        } else {
             publication.getLikes().remove(likeRepository.findByPublicationIdAndUserId(publicationId, userId));
             likeRepository.delete(likeRepository.findByPublicationIdAndUserId(publicationId, userId));
         }

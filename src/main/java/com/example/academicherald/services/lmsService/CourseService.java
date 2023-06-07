@@ -23,12 +23,13 @@ public class CourseService {
 
     public Course create(Course course, Long mentorId) {
         User mentor = userRepository.findByIdAndRole(mentorId, UserRole.ROLE_MENTOR);
-        if(mentor == null){
+        if (mentor == null) {
             throw new IllegalArgumentException("Укажите ментора курса");
         }
         course.setMentor(mentor);
         return courseRepository.save(course);
     }
+
     public Course addStudentsToCourse(Long courseId, List<Long> studentIds) {
         Course course = courseRepository.findById(courseId)
                 .orElseThrow(() -> new IllegalArgumentException("Курс с указанным ID не найден"));
@@ -41,15 +42,16 @@ public class CourseService {
         for (User student : studentsId) {
             if (!existingStudents.contains(student)) {
                 existingStudents.add(student);
-            }else{
+            } else {
                 throw new IllegalArgumentException("Студенты проходят курс");
             }
         }
         return courseRepository.save(course);
     }
+
     public List<User> getCourseStudents(Long courseId) {
-        Course course = courseRepository.findById(courseId).orElse(null);
-       return course.getStudents();
+        Course course = courseRepository.findById(courseId).orElseThrow();
+        return course.getStudents();
     }
 
     public Course getById(Long id) {

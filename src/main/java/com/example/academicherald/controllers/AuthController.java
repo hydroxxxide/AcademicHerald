@@ -17,8 +17,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -74,14 +72,14 @@ public class AuthController {
     }
 
     @GetMapping("/reset")
-    public ResponseMessage<String> resetPassword(@RequestParam String email){
+    public ResponseMessage<String> resetPassword(@RequestParam String email) {
         try {
             return new ResponseMessage<>(
                     userService.resetPassword(email),
                     ResultCode.SUCCESS,
                     "Успешно",
                     ResultCode.SUCCESS.getHttpCode());
-        }catch (Exception e){
+        } catch (Exception e) {
             log.error("AuthController: resetPassword", e);
             return new ResponseMessage<>(null, ResultCode.FAIL, e.getMessage(), ResultCode.FAIL.getHttpCode());
         }
@@ -95,7 +93,7 @@ public class AuthController {
                     ResultCode.SUCCESS,
                     "Пароль сохранен",
                     ResultCode.SUCCESS.getHttpCode());
-        }catch (Exception e){
+        } catch (Exception e) {
             log.error("AuthController: saveNewPassword", e);
             return new ResponseMessage<>(null, ResultCode.FAIL, e.getMessage(), ResultCode.FAIL.getHttpCode());
         }

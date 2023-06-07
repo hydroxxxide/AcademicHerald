@@ -27,6 +27,7 @@ public class CourseMapper {
         }
         return courseDtoList;
     }
+
     public Course convertToEntity(CourseDto courseDto) {
         return mapper.map(courseDto, Course.class);
     }
