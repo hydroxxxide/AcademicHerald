@@ -6,12 +6,20 @@ import com.example.academicherald.entity.User;
 import com.example.academicherald.repositories.LikeRepository;
 import com.example.academicherald.repositories.PublicationRepository;
 import com.example.academicherald.repositories.UserRepository;
+import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.UUID;
 
@@ -48,6 +56,68 @@ public class UserService {
         return userRepository.findAllByRdtIsNull();
     }
 
+    public ResponseEntity<byte[]> exportToExcel(List<User> users) throws IOException {
+        Workbook workbook = new XSSFWorkbook();
+        Sheet sheet = workbook.createSheet("Users from AHeld");
+
+        // Задаем стиль заголовков
+        CellStyle headerStyle = workbook.createCellStyle();
+        Font font = workbook.createFont();
+        font.setBold(true);
+        headerStyle.setFont(font);
+
+        // Создаем заголовки столбцов
+        Row headerRow = sheet.createRow(0);
+        headerRow.createCell(0).setCellValue("ID");
+        headerRow.createCell(1).setCellValue("Username");
+        headerRow.createCell(2).setCellValue("Email");
+        headerRow.createCell(3).setCellValue("Role");
+        headerRow.createCell(4).setCellValue("Course");
+
+
+        // Устанавливаем стиль заголовков
+        for (Cell cell : headerRow) {
+            cell.setCellStyle(headerStyle);
+        }
+
+        // Заполняем таблицу данными
+        int rowNum = 1;
+        for (User user : users) {
+            Row row = sheet.createRow(rowNum++);
+
+            row.createCell(0).setCellValue(user.getId());
+            row.createCell(1).setCellValue(user.getUsername());
+            row.createCell(2).setCellValue(user.getEmail());
+            row.createCell(3).setCellValue(user.getRole().toString());
+            if (user.getCourse() != null){
+                row.createCell(4).setCellValue(user.getCourse().getType().toString());
+            }else {
+                row.createCell(4).setCellValue(" - ");
+            }
+        }
+
+        // Авторазмер столбцов
+        for (int i = 0; i < 5; i++) {
+            sheet.autoSizeColumn(i);
+        }
+
+        // Переводим книгу Excel в массив байтов
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        workbook.write(outputStream);
+
+
+        String fileName = "users info " +
+                LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy"));
+
+        // Формируем ответ с файлом Excel
+        byte[] bytes = outputStream.toByteArray();
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+        headers.setContentDispositionFormData("attachment", fileName + ".xlsx");
+        headers.setContentLength(bytes.length);
+        return new ResponseEntity<>(bytes, headers, 200);
+    }
+
     public User update(User newUser) {
         User oldUser = getById(newUser.getId());
         oldUser.setUsername(newUser.getUsername());
@@ -57,10 +127,11 @@ public class UserService {
         return userRepository.save(oldUser);
     }
 
-    public void delete(Long id) {
+    public String delete(Long id) {
         User user = getById(id);
         user.setRdt(LocalDateTime.now());
         userRepository.save(user);
+        return "Пользователь под ником " + user.getUsername() + " удален";
     }
 
 

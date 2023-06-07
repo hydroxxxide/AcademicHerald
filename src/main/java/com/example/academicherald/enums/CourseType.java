@@ -2,6 +2,7 @@ package com.example.academicherald.enums;
 
 
 public enum CourseType {
+    NONE,
     JAVA,
     PYTHON,
     JAVASCRIPT,
