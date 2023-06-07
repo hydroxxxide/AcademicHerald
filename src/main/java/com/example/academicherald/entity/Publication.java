@@ -70,4 +70,7 @@ public class Publication {
 
     private LocalDateTime rdt;
 
+    @Column(columnDefinition = "text")
+    private String preview; // ссылка к картинке
+
 }

@@ -37,7 +37,7 @@ public class EmailService {
             for (String email :
                     userRepository.findAllEmails()) {
                 String subject = "Новый ивент!";
-                String text = "Доброго времени суток, совсем скоро новый ивент!\n\n" +
+                String text = "Доброго времени суток, а у нас тут ивент!)\n\n" +
                         event.getTitle() +
                         "\n" +
                         event.getSubtitle();

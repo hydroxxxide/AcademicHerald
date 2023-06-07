@@ -102,7 +102,7 @@ public class UserService {
         return user != null;
     }
 
-    public void likePublication(Long publicationId, Long userId){
+    public String likePublication(Long publicationId, Long userId){
         User user = getById(userId);
         Publication publication = publicationRepository.findById(publicationId).orElseThrow();
         Like like = new Like();
@@ -115,5 +115,6 @@ public class UserService {
             publication.getLikes().remove(likeRepository.findByPublicationIdAndUserId(publicationId, userId));
             likeRepository.delete(likeRepository.findByPublicationIdAndUserId(publicationId, userId));
         }
+        return "Пользователь " + user.getUsername() + " лайкнул публикацию " + "\"" + publication.getTitle() + "\"";
     }
 }

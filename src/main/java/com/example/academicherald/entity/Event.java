@@ -50,4 +50,6 @@ public class Event {
     private Double duration;
 
     private LocalDateTime rdt;
+
+    private String preview; // ссылка к картинке
 }

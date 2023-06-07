@@ -15,8 +15,12 @@ public class EventMapper {
     public EventMapper(ModelMapper mapper) {
         this.mapper = mapper;
     }
+
     public EventDto convertToDto(Event event) {
         return mapper.map(event, EventDto.class);
+    }
+
+    public Event convertToEntity(EventDto eventDto){ return mapper.map(eventDto, Event.class);
     }
 
     public List<EventDto> convertToDTOList(List<Event> events) {

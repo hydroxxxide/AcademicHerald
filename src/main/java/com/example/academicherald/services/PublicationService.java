@@ -113,17 +113,22 @@ public class PublicationService {
         else throw new Exception("Пользователь " + oldPublication.getAuthor().getUsername() +
                 " не является автором данной публикации");
     }
-    public void delete(Long id) {
+    public String delete(Long id) {
         Publication publication = getById(id);
         publication.setRdt(LocalDateTime.now());
         publicationRepository.save(publication);
+        return "Публикация " + publication.getTitle() + " удалена";
     }
 
-    public void confirmPublication(Long id, Boolean res){
-        Publication publication = publicationRepository.findById(id).orElse(null);
-        assert publication != null;
+    public String confirmAndRejectPublication(Long id, Boolean res){
+        Publication publication = publicationRepository.findById(id).orElseThrow();
         publication.setPass(res);
         publicationRepository.save(publication);
+        if (res){
+            return "Публикация " +  publication.getTitle() + " принята и опубликована на сайте";
+        }else {
+            return "Публикация " + publication.getTitle() + " отклонена и не будет опубликована на сайте";
+        }
     }
 
     public List<Publication> sortByPopularity() {

@@ -33,9 +33,10 @@ public class TagService {
         return tagRepository.save(oldTag);
     }
 
-    public void delete(Long id) {
+    public String delete(Long id) {
         Tag tag = getById(id);
         tag.setRdt(LocalDateTime.now());
         tagRepository.save(tag);
+        return "Тег " + tag.getName() + " удален";
     }
 }

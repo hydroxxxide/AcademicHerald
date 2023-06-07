@@ -50,4 +50,6 @@ public class User {
     private LocalDateTime resetTokenExpireTime;
 
     private LocalDateTime rdt;
+
+    private String preview; // ссылка к картинке
 }

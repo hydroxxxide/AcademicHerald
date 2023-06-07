@@ -54,10 +54,11 @@ public class CommentService {
         return commentRepository.findByUserAndRdtIsNull(user);
     }
 
-    public void deleteComment(Long id) {
+    public String deleteComment(Long id) {
         Comment comment = getCommentById(id);
         comment.setRdt(LocalDateTime.now());
         commentRepository.save(comment);
+        return "Комментарий удален";
     }
 
 }

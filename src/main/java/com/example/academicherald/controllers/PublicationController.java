@@ -28,7 +28,7 @@ public class PublicationController {
 
 
     @PostMapping("/create")
-    public ResponseMessage <PublicationDto> createPublication(
+    public ResponseMessage<PublicationDto> createPublication(
             @RequestBody PublicationDto publicationDto,
             @RequestParam Long userId,
             @RequestParam Long categoryId,
@@ -36,40 +36,40 @@ public class PublicationController {
     ) {
         Publication publication = mapper.convertToEntity(publicationDto);
         try {
-        return new ResponseMessage<>(
-                mapper.convertToDto(publicationService.create(publication, userId, categoryId, tagsIds)),
-                ResultCode.SUCCESS,
-                "Success",
-                ResultCode.SUCCESS.getHttpCode());
-        }catch (Exception e){
+            return new ResponseMessage<>(
+                    mapper.convertToDto(publicationService.create(publication, userId, categoryId, tagsIds)),
+                    ResultCode.SUCCESS,
+                    "Публикация успешно создана",
+                    ResultCode.SUCCESS.getHttpCode());
+        } catch (Exception e) {
             log.error("PublicationController: createPublication", e);
             return new ResponseMessage<>(null, ResultCode.FAIL, e.getMessage(), ResultCode.FAIL.getHttpCode());
         }
     }
 
     @GetMapping("/get/{id}")
-    public ResponseMessage <PublicationDto> getById(@PathVariable Long id) {
+    public ResponseMessage<PublicationDto> getById(@PathVariable Long id) {
         try {
             return new ResponseMessage<>(
                     mapper.convertToDto(publicationService.getById(id)),
                     ResultCode.SUCCESS,
-                    "Success",
+                    "Публикация успешно найдена",
                     ResultCode.SUCCESS.getHttpCode());
-        }catch (Exception e){
+        } catch (Exception e) {
             log.error("PublicationController: getById", e);
             return new ResponseMessage<>(null, ResultCode.FAIL, e.getMessage(), ResultCode.FAIL.getHttpCode());
         }
     }
 
     @GetMapping("/get/all")
-    public ResponseMessage <List<PublicationDto>> getAll() {
+    public ResponseMessage<List<PublicationDto>> getAll() {
         try {
             return new ResponseMessage<>(
                     mapper.convertToDTOList(publicationService.getAllAccepted()),
                     ResultCode.SUCCESS,
-                    "Success",
+                    "Список публикаций",
                     ResultCode.SUCCESS.getHttpCode());
-        }catch (Exception e){
+        } catch (Exception e) {
             log.error("PublicationController: getAll", e);
             return new ResponseMessage<>(null, ResultCode.FAIL, e.getMessage(), ResultCode.FAIL.getHttpCode());
         }
@@ -77,38 +77,49 @@ public class PublicationController {
 
     @PutMapping("/update")
     public ResponseMessage<PublicationDto> update(@RequestBody Publication publication,
-                                 @RequestParam Long userId,
-                                 @RequestParam Long categoryId) throws Exception{
+                                                  @RequestParam Long userId,
+                                                  @RequestParam Long categoryId) throws Exception {
         try {
             return new ResponseMessage<>(
-                   mapper.convertToDto(publicationService.update(publication, userId, categoryId)),
+                    mapper.convertToDto(publicationService.update(publication, userId, categoryId)),
                     ResultCode.SUCCESS,
-                    "Success",
+                    "Публикация успешно обновлена",
                     ResultCode.SUCCESS.getHttpCode());
-        }catch (Exception e){
+        } catch (Exception e) {
             log.error("PublicationController: update", e);
             return new ResponseMessage<>(null, ResultCode.FAIL, e.getMessage(), ResultCode.FAIL.getHttpCode());
         }
     }
 
     @DeleteMapping("/delete/{id}")
-    public void delete(@PathVariable Long id) {
-        publicationService.delete(id);
+    public ResponseMessage<String> delete(@PathVariable Long id) {
+        try {
+            return new ResponseMessage<>(
+                    publicationService.delete(id),
+                    ResultCode.SUCCESS,
+                    "Успешное удаление",
+                    ResultCode.SUCCESS.getHttpCode());
+        } catch (Exception e) {
+            log.error("PublicationController: delete", e);
+            return new ResponseMessage<>(null, ResultCode.FAIL, e.getMessage(), ResultCode.FAIL.getHttpCode());
+        }
     }
+
     //Вытаскиваем список публикаций по id тега
     @GetMapping("/listByTag/{tagId}")
-    public ResponseMessage<List<PublicationDto>> listByTag(@PathVariable Long tagId) {
+    public ResponseMessage<List<PublicationDto>> listOfPublicationsByTag(@PathVariable Long tagId) {
         try {
             return new ResponseMessage<>(
                     mapper.convertToDTOList(publicationService.getPublicationsByTagId(tagId)),
                     ResultCode.SUCCESS,
-                    "Success",
+                    "Список публикаций по тегу успешно найден",
                     ResultCode.SUCCESS.getHttpCode());
-        }catch (Exception e){
-            log.error("PublicationController: listPublicationsByTag", e);
+        } catch (Exception e) {
+            log.error("PublicationController: listOfPublicationsByTag", e);
             return new ResponseMessage<>(null, ResultCode.FAIL, e.getMessage(), ResultCode.FAIL.getHttpCode());
         }
     }
+
     //Вытаскиваем список публикаций по id категории
     @GetMapping("/getByCategory/{categoryId}")
     public ResponseMessage<List<PublicationDto>> getPublicationsByCategoryId(@PathVariable Long categoryId) {
@@ -116,13 +127,14 @@ public class PublicationController {
             return new ResponseMessage<>(
                     mapper.convertToDTOList(publicationService.getPublicationsByCategoryId(categoryId)),
                     ResultCode.SUCCESS,
-                    "Success",
+                    "Список публикаций по категории успешно найден",
                     ResultCode.SUCCESS.getHttpCode());
-        }catch (Exception e){
+        } catch (Exception e) {
             log.error("PublicationController: getPublicationsByCategoryId", e);
             return new ResponseMessage<>(null, ResultCode.FAIL, e.getMessage(), ResultCode.FAIL.getHttpCode());
         }
     }
+
     //Вытаскиваем список публикаций по id автора(какие посты он выложил)
     @GetMapping("/user/{authorId}")
     public ResponseMessage<List<PublicationDto>> getPublicationsByUser(@PathVariable Long authorId) {
@@ -130,9 +142,9 @@ public class PublicationController {
             return new ResponseMessage<>(
                     mapper.convertToDTOList(publicationService.getPublicationsByAuthorId(authorId)),
                     ResultCode.SUCCESS,
-                    "Success",
+                    "Список публикаций по автору успешно найден",
                     ResultCode.SUCCESS.getHttpCode());
-        }catch (Exception e){
+        } catch (Exception e) {
             log.error("PublicationController: getPublicationsByUser", e);
             return new ResponseMessage<>(null, ResultCode.FAIL, e.getMessage(), ResultCode.FAIL.getHttpCode());
         }
@@ -144,9 +156,9 @@ public class PublicationController {
             return new ResponseMessage<>(
                     mapper.convertToDTOList(publicationService.sortByPopularity()),
                     ResultCode.SUCCESS,
-                    "Success",
+                    "Список публикаций по популярности успешно найден",
                     ResultCode.SUCCESS.getHttpCode());
-        }catch (Exception e){
+        } catch (Exception e) {
             log.error("PublicationController: getPopular", e);
             return new ResponseMessage<>(null, ResultCode.FAIL, e.getMessage(), ResultCode.FAIL.getHttpCode());
         }

@@ -26,4 +26,6 @@ public class EventDto {
     private String location; // место проведения ивента
 
     private Double duration; // продолжительность ивента
+
+    private String preview; // ссылка к картинке
 }

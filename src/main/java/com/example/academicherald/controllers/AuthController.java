@@ -79,7 +79,7 @@ public class AuthController {
             return new ResponseMessage<>(
                     userService.resetPassword(email),
                     ResultCode.SUCCESS,
-                    "Success",
+                    "Успешно",
                     ResultCode.SUCCESS.getHttpCode());
         }catch (Exception e){
             log.error("AuthController: resetPassword", e);
@@ -93,7 +93,7 @@ public class AuthController {
             return new ResponseMessage<>(
                     userService.saveNewPassword(resetToken, password),
                     ResultCode.SUCCESS,
-                    "Success",
+                    "Пароль сохранен",
                     ResultCode.SUCCESS.getHttpCode());
         }catch (Exception e){
             log.error("AuthController: saveNewPassword", e);

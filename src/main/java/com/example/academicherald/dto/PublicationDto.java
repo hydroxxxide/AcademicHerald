@@ -21,4 +21,5 @@ public class PublicationDto {
     private UserDto author;
     @Enumerated(EnumType.STRING)
     private PublicationType type;
+    private String preview; // ссылка к картинке
 }

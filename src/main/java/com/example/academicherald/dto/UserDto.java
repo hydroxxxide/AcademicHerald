@@ -17,4 +17,6 @@ public class UserDto {
 
     @Enumerated(EnumType.STRING)
     private UserRole role;
+
+    private String preview; // ссылка к картинке
 }

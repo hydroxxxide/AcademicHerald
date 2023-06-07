@@ -13,13 +13,11 @@ import java.util.List;
 public class EventService {
     private final EventRepository eventRepository;
     private final UserService userService;
-    private final UserRepository userRepository;
     private final EmailService emailService;
 
-    public EventService(EventRepository eventRepository, UserService userService, UserRepository userRepository, EmailService emailService) {
+    public EventService(EventRepository eventRepository, UserService userService, EmailService emailService) {
         this.eventRepository = eventRepository;
         this.userService = userService;
-        this.userRepository = userRepository;
         this.emailService = emailService;
     }
 
@@ -50,9 +48,10 @@ public class EventService {
         return eventRepository.save(oldEvent);
     }
 
-    public void delete(Long id) {
+    public String delete(Long id) {
         Event event = getById(id);
         event.setRdt(LocalDateTime.now());
         eventRepository.save(event);
+        return "Ивент " + event.getTitle() + " успешно удален";
     }
 }
