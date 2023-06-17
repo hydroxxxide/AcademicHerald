@@ -35,6 +35,6 @@ spring.jpa.hibernate.ddl-auto=create
 
 spring.datasource.driver-class-name=org.postgresql.Driver
 ```
-2.3 Запустите приложение в PartnershipProgramsApplication.
+2.3 Запустите приложение в AcademicHeraldApplication.
 2.4 После первого запуска, замените ```sh spring.jpa.hibernate.ddl-auto=create field``` на ```sh spring.jpa.hibernate.ddl-auto=update```
-2.5 Запустите sql insert запросы в файле V00002_insert_tables
+2.5 Запустите sql insert запросы в файле V00002_insert_tables.sql
