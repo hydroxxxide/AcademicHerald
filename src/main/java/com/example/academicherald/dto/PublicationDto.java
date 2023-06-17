@@ -15,6 +15,7 @@ public class PublicationDto {
     private String title;
     private String subtitle;
     private String text;
+    private Boolean pass = false;
     @DateTimeFormat(pattern = "dd-MM-yyyy HH:mm:ss")
     private LocalDateTime dateOfCreation;
     private CategoryDto category;

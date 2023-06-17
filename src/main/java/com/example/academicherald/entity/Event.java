@@ -43,13 +43,15 @@ public class Event {
     @DateTimeFormat(pattern = "dd-MM-yyyy HH:mm:ss")
     private LocalDateTime dateOfEvent;
 
+    @Column(columnDefinition = "time")
     private Timestamp startTime;
 
     private String location;
-
+    @Column(columnDefinition = "interval")
     private Double duration;
 
     private LocalDateTime rdt;
 
+    @Column(columnDefinition = "text")
     private String preview; // ссылка к картинке
 }

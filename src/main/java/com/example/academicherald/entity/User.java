@@ -50,6 +50,9 @@ public class User {
     private LocalDateTime resetTokenExpireTime;
 
     private LocalDateTime rdt;
-
+    @Column(columnDefinition = "text")
     private String preview; // ссылка к картинке
+
+    private String userDetails;
+
 }

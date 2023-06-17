@@ -150,12 +150,12 @@ public class UserService {
         user.setResetTokenExpireTime(LocalDateTime.now().plusMinutes(60));
         userRepository.save(user);
 
-        String resetUrl = "http://localhost:9090/auth/reset/" + resetToken;
+        String resetUrl = "http://127.0.0.1:5500/index.html#reset-password";
         String emailText = "Здравствуйте, " + user.getUsername() +
                 "\n\nДля сброса пароля перейдите по ссылке: " + resetUrl;
 
         emailService.sendSimpleMessage(email, "Сброс пароля", emailText);
-        return "Ссылка для сброса пароля была отправлена ваш на адрес электронной почты " + email;
+        return resetToken;
     }
 
     @Transactional(isolation = Isolation.SERIALIZABLE)

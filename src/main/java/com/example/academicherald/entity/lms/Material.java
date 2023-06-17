@@ -20,5 +20,6 @@ public class Material {
 
     private String theme;
 
+    @Column(columnDefinition = "text")
     private String text;
 }

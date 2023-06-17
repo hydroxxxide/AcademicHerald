@@ -18,4 +18,6 @@ public class UserDto {
     private UserRole role;
 
     private String preview; // ссылка к картинке
+
+    private String userDetails;
 }

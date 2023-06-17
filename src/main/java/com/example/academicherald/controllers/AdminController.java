@@ -69,17 +69,9 @@ public class AdminController {
     }
 
     @GetMapping("/rejected/getAll")
-    public ResponseMessage<List<PublicationDto>> getAllRejectedPublications() {
-        try {
-            return new ResponseMessage<>(
-                    publicationMapper.convertToDTOList(publicationService.getAllRejected()),
-                    ResultCode.SUCCESS,
-                    "Список отклоненных публикаций",
-                    ResultCode.SUCCESS.getHttpCode());
-        } catch (Exception e) {
-            log.error("AdminController: getAllRejectedPublications", e);
-            return new ResponseMessage<>(null, ResultCode.FAIL, e.getMessage(), ResultCode.FAIL.getHttpCode());
-        }
+    public List<PublicationDto> getAllRejectedPublications() {
+        return publicationMapper.convertToDTOList(publicationService.getAllRejected());
+
     }
 
 

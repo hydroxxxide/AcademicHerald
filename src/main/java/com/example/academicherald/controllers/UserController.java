@@ -22,7 +22,14 @@ import java.util.List;
 @RestController
 @Slf4j
 @RequestMapping("/user")
-@CrossOrigin(origins = "http://127.0.0.1:5500")
+//@CrossOrigin(origins = "http://127.0.0.1:5500")
+@CrossOrigin(
+        origins = "http://127.0.0.1:5500/",
+        allowedHeaders = {"Authorization", "Content-Type"},
+        exposedHeaders = {"Authorization"},
+        methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE},
+        allowCredentials = "true"
+)
 
 public class UserController {
     private final UserService userService;
@@ -127,17 +134,8 @@ public class UserController {
     }
 
     @GetMapping("/publication/get/all")
-    public ResponseMessage<List<PublicationDto>> getAllPublications() {
-        try {
-            return new ResponseMessage<>(
-                    publicationMapper.convertToDTOList(publicationService.getAllAccepted()),
-                    ResultCode.SUCCESS,
-                    "Список публикаций",
-                    ResultCode.SUCCESS.getHttpCode());
-        } catch (Exception e) {
-            log.error("UserController: getAllPublications", e);
-            return new ResponseMessage<>(null, ResultCode.FAIL, e.getMessage(), ResultCode.FAIL.getHttpCode());
-        }
+    public List<PublicationDto> getAllPublications() {
+        return publicationMapper.convertToDTOList(publicationService.getAllAccepted());
     }
 
     @PutMapping("/publication/update")

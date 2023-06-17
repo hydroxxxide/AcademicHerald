@@ -11,6 +11,8 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/student")
+@CrossOrigin(origins = "http://127.0.0.1:5500")
+
 public class StudentController {
     private final CourseService courseService;
     private final CourseMapper courseMapper;
@@ -81,6 +83,7 @@ public class StudentController {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
+
 
     @GetMapping("/geSubmittedExercise/{id}")
     public SubmittedExerciseDto geSubmittedExerciseById(@PathVariable Long id) {

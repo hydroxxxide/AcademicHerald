@@ -116,7 +116,7 @@ public class PublicationService {
     }
 
     public String delete(Long publicationId, Long userId) throws Exception {
-        Publication publication = getById(publicationId);
+        Publication publication = publicationRepository.findById(publicationId).orElseThrow();
         if (userId.equals(publication.getAuthor().getId())) {
             publication.setRdt(LocalDateTime.now());
             publicationRepository.save(publication);

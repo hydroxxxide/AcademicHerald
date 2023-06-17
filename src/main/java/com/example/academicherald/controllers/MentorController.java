@@ -17,6 +17,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/mentor")
+@CrossOrigin(origins = "http://127.0.0.1:5500")
 public class MentorController {
     private final ExerciseService exerciseService;
     private final ExerciseMapper exerciseMapper;
@@ -52,8 +53,13 @@ public class MentorController {
 
     // управление курсами
 
-    @PostMapping("/course/create")
-    public CourseDto createCourse(@RequestBody CourseDto courseDto,
+    @PostMapping("/course/{courseId}/addStudents")
+    public CourseDto createCourse(@PathVariable Long courseId,
+                                  @RequestBody List<Long> studentIds) {
+        return courseMapper.convertToDto(courseService.addStudentsToCourse(courseId,studentIds));    }
+
+    @PostMapping("/course/add")
+    public CourseDto addStudentsToCourse(@RequestBody CourseDto courseDto,
                                   @RequestParam Long mentorId) {
         Course course = courseMapper.convertToEntity(courseDto);
         Course createdCourse = courseService.create(course, mentorId);

@@ -25,13 +25,13 @@ public class Publication {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotNull
+    @Column(columnDefinition = "text")
     private String title;
 
-    @NotNull
+    @Column(columnDefinition = "text")
     private String subtitle;
 
-    @NotNull
+    @Column(columnDefinition = "text")
     private String text;
 
     @NotNull
